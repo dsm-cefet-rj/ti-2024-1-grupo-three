@@ -4,15 +4,12 @@ import './styles/index.css';
 import reportWebVitals from './reportWebVitals';
 import Router from './router';
 import { RecoilRoot } from "recoil";
+import Home from './pages/home';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <RecoilRoot>
-      <Router />
-    </RecoilRoot>
-  </React.StrictMode>
-);
+  <Home/>
+  );
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
