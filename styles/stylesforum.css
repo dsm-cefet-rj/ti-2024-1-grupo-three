@@ -57,16 +57,43 @@ input{
 .box-message{
     display: flex;
     justify-content: flex-end;
-    text-align: left;
+    text-align: right;
 }
 .myMessage{
     background-color: #1919e0;
-    border-radius: 10px;
+    border-radius: 10px 10px 0 10px;
     padding: 1rem;
     color: white;
     margin: 0;
 
 
+}
+.box-response-message{
+    display: flex;
+    background-color: #4b4b5a;
+    justify-content: flex-start;
+    text-align: left;
+    padding: 1rem;  
+    flex-direction: column;
+    border-radius: 10px 10px 10px 0;
+}
+.name-chat{
+    
+    display: block;
+    font-weight: 700;
+    
+}
+.name-chat:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+.response-chat{
+
+}
+.name-chat, .response-chat{
+    
+    text-align: left;
+    margin: 0;
 }
 .box-forum{
     background-color: #292942;
