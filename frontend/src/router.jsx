@@ -1,8 +1,13 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Partida from "./pages/partida";
 import Home from "./pages/home";
 
 const routes = [
+  {
+    path: "/partida",
+    element: <Partida />,
+  },
   {
     path: "/",
     element: <Home />,

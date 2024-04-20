@@ -1,4 +1,5 @@
 import React from "react";
+import Partida from "../pages/partida"
 
 const Home = () => {
     

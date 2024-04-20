@@ -136,3 +136,17 @@ h2 {
   background-color: #19ae47;
   border: none;
 }
+
+.nota {
+  border-style: dashed;
+  box-shadow: none;
+  width: 2vh;
+  background-color: #000;
+  text-align: center;
+}
+
+.nota1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

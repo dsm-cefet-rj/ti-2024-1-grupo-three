@@ -1,10 +1,17 @@
 import React from "react";
-import "./styles/stylenotas.css";
+import './stylenotas.css';
 
-const Button = () => {
-  //logica aqui
 
-  return <button>ver mais</button>;
-};
+export default function Button(show) {
+ 
+  return (
+    <div className="ver">
+      <button onClick={() => setShow(!show)}>
+        Ver {show ? "mais" : "menos"}
+      </button>
+    </div>
+  );
+}
 
-export default Button;
+
+
