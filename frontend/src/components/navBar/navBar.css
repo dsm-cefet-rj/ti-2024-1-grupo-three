@@ -1,0 +1,154 @@
+
+.navbar-container{
+    width: 100%;
+    height: 15vh;
+}
+.top{
+    height: 75%;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    justify-items: center;
+    align-items: center;
+    background-color: #222232;
+}
+.search{
+    height: 25%;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+}
+.search input{
+    height: 4vh;
+    padding-left: 2rem;
+    border-radius: 0 0 0 15px;
+    width: 85vw;
+    background-color: #353542;
+    border: none;
+    color: #ACACAC;
+}
+.search input:focus{
+    outline: 0;
+}
+.search button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 0 0 15px 0;
+    height: 4vh;
+    width: 15vw;
+    background-color:  #353542;
+}
+.imagemenu{
+    height: 4vh;
+    width: 4vh;
+}
+.imagelogo{
+    height: 12vh;
+    width: 17vh;
+}
+.imageuser{
+    height: 6vh;
+    width: 6vh;
+}
+.imagelupa{
+    height: 3vh;
+    width: 3vh;
+}
+.menu{
+    position: relative;
+    height:85vh;
+    width: 30vw;
+    background-color: #222232;
+}
+.botoesDiv{
+    display: flex;
+    flex-direction: column;
+}
+.botao{
+    border: none;
+    margin-top: 3vh;
+    margin-bottom: 5vh;
+}
+.botao::before{
+    content: "";
+    display: flex;
+    position: relative;
+    background-color: #4D4D4D;
+    left: -1vh;
+    width: 30vw;
+    height: 0.2rem;
+    top: -1vh;
+}
+.botao::after{
+    content: "";
+    display: flex;
+    position: relative;
+    background-color: #4D4D4D;
+    left: -1vh;
+    width: 30vw;
+    height: 0.2rem;
+    top: -1vh;
+}
+.botao2{
+    margin-bottom: 5vh;
+    border: none;
+}
+.botao2::before{
+    content: "";
+    display: flex;
+    position: relative;
+    background-color: #4D4D4D;
+    left: -1vh;
+    width: 30vw;
+    height: 0.2rem;
+    top: -1vh;
+}
+
+.botao2::after{
+    content: "";
+    display: flex;
+    position: relative;
+    background-color: #4D4D4D;
+    left: -1vh;
+    width: 30vw;
+    height: 0.2rem;
+    top: -1vh;
+}
+
+.botao3::before{
+    content: "";
+    display: flex;
+    position: relative;
+    background-color: #4D4D4D;
+    left: -1vh;
+    width: 30vw;
+    height: 0.2rem;
+    top: -1vh;
+}
+.botao3::after{
+    content: "";
+    display: flex;
+    position: relative;
+    background-color: #4D4D4D;
+    left: -1vh;
+    width: 30vw;
+    height: 0.2rem;
+    top: -1vh;
+}
+.logout{
+    position: absolute;
+    bottom: 1rem;
+    width: 30vw;
+    border: none;
+}
+.logout::before{
+    content: "";
+    display: flex;
+    position: relative;
+    background-color: #4D4D4D;
+    left: -1vw;
+    width: 30vw;
+    height: 0.2vh;
+    top: -1vh;
+}
