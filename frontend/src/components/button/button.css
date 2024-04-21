@@ -1,0 +1,30 @@
+.vermais {
+  font-size: 1.25rem;
+  font-family: Jockey One;
+  border: none;
+  width: 18.75rem;
+  height: 2.188rem;
+  border-radius: 0.313rem;
+  color: white;
+  background-color: #0c87d1;
+}
+
+.botao {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.addbutton {
+  font-size: 1.25rem;
+  font-family: Jockey One;
+  width: 18.75rem;
+  height: 3rem;
+  border-radius: 0.313rem;
+  color: white;
+  background-color: #19ae47;
+  border: none;
+}

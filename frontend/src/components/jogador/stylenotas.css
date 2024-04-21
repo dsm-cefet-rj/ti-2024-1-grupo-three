@@ -28,37 +28,16 @@ body {
   width: 100%;
 }
 
-header {
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr 1fr;
-  justify-items: center;
-  align-items: center;
-  background-color: #222232;
-}
-
-.titulo {
-  margin-top: 1.875rem;
-  margin-left: 0.938rem;
-  font-family: "Roboto Flex", Arial, sans-seriff;
-  font-weight: 600;
-}
-
-.titulo-jogadores-time1 {
-  display: flex;
-  justify-content: space-between;
-}
-
-.titulo-jogadores-time1 img {
+/* .titulo-jogadores-time1 img {
   margin-top: 15px;
   margin-right: 15px;
+} */
+
+.tudo {
+  display: flex;
+  justify-content: center;
 }
 
-.jogadores {
-  margin-top: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 .jogadores-time1 {
   padding: 0.375rem 1.25rem;
   height: 5rem;
@@ -76,6 +55,8 @@ header {
 .info-j {
   display: flex;
   align-items: center;
+  color: white;
+  font-family: "Jockey One", sans-serif;
 }
 .info-j h2 {
   display: flex;
@@ -87,16 +68,13 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: white;
+  font-family: "Jockey One", sans-serif;
 }
 
 .info-n h2 {
   margin: 0px;
   margin-bottom: 0.313rem;
-}
-
-.img4 {
-  width: 55px;
-  height: 55px;
 }
 
 h2 {
@@ -106,43 +84,13 @@ h2 {
   white-space: nowrap;
 }
 
-.botao {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 1rem;
-  margin-top: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-.vermais {
-  font-size: 1.25rem;
-  font-family: Jockey One;
-  border: none;
-  width: 18.75rem;
-  height: 2.188rem;
-  border-radius: 0.313rem;
-  color: white;
-  background-color: #0c87d1;
-}
-
-.addbutton {
-  font-size: 1.25rem;
-  font-family: Jockey One;
-  width: 18.75rem;
-  height: 3rem;
-  border-radius: 0.313rem;
-  color: white;
-  background-color: #19ae47;
-  border: none;
-}
-
 .nota {
   border-style: dashed;
   box-shadow: none;
   width: 2vh;
   background-color: #000;
   text-align: center;
+  color: white;
 }
 
 .nota1 {
