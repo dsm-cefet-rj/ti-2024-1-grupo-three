@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Partida from "./pages/partida";
+import Partida from "./pages/partida/partida";
 import Home from "./pages/home";
 
 const routes = [

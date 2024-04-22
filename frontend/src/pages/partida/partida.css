@@ -1,0 +1,33 @@
+body {
+  background-color: #161621 !important;
+  margin: 0px;
+  height: 100%;
+  width: 100%;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0px;
+  font-weight: normal;
+}
+
+ul {
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+img {
+  max-width: 100%;
+  display: block;
+}
+
+h1 {
+  font-family: "Roboto Flex", sans-serif;
+  font-size: 1.25rem !important;
+  color: white !important;
+  font-weight: 600 !important;
+  margin-top: 1.875rem !important;
+  margin-left: 0.938rem !important;
+}
