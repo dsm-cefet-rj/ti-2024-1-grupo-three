@@ -47,18 +47,6 @@ const routes = [
     path: "/cadastro",
     element: <Cadastro />,
   },
-  {
-    path: "/chat",
-    element: <ChatBox/>,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/cadastro",
-    element: <Cadastro />,
-  },
 ];
 
 function Router(props) {
