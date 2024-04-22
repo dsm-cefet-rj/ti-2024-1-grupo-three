@@ -1,0 +1,39 @@
+.formCriarTime{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.botaoCriarTime{
+    position: absolute;
+    bottom: 5rem;
+    font-size: 1.25rem;
+    font-family: Jockey One;
+    width: 18.75rem;
+    height: 3rem;
+    border-radius: 0.313rem;
+    color: white;
+    background-color: #19ae47;
+    border: none;
+}
+.inputCriarTime{
+    height: 4vh;
+    width: 80vw;
+    border-radius: 15px;
+    background-color: #09090E;
+    color: white;
+    border: none;
+    padding-left: 3vw;
+}
+.inputCriarTime:focus{
+    outline: 0;
+}
+.nomeCriarTime{
+    margin-top: 30vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.nomedoTime{
+    font-size: 2rem !important;
+}

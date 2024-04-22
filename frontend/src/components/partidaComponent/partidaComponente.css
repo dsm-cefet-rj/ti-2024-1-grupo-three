@@ -1,0 +1,45 @@
+.partidaContainer{
+    display: flex;
+    justify-content: center;
+}
+.divisao2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5rem;
+    margin-top: 0.4rem;
+    border-radius: 5px;
+    width: 18.75rem;
+    background-color: #09090e;
+}
+.partidaNome{
+    display: flex;
+    align-items: center;
+}
+.divisao{
+    display: flex;
+}
+.infos{
+    display: flex;
+    flex-direction: column;
+    justify-items: center
+}
+.divisao h2{
+    color: white;
+}
+.setaButton{
+    display: flex;
+    height: 5rem;
+    width: 3rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    border: none;
+    background-color: #09090e;
+}
+.partidas{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 16rem;
+}

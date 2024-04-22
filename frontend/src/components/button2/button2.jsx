@@ -1,8 +1,8 @@
 import React from "react";
 import "./button.css";
 
-const Button = () => {
+const Button2 = () => {
   return <button>enviar votos</button>;
 };
 
-export default Button;
+export default Button2;

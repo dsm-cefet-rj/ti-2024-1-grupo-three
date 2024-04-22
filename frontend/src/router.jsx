@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Partida from "./pages/partida/partida";
 import Home from "./pages/home/home";
 import Time from "./pages/time/time";
+import CriarTime from "./pages/criarTime/criarTime";
 
 const routes = [
   {
@@ -16,6 +17,10 @@ const routes = [
   {
     path: "/time",
     element: <Time />,
+  },
+  {
+    path: "/criarTime",
+    element: <CriarTime />,
   },
 ];
 
