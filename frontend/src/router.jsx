@@ -1,12 +1,12 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./pages/home";
-import CriarTorneio from "./components/CriarTorneio/criarTorneio";
-import TorneioCriado from "./components/TorneioCriado/torneiocriado";
+import CriarTorneio from "./pages/CriarTorneio/criarTorneio";
+import TorneioCriado from "./pages/TorneioCriado/torneiocriado";
+import MeusTorneios from "./pages/Campeonatos/campeonato";
 const routes = [
   {
     path: "/",
-    element: <Home />,
+    element: <MeusTorneios />,
   },
   {
     path:"/criartorneio",
