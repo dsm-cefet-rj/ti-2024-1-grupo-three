@@ -1,0 +1,122 @@
+.cadastro-container{
+    background-color: #161621;
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.cadastro-header{
+    color: white;
+
+}
+.box-cadastro{
+    background-color: #09090E;
+    width: fit-content;
+    padding: 1rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    border-radius: 10px;
+    margin: 3rem;
+    
+}
+.box-cadastro h3{
+    color: white;
+}
+.box-cadastro .input-certo{
+    width: 100%;
+    font-size: 1rem;
+    border: 1px solid white;
+    padding: 10px;
+    background-color: #09090E;
+    color: #ffffff;
+    border-radius: 5px;
+    outline: none;
+    margin-bottom: 15px;
+
+}
+.condicao-senha{
+    color: white;
+    margin-top: -15px;
+    margin-bottom: 30px;
+    width: 100%;
+    font-size: 11px;
+}
+.btn-cadastro{
+    margin: 10px;
+    font-size: 1.25rem;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 0.313rem;
+    color: white;
+    background-color: #19ae47;
+    border: none;
+}
+.btn-cadastro:hover{
+    background-color: #115a28;
+    cursor: pointer;
+}
+input[type="checkbox"]{
+    display: none;
+}
+.btn-checkbox-personalizado{
+    display: inline-block;
+    position: relative;
+    padding-left: 25px; /* espaço para o novo checkbox personalizado */
+    cursor: pointer;
+    color: white;
+}
+.btn-checkbox-personalizado::before{
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 5px;
+    border: 2px solid #ccc; /* cor da borda */
+    background-color: #161621; /* cor de fundo */
+    position: absolute;
+    left: 0;
+    top: 1px;
+}
+input[type="checkbox"]:checked + .btn-checkbox-personalizado::before {
+    background-color: #0000ff; 
+}
+.btn-checkbox-personalizado::after {
+    content: '\2713';
+    font-size: 12px;
+    color: #fff;
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    visibility: hidden;
+}
+input[type="checkbox"]:checked + .btn-checkbox-personalizado:after {
+    visibility: visible;
+}
+.input-error{
+    width: 100%;
+    font-size: 1rem;
+    border: 1px solid red;
+    padding: 10px;
+    background-color: #161621;
+    color: #ffffff;
+    border-radius: 5px;
+    outline: none;
+    margin-bottom: 30px;
+}
+.form-cadastro{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.pergunta-cadastro{
+    color: white;
+}
+.entrar-login-cadastro{
+    color: #246fd1;
+}
+.entrar-login-cadastro:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
