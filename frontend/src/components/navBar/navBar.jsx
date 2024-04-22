@@ -13,19 +13,18 @@ function NavBar (){
     };
 
     return(
-        <div className="cu">
-
+        <div className="navBar">
             <div className="navbar-container">
-                <div className="top">
-                    <button className="botaomenu" onClick={abrirMenu}>
+                <div className="navBarHeader">
+                    <button className="menuHamButton" onClick={abrirMenu}>
                         <img src={Menu} alt="menu" className="imagemenu"/>
                     </button>
                     <img src={Logo} alt="logo" className="imagelogo"/>
                     <img src={User} alt="user" className="imageuser"/>
                 </div>
-                <div className="search">
+                <div className="navBarSearch">
                     <form action="">
-                        <input type="text"/>
+                        <input  type="text"/>
                     </form>
                     <button>
                         <img src={Lupa} className="imagelupa" />
@@ -37,7 +36,7 @@ function NavBar (){
                 {aberto ? (
                     <div className="menu">
                     <div className="botoesDiv">
-                        <button className="botao">Jogar</button>
+                        <button className="botao1">Jogar</button>
                         <button className="botao2">Time</button>
                         <button className="botao3"> Convites</button>
                     </div>

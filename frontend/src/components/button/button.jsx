@@ -1,5 +1,5 @@
 import React from "react";
-import "../button/button.css";
+import "./button.css";
 
 export default function Button({ show, setShow }) {
   return (

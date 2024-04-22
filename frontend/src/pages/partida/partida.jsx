@@ -3,6 +3,7 @@ import Jogador from "../../components/jogador/jogador";
 import Button from "../../components/button/button";
 import JogadorN from "../../components/jogadorN/jogadorN";
 import "../partida/partida.css";
+import NavBar from "../../components/navBar/navBar";
 
 const Partida = ({ id }) => {
   const jogadores = [
@@ -24,6 +25,7 @@ const Partida = ({ id }) => {
 
   return (
     <div>
+      <NavBar/>
       <div>
         <h1>{time1}</h1>
         {show ? (

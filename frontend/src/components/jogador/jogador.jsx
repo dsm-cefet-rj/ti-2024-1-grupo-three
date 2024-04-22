@@ -1,4 +1,4 @@
-import "../jogador/stylenotas.css";
+import "./stylenotas.css";
 import React from "react";
 
 function Jogador({ id, nome }) {

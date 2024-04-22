@@ -1,5 +1,5 @@
 import React from "react";
-import "../button/button.css";
+import "./button.css";
 
 const Button = () => {
   return <button>enviar votos</button>;

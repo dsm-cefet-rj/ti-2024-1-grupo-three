@@ -1,5 +1,5 @@
 import React from "react";
-import "../jogador/stylenotas.css";
+import "./stylenotas.css";
 
 function JogadorN({ id, nome, nota, votos }) {
   return (
