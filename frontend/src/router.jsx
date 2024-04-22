@@ -1,6 +1,11 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./pages/home";
+import CriarTime from "./pages/criarTime/criarTime";
+import Time from "./pages/time/time";
+import TorneioCriado from "./pages/TorneioCriado/torneiocriado";
+import Partida from "./pages/partida/partida";
+import MeusTorneios from "./pages/Campeonatos/campeonato";
+import CriarTorneio from "./pages/CriarTorneio/criarTorneio"
 
 const routes = [
   {
