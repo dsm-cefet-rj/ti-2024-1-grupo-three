@@ -55,6 +55,10 @@
     height: 3vh;
     width: 3vh;
 }
+.botaomenu{
+    border: none;
+    background-color: #222232;
+}
 .menu{
     position: relative;
     height:85vh;
@@ -69,40 +73,44 @@
     border: none;
     margin-top: 3vh;
     margin-bottom: 5vh;
+    background-color: #222232;
+    color:#ACACAC
 }
 .botao::before{
     content: "";
     display: flex;
     position: relative;
     background-color: #4D4D4D;
-    left: -1vh;
+    left: -1.5vw;
     width: 30vw;
-    height: 0.2rem;
-    top: -1vh;
+    height: 0.2vh;
+    top: -0.3vh;
 }
 .botao::after{
     content: "";
     display: flex;
     position: relative;
     background-color: #4D4D4D;
-    left: -1vh;
+    left: -1.5vw;
     width: 30vw;
-    height: 0.2rem;
-    top: -1vh;
+    height: 0.2vh;
+    top: 0.2vh;
 }
 .botao2{
     margin-bottom: 5vh;
     border: none;
+    background-color: #222232;
+    color:#ACACAC
 }
 .botao2::before{
     content: "";
     display: flex;
     position: relative;
     background-color: #4D4D4D;
-    left: -1vh;
+    left: -1.5vw;
     width: 30vw;
-    height: 0.2rem;
-    top: -1vh;
+    height: 0.2vh;
+    top: -0.3vh;
 }
 
 .botao2::after{
@@ -110,35 +118,41 @@
     display: flex;
     position: relative;
     background-color: #4D4D4D;
-    left: -1vh;
+    left: -1.5vw;
     width: 30vw;
-    height: 0.2rem;
-    top: -1vh;
+    height: 0.2vh;
+    top: 0.2vh;
 }
-
+.botao3{
+    border: none;
+    background-color: #222232;
+    color:#ACACAC
+}
 .botao3::before{
     content: "";
     display: flex;
     position: relative;
     background-color: #4D4D4D;
-    left: -1vh;
+    left: -1.5vw;
     width: 30vw;
-    height: 0.2rem;
-    top: -1vh;
+    height: 0.2vh;
+    top: -0.3vh;
 }
 .botao3::after{
     content: "";
     display: flex;
     position: relative;
     background-color: #4D4D4D;
-    left: -1vh;
+    left: -1.5vw;
     width: 30vw;
-    height: 0.2rem;
-    top: -1vh;
+    height: 0.2vh;
+    top: 0.2vh;
 }
 .logout{
     position: absolute;
-    bottom: 1rem;
+    background-color: #222232;
+    color:#ACACAC;
+    bottom: -0.1px;
     width: 30vw;
     border: none;
 }
@@ -147,8 +161,8 @@
     display: flex;
     position: relative;
     background-color: #4D4D4D;
-    left: -1vw;
+    left: -1.5vw;
     width: 30vw;
     height: 0.2vh;
-    top: -1vh;
+    top: -0.3vh;
 }

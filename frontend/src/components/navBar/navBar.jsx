@@ -17,7 +17,7 @@ function NavBar (){
 
             <div className="navbar-container">
                 <div className="top">
-                    <button onClick={abrirMenu}>
+                    <button className="botaomenu" onClick={abrirMenu}>
                         <img src={Menu} alt="menu" className="imagemenu"/>
                     </button>
                     <img src={Logo} alt="logo" className="imagelogo"/>
