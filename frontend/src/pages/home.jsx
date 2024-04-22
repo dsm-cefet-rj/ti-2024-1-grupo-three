@@ -5,7 +5,7 @@ import "./home.css"
 const Home = () => {
     
     return(
-        <div className="u">
+        <div className="">
             <NavBar/>
         </div>
     );
