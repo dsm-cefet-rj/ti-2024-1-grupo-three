@@ -1,9 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Partida from "./pages/partida/partida";
-import Home from "./pages/home/home";
-import Time from "./pages/time/time";
-import CriarTime from "./pages/criarTime/criarTime";
+import Home from "./pages/home";
 
 const routes = [
   {
@@ -12,7 +9,15 @@ const routes = [
   },
   {
     path: "/",
-    element: <Home />,
+    element: <MeusTorneios />,
+  },
+  {
+    path:"/criartorneio",
+    element: <CriarTorneio />,
+  },
+  {
+    path:"/torneiocriado",
+    element: <TorneioCriado/>,
   },
   {
     path: "/time",
