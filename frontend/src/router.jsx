@@ -2,10 +2,10 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CriarTime from "./pages/criarTime/criarTime";
 import Time from "./pages/time/time";
-import TorneioCriado from "./pages/torneioCriado/torneiocriado";
+import TorneioCriado from "./pages/TorneioCriado/torneiocriado";
 import Partida from "./pages/partida/partida";
 import MeusTorneios from "./pages/meusTorneios/meusTorneios";
-import CriarTorneio from "./pages/criarTorneio/criarTorneio"
+import CriarTorneio from "./pages/CriarTorneio/criarTorneio"
 import ChatBox from "./pages/Chat/chat-box";
 import Login from "./pages/Login/login";
 import Cadastro from "./pages/Cadastro/cadastro"
