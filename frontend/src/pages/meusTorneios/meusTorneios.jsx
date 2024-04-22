@@ -3,7 +3,7 @@ import Button from "../../components/button/button";
 import NavBar from "../../components/navBar/navBar";
 import JogadorN from "../../components/jogadorN/jogadorN";
 import PartidaComponente from "../../components/partidaComponent/partidaComponente";
-import "./campeonato.css";
+import "./meusTorneios.css";
 
 const MeusTorneios = ({ id }) => {
 

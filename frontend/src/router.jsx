@@ -2,10 +2,10 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CriarTime from "./pages/criarTime/criarTime";
 import Time from "./pages/time/time";
-import TorneioCriado from "./pages/TorneioCriado/torneiocriado";
+import TorneioCriado from "./pages/torneioCriado/torneiocriado";
 import Partida from "./pages/partida/partida";
-import MeusTorneios from "./pages/Campeonatos/campeonato";
-import CriarTorneio from "./pages/CriarTorneio/criarTorneio"
+import MeusTorneios from "./pages/meusTorneios/meusTorneios";
+import CriarTorneio from "./pages/criarTorneio/criarTorneio"
 
 const routes = [
   {
