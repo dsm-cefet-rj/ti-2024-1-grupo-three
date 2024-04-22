@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Partida from "./pages/partida/partida";
-import Home from "./pages/home";
+import Home from "./pages/home/home";
 
 const routes = [
   {
