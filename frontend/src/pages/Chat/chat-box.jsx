@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Button } from "react-bootstrap";
-import "../styles/chatbox.css"
+import "../Chat/chatbox.css"
 
 var mensagem = '';
 
@@ -57,7 +57,7 @@ const ChatBox = (props)=>{
                  <div className="rodape-chat">
                         <form onSubmit={handleSubmit}>
                         <input type="text" name="mensagem" value={msg} onChange={handleChangeMsg} placeholder="Digite Aqui..." className={`input-chat ${inputError ? "input-error" : ""}`} />
-                        <Button variant="outline-secondary" type="submit"><img src="../img/send.svg"/></Button>
+                        <Button variant="success" type="submit"><img src="../img/send.svg"/></Button>
                         </form>                                                                 
                  </div>
             </div>
