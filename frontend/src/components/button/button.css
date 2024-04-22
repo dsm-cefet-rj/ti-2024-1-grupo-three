@@ -21,8 +21,7 @@
 .addbutton {
   font-size: 1.25rem;
   font-family: Jockey One;
-  width: 18.75rem;
-  height: 3rem;
+  width: fit-content;
   border-radius: 0.313rem;
   color: white;
   background-color: #19ae47;

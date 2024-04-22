@@ -1,0 +1,120 @@
+.input-chat{
+    width: 80%;
+    font-size: 1rem;
+    border: none;
+    padding: 10px;
+    background-color: #161621;
+    color: #ffffff;
+    border-radius: 5px;
+    outline: none;
+}
+.container-chat{
+    background-color:#161621;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 90vh;
+}
+.box-chat{
+    background-color: #292942;
+    margin-top: 3rem;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 80%;
+    max-height: 800px;
+    border-radius: 10px;
+    text-align: center;
+}
+.nome-liga-chat{
+    background-color: #222232;
+    font-size: 1.4rem;
+    border-radius: 10px 10px 0 0;
+    color: white;        
+}
+.rodape-chat{
+    background-color: #222232;
+    padding: 1rem;
+    border: 0 0 10px 10px;
+    color: white;
+}
+#historico-chat{
+    padding: 1rem;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+
+}
+.box-my-message{
+    display: flex;
+    justify-content: flex-end;
+    text-align: right;
+}
+.myMessage{
+    background-color: #1919e0;
+    border-radius: 10px 10px 0 10px;
+    padding: 1rem;
+    color: white;    
+}
+.box-response-message{
+    display: flex;
+    background-color: #4b4b5a;
+    justify-content: flex-start;
+    text-align: left;
+    padding: 1rem;  
+    width: fit-content;
+    flex-direction: column;
+    border-radius: 10px 10px 10px 0;
+}
+.name-chat{
+    
+    display: block;
+    font-weight: 700;
+    
+}
+.name-chat:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+.name-chat, .response-chat{
+    
+    text-align: left;
+    margin: 0;
+}
+.hist::-webkit-scrollbar-track{
+    background-color: #292942;
+}
+.hist::-webkit-scrollbar-thumb{
+    background-color: #161621;
+    border-radius: 20px;
+    border: 3px solid #292942;
+}
+.hist::-webkit-scrollbar {     width: 15px; }
+.input-error{
+    border: 1px solid red
+}
+.rodape-chat form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn-chat{
+    margin: 10px;
+    font-size: 1.25rem;
+  font-family: Jockey One;
+  width: fit-content;
+  padding: 10px;
+  border-radius: 0.313rem;
+  color: white;
+  background-color: #19ae47;
+  border: none;
+}
+.btn-chat:hover{
+    background-color: #115a28;
+    cursor: pointer;
+}

@@ -6,6 +6,9 @@ import TorneioCriado from "./pages/torneioCriado/torneiocriado";
 import Partida from "./pages/partida/partida";
 import MeusTorneios from "./pages/meusTorneios/meusTorneios";
 import CriarTorneio from "./pages/criarTorneio/criarTorneio"
+import ChatBox from "./pages/Chat/chat-box";
+import Login from "./pages/Login/login";
+import Cadastro from "./pages/Cadastro/cadastro"
 
 const routes = [
   {
@@ -31,6 +34,30 @@ const routes = [
   {
     path: "/criarTime",
     element: <CriarTime />,
+  },
+  {
+    path: "/chat",
+    element: <ChatBox/>,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/cadastro",
+    element: <Cadastro />,
+  },
+  {
+    path: "/chat",
+    element: <ChatBox/>,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/cadastro",
+    element: <Cadastro />,
   },
 ];
 
