@@ -25,6 +25,7 @@ function sendMessage(){
 function showHistoric(message){
     var randomUsu = Math.floor(Math.random()*usuarios.length);
     var randomRes = Math.floor(Math.random()*respostas.length);
+    const chatHistoryRef = useRef(null);
     if(message.value == '/time'){
 
     }else if(message.value == '/aviso'){
