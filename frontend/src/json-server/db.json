@@ -27,5 +27,22 @@
       "user": "1111",
       "senha": "1111"
     }
+  ],
+  "Torneio": [
+    {},
+    {
+      "id": "99cb043b-fa78-4268-9ad2-3b95393a078c",
+      "nomeTorneio": "Futzin Cria",
+      "userIdDonoTorneio": "6ae4",
+      "qtdTimes": "2",
+      "tipoTorneio": "aberto"
+    },
+    {
+      "id": "5083ceba-d510-491a-af08-8c09c30f7c58",
+      "nomeTorneio": "Futzin Cria",
+      "userIdDonoTorneio": "6ae4",
+      "qtdTimes": "2",
+      "tipoTorneio": "aberto"
+    }
   ]
 }

@@ -1,0 +1,35 @@
+.TorneioContainer{
+    display: flex;
+    justify-content: center;
+}
+.dividir2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5rem;
+    margin-top: 0.4rem;
+    border-radius: 5px;
+    width: 18.75rem;
+    background-color: #09090e;
+}
+.torneioNome{
+    display: flex;
+    align-items: center;
+}
+.dividir1{
+    display: flex;
+}
+.infos1{
+    display: flex;
+    flex-direction: column;
+    justify-items: center
+}
+.dividir1 h2{
+    color: white;
+}
+.TORNEIOSS{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 16rem;
+}
