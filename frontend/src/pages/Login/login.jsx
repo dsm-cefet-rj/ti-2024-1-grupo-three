@@ -24,7 +24,7 @@ const Login = () => {
     const users = response.data;
 
     for (let user of users) {
-      if (user.user === info.user && user.senha === info.senha) {
+      if (user.user === submitUser && user.senha === submitSenha) {
         dispatch(addLoggedUser(user));
         //  dispatch(getTimesByUserID(user.id));
         //  dispatch(getPartidasByUserID(user.id));
