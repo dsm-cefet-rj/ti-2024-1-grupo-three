@@ -1,1 +1,17 @@
-{}
+{
+  "users": [
+    {},
+    {
+      "id": "95e6edcf-291f-423b-bc66-eeee48869d45",
+      "email": "123",
+      "user": "123",
+      "senha": "123"
+    },
+    {
+      "id": "d25e274f-8a27-4262-aecf-b88bdf673af0",
+      "email": "cu",
+      "user": "cu",
+      "senha": "cuuuuuuuuuu"
+    }
+  ]
+}
