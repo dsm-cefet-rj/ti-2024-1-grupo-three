@@ -12,10 +12,10 @@ const CriarTime = () => {
                     <h1 className="nomedoTime">Nome do time:</h1>
                     <input type="text" className="inputCriarTime"/>
                 </div>
-            </form>
-            <div className="formCriarTime">
+                <div className="formCriarTime">
                 <button className="botaoCriarTime">criar um time</button>
-            </div> 
+                </div> 
+            </form>            
         </div>
     );
 };

@@ -16,7 +16,7 @@ const routes = [
     element: <Partida />,
   },
   {
-    path: "/",
+    path: "/meustorneios",
     element: <MeusTorneios />,
   },
   {
@@ -44,7 +44,7 @@ const routes = [
     element: <Login />,
   },
   {
-    path: "/cadastro",
+    path: "/",
     element: <Cadastro />,
   },
 ];
