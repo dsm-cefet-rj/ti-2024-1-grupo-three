@@ -18,9 +18,9 @@ const TorneioCriado = () => {
                 <div className="pesquisa">
                     <input type="text" id="nomeTime" placeholder="Pesquisar time" />
                 </div>
-                <buttonEnviar className="botaoEnviar" onClick={handleInviteClick}>
+                <button className="botaoEnviar" onClick={handleInviteClick}>
                     Convidar para Torneio
-                </buttonEnviar>
+                </button>
             </div></>
     );
 };
