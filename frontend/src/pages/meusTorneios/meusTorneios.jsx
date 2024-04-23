@@ -1,6 +1,8 @@
 import { React, useState } from "react";
 import NavBar from "../../components/navBar/navBar";
+import Torneiomjr from "../../components/meustorneioscomponent/meustorneioscomponent";
 import "./meusTorneios.css";
+import Button from "../../components/button/button";
 
 const MeusTorneios = ({ id }) => {
 
@@ -18,77 +20,66 @@ const MeusTorneios = ({ id }) => {
   return (
     <div>
         <NavBar/>
-            {campeonato? (
+            {campeonato ? (
             <div>
-            
             <div>
-              <h1 className="tituloPag">meus torneios</h1>
-              {show ? (
+                <h1 className="tituloPag">meus torneios</h1>
+                {show ? (
                 <div>
-                  <div className="caixaTorneios">
-                    {partidaDados.map((partida) => (
-                      <div className="Meustorneios" key={partida.id}>
-                        <div className="NomedoCamp">
-                            {partida.nome}                      
-                          </div>
-                          <div className="parte2">
-                          {partida.tipoTorneio}
-                          {partida.local}
-                          <div>
-                          {partida.qtdPartidas}
-                          </div>
-                          
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+                    <div>
+                        {partidaDados.map((Torneio, i) => (
+                            <Torneiomjr
+                            key={Torneio.id}
+                            nome={Torneio.nome}
+                            tipoTorneio={Torneio.tipoTorneio}
+                            qtdPartidas={Torneio.qtdPartidas}
+                            local={Torneio.local}
+                            />
+                        ))}
+                    </div>
+                    <div>
+                        <Button show={show} setShow={setShow} />
+                    </div>
                 </div>
-              ) : (
+                ) : (
                 <div>
-                  <div>
-                    {partidaDados.slice(0, 3).map((partida, i) => (
-                      <div className="caixaTorneios">
-                      <div className="MeusTorneios" key={partida.id}>                        
-                          <div className="NomedoCamp">
-                            {partida.nome}                         
-                         </div>
-                          <div className="parte2">                         
-                          {partida.tipoTorneio}
-                          <div className="parte3">
-                           {partida.qtdPartidas}   
-                          </div>
-                          
-                          <div>
-                          {partida.local}
-                          </div>
-
-                        </div>
-                      </div>
-                      </div>
-                    ))}
-                  </div>
+                    <div>
+                        {partidaDados.slice(0, 2).map((Torneio, i) => (
+                            <Torneiomjr
+                            key={Torneio.id}
+                            nome={Torneio.nome}
+                            tipoTorneio={Torneio.tipoTorneio}
+                            qtdPartidas={Torneio.qtdPartidas}
+                            local={Torneio.local}
+                            />
+                        ))}
+                    </div>
+                    <div>
+                        <Button show={show} setShow={setShow} />
+                    </div>
                 </div>
-              )}
+                )}
             </div>
-          </div>
-        ) : (
-          <div className="">
-            <div className="textocontent">
-              <div className="Mensagens">
-                <h1>Você não está participando de nenhum torneio no momento.</h1>
-                <h1 className="espaço2">Vamos resolver isso?</h1>
-              </div>
-              <div className="Mensagens">
-                <h1>Você pode buscar um torneio aberto, criar o seu, ou aceitar um convite.</h1>
-              </div>
-            </div>
-            <div className="textocontent">
-              <button className="botaoCrieCampeonato">Crie um torneio</button>
-            </div>
-          </div>
-        )}
-      </div>
+        </div>
+            ) : (
+                <div>
+                    <div className="textocontent">
+                        <div className="Mensagens">
+                            <h1>você não está participando de nenhum torneio no momento.</h1>
+                            <h1 className="espaço2">vamos resolver isso?</h1>
+                        </div>
+                        <div className="Mensagens">
+                            <h1>você pode buscar um torneio aberto, criar o seu, ou aceitar um convite.</h1>
+                        </div>
+                    </div>
+                    <div className="textocontent">
+                        <button className="botaoCrieCampeonato">crie um time</button>
+                    </div>  
+                </div>
+            )}
+    </div>
   );
 };
 
 export default MeusTorneios;
+
