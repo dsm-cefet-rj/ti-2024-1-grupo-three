@@ -5,10 +5,11 @@ import Time from "./pages/time/time";
 import TorneioCriado from "./pages/TorneioCriado/torneiocriado";
 import Partida from "./pages/partida/partida";
 import MeusTorneios from "./pages/meusTorneios/meusTorneios";
-import CriarTorneio from "./pages/CriarTorneio/criarTorneio"
+import CriarTorneio from "./pages/CriarTorneio/criarTorneio";
 import ChatBox from "./pages/Chat/chat-box";
 import Login from "./pages/Login/login";
-import Cadastro from "./pages/Cadastro/cadastro"
+import Cadastro from "./pages/Cadastro/cadastro";
+import Convite from "./components/convite/convite";
 
 const routes = [
   {
@@ -16,16 +17,20 @@ const routes = [
     element: <Partida />,
   },
   {
+    path: "/convite",
+    element: <Convite />,
+  },
+  {
     path: "/meustorneios",
     element: <MeusTorneios />,
   },
   {
-    path:"/criartorneio",
+    path: "/criartorneio",
     element: <CriarTorneio />,
   },
   {
-    path:"/torneiocriado",
-    element: <TorneioCriado/>,
+    path: "/torneiocriado",
+    element: <TorneioCriado />,
   },
   {
     path: "/time",
@@ -37,7 +42,7 @@ const routes = [
   },
   {
     path: "/chat",
-    element: <ChatBox/>,
+    element: <ChatBox />,
   },
   {
     path: "/login",
