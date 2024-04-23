@@ -1,7 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import "./convite.css";
-
-import { useState } from "react";
 
 const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
@@ -22,7 +20,12 @@ const Modal = ({ isOpen, onClose, children }) => {
   );
 };
 
-const Convite = (idConvite) => {
+const Convite = () => {
+  const conviiites = [
+    { id: "1", nome: "vasco" },
+    { id: "2", nome: "flumkimnnse" },
+    { id: "3", nome: "flaemngo" },
+  ];
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenModal = () => {
@@ -32,27 +35,34 @@ const Convite = (idConvite) => {
   const handleCloseModal = () => {
     setIsOpen(false);
   };
-  // modal ficaria na navbar, e abriria quando clicar em convites
-  {
-    /* <button onClick={handleOpenModal}>Convites</button>
-<Modal isOpen={isOpen} onClose={handleCloseModal}>
-      </Modal> */
-  }
+
   return (
-    <div className="tudodo">
-      <div className="container-convites">
-        <h1 className="tituloconvites">seus convites</h1>
-        {/* //modal entra aqui */}
-        <div className="conteudo-convites">
-          <p className="testetetete">tetste</p>
-          <button type="submit" className="btn-recusa">
-            rejeitar
-          </button>
-          <button type="submit" className="btn-aceita">
-            aceitar
-          </button>
-        </div>
-      </div>
+    <div>
+      {isOpen ? (
+        <Modal isOpen={isOpen} onClose={handleCloseModal}>
+          <div className="container-convites">
+            <h1 className="tituloconvites">seus convites</h1>
+            {/* //modal entra aqui */}
+            <div>
+              {conviiites.map((convite, i) => (
+                <div className="conteudo-convites">
+                  <p className="testetetete">{convite.nome}</p>
+                  <button type="submit" className="btn-recusa">
+                    rejeitar
+                  </button>
+                  <button type="submit" className="btn-aceita">
+                    aceitar
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Modal>
+      ) : (
+        <button onClick={handleOpenModal} className="buttonconvite">
+          Convites
+        </button>
+      )}
     </div>
   );
 };
