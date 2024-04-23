@@ -3,7 +3,8 @@ import axios from "axios";
 
 const initialState = {
   id: "",
-  time: {},
+  nomeTime: "",
+  userIdDono:"",
   userId:[],
 };
 
@@ -11,13 +12,17 @@ const addTimeAsync = createAsyncThunk("time/addTimeAsync", async (data) => {
   const response = await axios.post("http://localhost:3004/time", data);
   return response.data;
 });
-const getTime = createAsyncThunk('anamnese/getTimeAsync', async (userId) => {
-    const response = await axios.get(`http://localhost:3004/anamnese?userId=${userId}`);
+const getTimeByUserId = createAsyncThunk('time/getTimeAsync', async (userId) => {
+    const response = await axios.get(`http://localhost:3004/time?userId=${userId}`);
     return response.data;
 });
 
 const updateTime = createAsyncThunk("time/updateTimeAsync", async (data) => {
   await axios.put(`http://localhost:3004/time/${data.id}`, data);
+});
+
+const deleteTimeByUserId = createAsyncThunk('time/deleteTimeAsync', async (userIdDono) => {
+    await axios.delete(`http://localhost:3004/time?userId=${userId}`);
 });
 
 const deleteTime = createAsyncThunk("time/deleteTimeAsync", async (id) => {
@@ -29,18 +34,22 @@ const timeSlice = createSlice({
   initialState,
   reducers: {
     addTime: (state, action) => {
-      state.logged = true;
-      state.user = action.payload;
+        state.id = action.payload.id;
+        state.nomeTime = action.payload.nomeTime;
+        state.userIdDono= action.payload.userIdDono;
+        state.userId = action.payload.userId;
     },
-    logoutUser: (state) => {
-      state.logged = false;
-      state.user = {};
+    clearTime: (state, action) => {
+        state.id = "";
+        state.nomeTime = "";
+        state.userIdDono= "";
+        state.userId = "";
     },
   },
 });
 
-export const { logoutUser, addLoggedUser } = userSlice.actions;
+export const { addTime, clearTime } = timeSlice.actions;
 
-export { addUser, updateUser, deleteUser };
+export { addTimeAsync, getTimeByUserId, updateTime, deleteTimeByUserId, deleteTime };
 
-export default userSlice.reducer;
+export default timeSlice.reducer;
