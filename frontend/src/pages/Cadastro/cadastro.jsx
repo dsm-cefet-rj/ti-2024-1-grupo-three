@@ -1,4 +1,8 @@
 import React, { useState }from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../../redux/user/slice";
+import { v4 as idGen } from "uuid";
 import "../Cadastro/cadastro.css"
 
 
@@ -9,10 +13,14 @@ const Cadastro = ()=>{
     const [inputErrorUser, setInputErrorUser] = useState(false);
     const [inputErrorEmail, setInputErrorEmail] = useState(false);
     const [inputErrorSenha, setInputErrorSenha] = useState(false);
-    const [submitUser,setSubmitUser]= useState('');
-    const [submitSenha,setSubmitSenha]= useState('');
-    const [submitEmail,setSubmitEmail]= useState('');
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const values2 = {
+        user: user,
+        email: email,
+        senha: senha,
+    }
     const handleTogglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
       };
@@ -26,6 +34,7 @@ const Cadastro = ()=>{
         setEmail(e.target.value);
     }
     function handleSubmit(e){
+        console.log(e)
         e.preventDefault();
         if(!user.trim() || !email.trim() || !senha.trim()){
             if(!user.trim()){
@@ -43,12 +52,9 @@ const Cadastro = ()=>{
         setInputErrorSenha(false);
         setInputErrorEmail(false);
         setInputErrorUser(false);
-        setSubmitEmail(email);
-        setSubmitSenha(senha);
-        setSubmitUser(user);
-        setEmail('');
-        setSenha('');
-        setUser('');
+        dispatch(addUser({...e, id:idGen()}));
+        navigate("/login");
+
     }
     return(
     
@@ -58,7 +64,7 @@ const Cadastro = ()=>{
                 <h1>cadastro</h1>
                 </div>
                 <div className="box-cadastro">
-                    <form onSubmit={handleSubmit} className="form-cadastro">
+                    <form onSubmit={(values) => {handleSubmit(values);}} className="form-cadastro">
                         <div>
                             <div>
                                 <h3>seu email:</h3>
