@@ -11,6 +11,8 @@ const MeusTorneios = ({ id }) => {
     { id: "1", nome: "Fut da Firma", tipoTorneio: "Torneio Fechado", qtdPartidas: "8 partidas", local:"Quadra Recreio" },
     { id: "2", nome: "Pelada dos Crias", tipoTorneio: "Torneio Aberto", qtdPartidas: "12 partidas", local: "Peninsula" },
     { id: "3", nome: "Futzin cria", tipoTorneio: "Torneio Aberto", qtdPartidas: "4 partidas", local: "Freguesia" },
+    { id: "4", nome: "Futeba de BCC", tipoTorneio: "Torneio Aberto", qtdPartidas: "10 partidas", local: "Quadra CEFET-RJ" }
+
     
   ];
 
@@ -73,7 +75,7 @@ const MeusTorneios = ({ id }) => {
                         </div>
                     </div>
                     <div className="textocontent">
-                        <button className="botaoCrieCampeonato">crie um time</button>
+                        <button className="botaoCrieCampeonato">criar torneio</button>
                     </div>  
                 </div>
             )}
