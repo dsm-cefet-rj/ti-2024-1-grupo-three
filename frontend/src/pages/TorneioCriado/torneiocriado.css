@@ -14,12 +14,13 @@ body {
 }
 
 .quadro {
-    width: 100%;
+    width: 75%;
     height: 100px;
     border: none;
     padding: 20px;
     margin-bottom: 20px;
     background: #09090E;
+    align-items: center;
 
 }
 
@@ -46,4 +47,7 @@ body {
     padding: 10px;
     background-color:  #09090E;
     border: none;
+    color:white
+    
+
 }

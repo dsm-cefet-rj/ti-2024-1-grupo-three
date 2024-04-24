@@ -13,7 +13,9 @@
     background-color: #09090E !important;
     border: none;
     border-radius: 15px;
-    color:#ffffff
+    color:#ffffff;
+    padding: 5px;
+    margin-top: 5px;
   }
   .input2702:focus{
     outline: 0;
@@ -25,6 +27,9 @@
     color: #fff;
     padding-left: 5vw;
     width: 5rem;
+    padding: 5px;
+    text-align: center;
+    margin-top: 5px;
   }
   .input2802:focus{
     outline: 0;
@@ -35,10 +40,17 @@
     color: #ffffff ;
     margin-top: 10px;
     margin-bottom: 10px !important;
+    display: flex;
+    flex-direction: column;
   }
   .form-select{
     background-color: #09090E !important;
     color: white !important;
+    height: 30px;
+    text-align: center;
+    border-radius: 5px;
+    border: none;
+    margin-top: 5px;
   }
   .form-select:focus{
     outline: 0;
@@ -75,4 +87,20 @@
    }
    .baixo2{
     display: flex;
+   }
+   .input2902{ 
+    background-color: #09090E !important;
+    border: none;
+    border-radius: 15px;
+    color:#ffffff;
+    padding: 5px;
+    margin-top: 5px;
+   }
+   .input2902:focus{
+    outline: 0;
+   }
+   .LocalTorneio{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
    }

@@ -40,6 +40,20 @@
       "senha": "1"
     }
   ],
+  "Torneio": [
+    {
+      "id": "3956"
+    },
+
+    {
+      "id": "53d0ab15-2f29-4ab4-9f51-dcc2deb93a91",
+      "nomeTorneio": "Futzin Cria",
+      "userIdDonoTorneio": "6ae4",
+      "qtdTimes": "5",
+      "tipoTorneio": "fechado",
+      "localTorneio": "Quadra Cefet"
+    }
+  ],
   "time": [
     {},
     {

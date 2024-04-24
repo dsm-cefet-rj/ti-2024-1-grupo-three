@@ -8,12 +8,11 @@ const MeusTorneios = ({ id }) => {
 
   
   const partidaDados = [
-    { id: "1", nome: "Fut da Firma", tipoTorneio: "Torneio Fechado", qtdPartidas: "8 partidas", local:"Quadra Recreio" },
-    { id: "2", nome: "Pelada dos Crias", tipoTorneio: "Torneio Aberto", qtdPartidas: "12 partidas", local: "Peninsula" },
-    { id: "3", nome: "Futzin cria", tipoTorneio: "Torneio Aberto", qtdPartidas: "4 partidas", local: "Freguesia" },
-    { id: "4", nome: "Futeba de BCC", tipoTorneio: "Torneio Aberto", qtdPartidas: "10 partidas", local: "Quadra CEFET-RJ" }
-
-    
+    { id: "1", nome: "Fut da Firma", tipoTorneio: "Torneio Fechado", qtdtimes: "8 times", local:"Quadra Recreio" },
+    { id: "2", nome: "Pelada dos Crias", tipoTorneio: "Torneio Aberto", qtdtimes: "12 times", local: "Peninsula" },
+    { id: "3", nome: "Futzin cria", tipoTorneio: "Torneio Aberto", qtdtimes: "4 times", local: "Freguesia" },
+    { id: "4", nome: "Futeba de BCC", tipoTorneio: "Torneio Aberto", qtdtimes: "10 times", local: "Quadra CEFET-RJ" }
+ 
   ];
 
   const campeonato = "VASCO";
@@ -34,7 +33,7 @@ const MeusTorneios = ({ id }) => {
                             key={Torneio.id}
                             nome={Torneio.nome}
                             tipoTorneio={Torneio.tipoTorneio}
-                            qtdPartidas={Torneio.qtdPartidas}
+                           qtdtimes={Torneio.qtdtimes}
                             local={Torneio.local}
                             />
                         ))}
@@ -51,7 +50,7 @@ const MeusTorneios = ({ id }) => {
                             key={Torneio.id}
                             nome={Torneio.nome}
                             tipoTorneio={Torneio.tipoTorneio}
-                            qtdPartidas={Torneio.qtdPartidas}
+                           qtdtimes={Torneio.qtdtimes}
                             local={Torneio.local}
                             />
                         ))}
