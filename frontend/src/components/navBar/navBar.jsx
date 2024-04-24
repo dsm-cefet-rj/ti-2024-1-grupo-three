@@ -4,6 +4,9 @@ import Logo from '../../assets/logo.svg';
 import User from '../../assets/user.svg';
 import Lupa from '../../assets/lupa.svg';
 import "./navBar.css"
+import { useDispatch, useSelector } from "react-redux";
+import { addLoggedUser, logoutUser } from "../../redux/user/slice";
+import { useNavigate, Navigate } from "react-router-dom";
 
 function NavBar (){
     const [aberto, setAberto] = useState(false);
@@ -11,7 +14,13 @@ function NavBar (){
     const abrirMenu = () => {
         setAberto(!aberto);
     };
+    const currentUser = useSelector(rootReducer => rootReducer.user);
+    const dispatch = useDispatch();
+    function handleLogOut(){
+            dispatch(logoutUser());
 
+    }
+    
     return(
         <div className="navBar">
             <div className="navbar-container">
@@ -40,7 +49,9 @@ function NavBar (){
                         <button className="botao2">Time</button>
                         <button className="botao3"> Convites</button>
                     </div>
-                    <button className="logout">Logout</button>
+                    <button className="logout" onClick={handleLogOut}>
+                <a href="/login">Torneios</a>
+              </button>
                 </div>
                 ) : (<div></div>)}
             </div>

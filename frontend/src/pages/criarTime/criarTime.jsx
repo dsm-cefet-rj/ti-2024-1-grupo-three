@@ -28,7 +28,7 @@ const CriarTime = () => {
     const initialValues = {
         nomeTime: nomeTime,
         userIdDono: currentUser.user.id,
-        idUser: currentUser.user.id,     
+        idUser: [currentUser.user.id],     
     }
     
     return(
