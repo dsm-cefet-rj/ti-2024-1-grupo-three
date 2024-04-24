@@ -37,12 +37,8 @@ const TorneioForm = () => {
         qtdTimes: initialValues.qtdTimes,
         tipoTorneio: initialValues.tipoTorneio,
       }));
-
-      if (response.payload) {
         navigate("/torneiocriado");
-      } else {
-        alert('Erro ao criar torneio.');
-      }
+       
     } catch (error) {
       console.error('Erro ao criar torneio:', error);
       alert('Erro ao criar torneio.');

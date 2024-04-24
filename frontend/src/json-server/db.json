@@ -29,7 +29,9 @@
     }
   ],
   "Torneio": [
-    {},
+    {
+      "id": "3956"
+    },
     {
       "id": "99cb043b-fa78-4268-9ad2-3b95393a078c",
       "nomeTorneio": "Futzin Cria",
@@ -38,10 +40,17 @@
       "tipoTorneio": "aberto"
     },
     {
-      "id": "5083ceba-d510-491a-af08-8c09c30f7c58",
-      "nomeTorneio": "Futzin Cria",
+      "id": "7399d1b7-4de2-4eed-8993-ccf0155bf9d0",
+      "nomeTorneio": "cariocao",
       "userIdDonoTorneio": "6ae4",
-      "qtdTimes": "2",
+      "qtdTimes": "5",
+      "tipoTorneio": "aberto"
+    },
+    {
+      "id": "ad424e09-329a-4fea-901f-d8cfecc059f3",
+      "nomeTorneio": "cariocao",
+      "userIdDonoTorneio": "6ae4",
+      "qtdTimes": "5",
       "tipoTorneio": "aberto"
     }
   ]
