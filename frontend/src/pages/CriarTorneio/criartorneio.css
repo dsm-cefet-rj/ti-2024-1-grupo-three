@@ -88,3 +88,19 @@
    .baixo2{
     display: flex;
    }
+   .input2902{ 
+    background-color: #09090E !important;
+    border: none;
+    border-radius: 15px;
+    color:#ffffff;
+    padding: 5px;
+    margin-top: 5px;
+   }
+   .input2902:focus{
+    outline: 0;
+   }
+   .LocalTorneio{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   }

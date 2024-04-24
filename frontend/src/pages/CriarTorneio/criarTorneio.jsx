@@ -13,11 +13,12 @@ const TorneioForm = () => {
   const [nomeTorneio, setNomeTorneio] = useState('');
   const [tipoTorneio, setTipoTorneio] = useState('aberto');
   const [quantidadeTimes, setQuantidadeTimes] = useState('2');
+  const[ localTorneio, setlocalTorneio] = useState('');
 
   const handleSubmitForm = async (event) => {
     event.preventDefault();
 
-    if (!nomeTorneio || !tipoTorneio || !quantidadeTimes) {
+    if (!nomeTorneio || !tipoTorneio || !quantidadeTimes || !localTorneio) {
       alert('Por favor, preencha todos os campos.');
       return;
     }
@@ -27,6 +28,7 @@ const TorneioForm = () => {
       userIdDonoTorneio: currentUser.user.id,
       tipoTorneio: tipoTorneio,
       qtdTimes: quantidadeTimes,
+      localTorneio: localTorneio
     };
 
     try {
@@ -36,6 +38,7 @@ const TorneioForm = () => {
         id: idGen(),
         qtdTimes: initialValues.qtdTimes,
         tipoTorneio: initialValues.tipoTorneio,
+        localTorneio: initialValues.localTorneio
       }));
         navigate("/torneiocriado");
        
@@ -63,6 +66,17 @@ const TorneioForm = () => {
             id="nomeTorneio"
             value={nomeTorneio}
             onChange={(event) => setNomeTorneio(event.target.value)}
+            required 
+          />
+        </div>
+        <div className="LocalTorneio">
+          <label htmlFor="localTorneio">Local do Torneio:</label>
+          <input 
+            className='input2902'
+            type="text"
+            id="localTorneio"
+            value={localTorneio}
+            onChange={(event) => setlocalTorneio(event.target.value)}
             required 
           />
         </div>

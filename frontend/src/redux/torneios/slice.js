@@ -7,6 +7,7 @@ const initialState = {
   userIdDonoTorneio:"",
   tipoTorneio: "", 
   qtdTimes:"",
+  localTorneio:"",
   Participantes:[], 
 };
 
@@ -42,6 +43,7 @@ const torneioSlice = createSlice({
         state.tipoTorneio = action.payload.tipoTorneio;
         state.qtdTimes = action.payload.qtdTimes;
         state.Participantes = action.payload.Participantes;
+        state.localTorneio = action.payload.localTorneio;
     },
     clearTorneio: (state, action) => {
         state.idTorneio = "";
@@ -50,6 +52,7 @@ const torneioSlice = createSlice({
         state.tipoTorneio = "";
         state.qtdTimes = "";
         state.Participantes = "";
+        state.localTorneio = "";
     },
   },
 });

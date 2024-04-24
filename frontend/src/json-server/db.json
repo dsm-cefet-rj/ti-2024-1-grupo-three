@@ -32,26 +32,14 @@
     {
       "id": "3956"
     },
+
     {
-      "id": "99cb043b-fa78-4268-9ad2-3b95393a078c",
+      "id": "53d0ab15-2f29-4ab4-9f51-dcc2deb93a91",
       "nomeTorneio": "Futzin Cria",
       "userIdDonoTorneio": "6ae4",
-      "qtdTimes": "2",
-      "tipoTorneio": "aberto"
-    },
-    {
-      "id": "7399d1b7-4de2-4eed-8993-ccf0155bf9d0",
-      "nomeTorneio": "cariocao",
-      "userIdDonoTorneio": "6ae4",
       "qtdTimes": "5",
-      "tipoTorneio": "aberto"
-    },
-    {
-      "id": "ad424e09-329a-4fea-901f-d8cfecc059f3",
-      "nomeTorneio": "cariocao",
-      "userIdDonoTorneio": "6ae4",
-      "qtdTimes": "5",
-      "tipoTorneio": "aberto"
+      "tipoTorneio": "fechado",
+      "localTorneio": "Quadra Cefet"
     }
   ]
 }

@@ -12,8 +12,7 @@ const MeusTorneios = ({ id }) => {
     { id: "2", nome: "Pelada dos Crias", tipoTorneio: "Torneio Aberto", qtdtimes: "12 times", local: "Peninsula" },
     { id: "3", nome: "Futzin cria", tipoTorneio: "Torneio Aberto", qtdtimes: "4 times", local: "Freguesia" },
     { id: "4", nome: "Futeba de BCC", tipoTorneio: "Torneio Aberto", qtdtimes: "10 times", local: "Quadra CEFET-RJ" }
-
-    
+ 
   ];
 
   const campeonato = "VASCO";
