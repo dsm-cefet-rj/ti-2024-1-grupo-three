@@ -13,11 +13,11 @@ const Time = () => {
     const navigate=useNavigate();
     const [jogadores, setJogadores] = useState([]);
   const partidaDados = [
-    { id: "1", nome: "vs Flamerda", resultado: "6x4", data: "22/04/24", local:"Maracana" },
-    { id: "2", nome: "vs Bostafogo", resultado: "6x4", data: "22/04/24", local: "Tapetinho" },
-    { id: "3", nome: "vs Internacional", resultado: "6x4", data: "22/04/24", local: "Beira-rio" },
-    { id: "4", nome: "vs River Plate", resultado: "6x4", data: "22/04/24", local: "Monumental" },
-    { id: "5", nome: "vs Vascu", resultado: "6x4", data: "22/04/24", local: "Sao Ratuario" },
+    { id: "1", nome: "vs Flamengo", resultado: "6x4", data: "23/04/24", local:"Maraca" },
+    { id: "2", nome: "vs Botafogo", resultado: "6x4", data: "22/04/24", local: "Tapetinho" },
+    { id: "3", nome: "vs Internacional", resultado: "6x6", data: "21/04/24", local: "Beira-rio" },
+    { id: "4", nome: "vs River Plate", resultado: "6x4", data: "20/04/24", local: "Monumental" },
+    { id: "5", nome: "vs Vascão", resultado: "0x6", data: "19/04/24", local: "São Janu" },
   ];
   const currentUser = useSelector(rootReducer => rootReducer.user);
   if (!currentUser.logged) {

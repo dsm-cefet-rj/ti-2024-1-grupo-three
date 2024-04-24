@@ -50,7 +50,7 @@ function NavBar (){
                         <button className="botao3"> Convites</button>
                     </div>
                     <button className="logout" onClick={handleLogOut}>
-                <a href="/login">Torneios</a>
+                <a href="/login">Logout</a>
               </button>
                 </div>
                 ) : (<div></div>)}
