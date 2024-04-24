@@ -33,5 +33,7 @@
       "user": "teste111",
       "senha": "teste111"
     }
-  ]
+  ],
+
+  "convites": [{}]
 }
