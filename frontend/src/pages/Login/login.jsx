@@ -29,7 +29,7 @@ const Login = () => {
         //  dispatch(getTimesByUserID(user.id));
         //  dispatch(getPartidasByUserID(user.id));
         alert("autenticado");
-        navigate("/criarTorneio");
+        navigate("/Time");
         return;
       }
     }

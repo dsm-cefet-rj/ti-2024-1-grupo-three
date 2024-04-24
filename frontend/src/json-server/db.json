@@ -87,6 +87,13 @@
       "qtdTimes": "22",
       "tipoTorneio": "fechado",
       "localTorneio": "cefeeeeet2"
+    },
+    {
+      "id": "19d44a4f-bba7-4c73-991e-31e13e984a49",
+      "nomeTorneio": "torneioteste",
+      "qtdTimes": "2",
+      "tipoTorneio": "aberto",
+      "localTorneio": "testolandia"
     }
   ],
   "time": [

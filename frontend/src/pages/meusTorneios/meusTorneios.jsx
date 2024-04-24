@@ -73,11 +73,12 @@ const MeusTorneios = ({ id }) => {
                             <h1>você pode buscar um torneio aberto, criar o seu, ou aceitar um convite.</h1>
                         </div>
                     </div>
-                    <div className="textocontent">
-                        <button className="botaoCrieCampeonato">criar torneio</button>
-                    </div>  
-                </div>
+                    </div>
             )}
+                    <div className="textocontent">
+                        <button className="botaoCrieCampeonato"><a href="/criarTorneio">criar torneio</a></button>
+                    </div>  
+
     </div>
   );
 };

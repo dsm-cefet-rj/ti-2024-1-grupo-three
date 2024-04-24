@@ -48,9 +48,9 @@ const TorneioForm = () => {
     }
   };
 
-  if (!currentUser.logged) {
-    return <Navigate to="/login" />;
-  }
+//  if (!currentUser.logged) {
+//    return <Navigate to="/login" />;
+ // }
 
   return (
     <>

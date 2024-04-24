@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { addInvite } from '../redux/invitesSlice';
 import { v4 as idGen } from "uuid";
 
-const EnviarConvite = ({ jogadorId, timeId }) => {
+const conviteEnviar = ({ jogadorId, timeId }) => {
   const dispatch = useDispatch();
 
   const handleInvite = () => {
@@ -15,4 +15,4 @@ const EnviarConvite = ({ jogadorId, timeId }) => {
   );
 };
 
-export default EnviarConvite;
+export default conviteEnviar;
