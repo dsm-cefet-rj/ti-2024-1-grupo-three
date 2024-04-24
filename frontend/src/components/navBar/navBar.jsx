@@ -5,6 +5,7 @@ import User from "../../assets/user.svg";
 import Lupa from "../../assets/lupa.svg";
 import "./navBar.css";
 import Convite from "../convite/convite";
+import Time from "../../pages/time/time";
 
 function NavBar() {
   const [aberto, setAberto] = useState(false);
@@ -36,8 +37,14 @@ function NavBar() {
         {aberto ? (
           <div className="menu">
             <div className="botoesDiv">
-              <button className="botao1">Jogar</button>
-              <button className="botao2">Time</button>
+              <button className="botao1">
+                <a href="/meustorneios">Torneios</a>
+              </button>
+              <button className="botao2">
+                <a className="timelink" href="/Time">
+                  Time
+                </a>
+              </button>
               <button className="botao3">
                 <Convite />
               </button>

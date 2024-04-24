@@ -173,3 +173,10 @@
   height: 0.2vh;
   top: -0.3vh;
 }
+
+a {
+  text-decoration: none;
+}
+a:visited {
+  color: inherit;
+}
