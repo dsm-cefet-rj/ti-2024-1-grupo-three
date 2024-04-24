@@ -44,7 +44,6 @@
     {
       "id": "3956"
     },
-
     {
       "id": "53d0ab15-2f29-4ab4-9f51-dcc2deb93a91",
       "nomeTorneio": "Futzin Cria",
@@ -52,6 +51,14 @@
       "qtdTimes": "5",
       "tipoTorneio": "fechado",
       "localTorneio": "Quadra Cefet"
+    },
+    {
+      "id": "cf512563-0384-427e-9895-f115b9a3f63d",
+      "nomeTorneio": "vasco da",
+      "userIdDonoTorneio": "5a5793d9-146b-4996-829b-178d416fe9ad",
+      "qtdTimes": "78",
+      "tipoTorneio": "aberto",
+      "localTorneio": "da gajmaa"
     }
   ],
   "time": [
@@ -75,6 +82,7 @@
       ]
     }
   ],
-
-  "convites": [{}]
+  "convites": [
+    {}
+  ]
 }
