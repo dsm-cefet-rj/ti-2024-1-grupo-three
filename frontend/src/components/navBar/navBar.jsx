@@ -6,6 +6,9 @@ import Lupa from "../../assets/lupa.svg";
 import "./navBar.css";
 import Convite from "../convite/convite";
 import Time from "../../pages/time/time";
+import { useDispatch, useSelector } from "react-redux";
+import { addLoggedUser, logoutUser } from "../../redux/user/slice";
+import { useNavigate, Navigate } from "react-router-dom";
 
 function NavBar() {
   const [aberto, setAberto] = useState(false);
@@ -13,7 +16,13 @@ function NavBar() {
   const abrirMenu = () => {
     setAberto(!aberto);
   };
+    const currentUser = useSelector(rootReducer => rootReducer.user);
+    const dispatch = useDispatch();
+    function handleLogOut(){
+            dispatch(logoutUser());
 
+    }
+    
   return (
     <div className="navBar">
       <div className="navbar-container">
@@ -49,7 +58,9 @@ function NavBar() {
                 <Convite />
               </button>
             </div>
-            <button className="logout">Logout</button>
+            <button className="logout" onClick={handleLogOut}>
+                <a href="/login">Logout</a>
+              </button>
           </div>
         ) : (
           <div></div>

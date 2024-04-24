@@ -1,103 +1,53 @@
-// actions.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const buscarConvites = createAsyncThunk(
-  "convites/buscarConvites",
-  async () => {
-    try {
-      const response = await axios.get("http://localhost:3004/convites");
-      return response.data;
-    } catch (error) {
-      throw Error("Erro ao buscar convites:", error);
-    }
-  }
-);
+const initialState = {
+  idConvite: "",
+  idUser: "",
+  idTime: "",
+};
 
-export const adicionarConvite = createAsyncThunk(
-  "convites/adicionarConvite",
-  async (novoConvite) => {
-    try {
-      const response = await axios.post(
-        "http://localhost:3004/convites",
-        novoConvite
-      );
-      return response.data;
-    } catch (error) {
-      throw Error("Erro ao adicionar convite:", error);
-    }
-  }
-);
+const addConviteAsync = createAsyncThunk("time/addTimeAsync", async (data) => {
+  const response = await axios.post("http://localhost:3004/time", data);
+  return response.data;
+});
+const getConviteByUserId = createAsyncThunk('time/getTimeAsync', async (userId) => {
+    const response = await axios.get(`http://localhost:3004/time?userId=${userId}`);
+    return response.data;
+});
 
-export const removerConvite = createAsyncThunk(
-  "convites/removerConvite",
-  async (id) => {
-    try {
-      await axios.delete(`http://localhost:3004/convites/${id}`);
-      return id;
-    } catch (error) {
-      throw Error("Erro ao remover convite:", error);
-    }
-  }
-);
+const updateConvite = createAsyncThunk("time/updateTimeAsync", async (data) => {
+  await axios.put(`http://localhost:3004/time/${data.id}`, data);
+});
 
-export const atualizarConvite = createAsyncThunk(
-  "convites/atualizarConvite",
-  async (conviteAtualizado) => {
-    try {
-      const response = await axios.put(
-        `http://localhost:3004/convites/${conviteAtualizado.id}`,
-        conviteAtualizado
-      );
-      return response.data;
-    } catch (error) {
-      throw Error("Erro ao atualizar convite:", error);
-    }
-  }
-);
+const deleteConviteByUserId = createAsyncThunk('time/deleteTimeAsync', async (userIdDono) => {
+    await axios.delete(`http://localhost:3004/time?userId=${userId}`);
+});
 
-const convitesSlice = createSlice({
+const deleteConvite = createAsyncThunk("time/deleteTimeAsync", async (id) => {
+  await axios.delete(`http://localhost:3004/time/${id}`);
+});
+
+const timeSlice = createSlice({
   name: "convites",
-  initialState: {
-    convites: [],
-    status: "idle",
-    error: null,
-  },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      // Buscar Convites
-      .addCase(buscarConvites.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(buscarConvites.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.convites = action.payload;
-      })
-      .addCase(buscarConvites.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      })
-      // Adicionar Convite
-      .addCase(adicionarConvite.fulfilled, (state, action) => {
-        state.convites.push(action.payload);
-      })
-      // Remover Convite
-      .addCase(removerConvite.fulfilled, (state, action) => {
-        state.convites = state.convites.filter(
-          (convite) => convite.id !== action.payload
-        );
-      })
-      // Atualizar Convite
-      .addCase(atualizarConvite.fulfilled, (state, action) => {
-        const index = state.convites.findIndex(
-          (convite) => convite.id === action.payload.id
-        );
+  initialState,
+  reducers: {
+    addConvite: (state, action) => {
+        state.idConvite = action.payload.idConvite;
+        state.idUser = action.payload.idUser;
+        state.idTime = action.payload.nomeTime;
+    },
+    aceitaConvite(state, action){
+        const index = state.findIndex(invite => invite.id === action.payload);
         if (index !== -1) {
-          state.convites[index] = action.payload;
-        }
-      });
+            state.splice(index, 1);
+          }
+    }
   },
 });
 
-export default convitesSlice.reducer;
+export const { addConvite, aceitaConvite } = timeSlice.actions;
+
+export { addConviteAsync, getConviteByUserId, updateConvite, deleteConviteByUserId, deleteConvite };
+
+export default conviteSlice.reducer;

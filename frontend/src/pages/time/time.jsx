@@ -1,48 +1,76 @@
-import { React, useState } from "react";
+import { React, useState, useEffect} from "react";
 import Button from "../../components/button/button";
 import NavBar from "../../components/navBar/navBar";
 import JogadorN from "../../components/jogadorN/jogadorN";
 import PartidaComponente from "../../components/partidaComponent/partidaComponente";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, Navigate } from "react-router-dom";
 import "./time.css";
+import axios from "axios";
+import Jogador from "../../components/jogador/jogador";
 
-const Time = ({ id }) => {
-
-  const jogadoresNota = [
-    { id: "1", nome: "Cristiano Gornaldo", nota: "5.4", votos: "10" },
-    { id: "2", nome: "Sósia do Neymar", nota: "7.4", votos: "12" },
-    { id: "3", nome: "Cano Sacudo", nota: "10", votos: "2" },
-  ];
+const Time = () => {
+    const navigate=useNavigate();
+    const [jogadores, setJogadores] = useState([]);
   const partidaDados = [
-    { id: "1", nome: "vs Flamerda", resultado: "6x4", data: "22/04/24", local:"Maracana" },
-    { id: "2", nome: "vs Bostafogo", resultado: "6x4", data: "22/04/24", local: "Tapetinho" },
-    { id: "3", nome: "vs Internacional", resultado: "6x4", data: "22/04/24", local: "Beira-rio" },
-    { id: "4", nome: "vs River Plate", resultado: "6x4", data: "22/04/24", local: "Monumental" },
-    { id: "5", nome: "vs Vascu", resultado: "6x4", data: "22/04/24", local: "Sao Ratuario" },
+    { id: "1", nome: "vs Flamengo", resultado: "6x4", data: "23/04/24", local:"Maraca" },
+    { id: "2", nome: "vs Botafogo", resultado: "6x4", data: "22/04/24", local: "Tapetinho" },
+    { id: "3", nome: "vs Internacional", resultado: "6x6", data: "21/04/24", local: "Beira-rio" },
+    { id: "4", nome: "vs River Plate", resultado: "6x4", data: "20/04/24", local: "Monumental" },
+    { id: "5", nome: "vs Vascão", resultado: "0x6", data: "19/04/24", local: "São Janu" },
   ];
+  const currentUser = useSelector(rootReducer => rootReducer.user);
+  if (!currentUser.logged) {
+    return <Navigate to="/login" />;
+} 
+  const [nomeTime,setNomeTime] = useState("");
+  useEffect(() => {
+    const fetchTime = async () => {
+      try {
+        const response = await axios.get("http://localhost:3004/time");
+        const times = response.data;        
+        const userTeam = times.find(time => time.idUser && time.idUser.some(id => id === currentUser.user.id));
+        if (userTeam) {
+            setNomeTime(userTeam.nomeTime)
+          const userDetailsPromises = userTeam.idUser.map(async userId => {
+            const userResponse = await axios.get(`http://localhost:3004/users/${userId}`);
+            return userResponse.data;
+          });
+          const userDetails = await Promise.all(userDetailsPromises);
+          console.log(userDetails);
+          setJogadores(userDetails);
+        }
+      } catch (error) {
+        console.error('Erro ao buscar o nome do time:', error);
+      }
+    };
+  
+    fetchTime();
+  }, [currentUser.user.id]);
 
-  const time = "Fluminense";
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
-
+  const handleClickCriarTime=()=>{
+    navigate('/criartime');
+  }
   return (
     <div>
         <NavBar/>
-            {time ? (
+            
+            {nomeTime ? (
             <div>
-            <h1 className="nomeTime">{time}</h1>
+            <h1 className="nomeTime">{nomeTime}</h1>
             <div>
                 <h1 className="tituloPag">Jogadores</h1>
                 {show ? (
                 <div>
                     <div>
-                        {jogadoresNota.map((jogadorN, i) => (
-                            <JogadorN
-                            key={jogadorN.id}
-                            nome={jogadorN.nome}
-                            id={jogadorN.id}
-                            nota={jogadorN.nota}
-                            votos={jogadorN.votos}
-                            />
+                        {jogadores.map(jogador => (
+                            <div key={jogador.id}>
+                                <Jogador nome={jogador.user}
+                                    />
+                            </div>
+                            
                         ))}
                     </div>
                     <div>
@@ -52,14 +80,10 @@ const Time = ({ id }) => {
                 ) : (
                 <div>
                     <div>
-                        {jogadoresNota.slice(0, 2).map((jogadorN, i) => (
-                            <JogadorN
-                            key={jogadorN.id}
-                            nome={jogadorN.nome}
-                            id={jogadorN.id}
-                            nota={jogadorN.nota}
-                            votos={jogadorN.votos}
-                            />
+                        {jogadores.slice(0, 2).map(jogador => (
+                            <div key={jogador.id}>
+                                <Jogador nome={jogador.user} />
+                        </div>
                         ))}
                     </div>
                     <div>
@@ -121,7 +145,7 @@ const Time = ({ id }) => {
                         </div>
                     </div>
                     <div className="texto-container">
-                        <button className="botaoCrieTime">crie um time</button>
+                        <button className="botaoCrieTime" onClick={handleClickCriarTime}>crie um time</button>
                     </div>  
                 </div>
             )}
