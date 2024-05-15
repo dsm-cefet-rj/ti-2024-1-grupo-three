@@ -33,7 +33,7 @@ const MeusTorneios = ({ id }) => {
                             key={Torneio.id}
                             nome={Torneio.nome}
                             tipoTorneio={Torneio.tipoTorneio}
-                           qtdtimes={Torneio.qtdtimes}
+                            qtdtimes={Torneio.qtdtimes}
                             local={Torneio.local}
                             />
                         ))}
@@ -50,7 +50,7 @@ const MeusTorneios = ({ id }) => {
                             key={Torneio.id}
                             nome={Torneio.nome}
                             tipoTorneio={Torneio.tipoTorneio}
-                           qtdtimes={Torneio.qtdtimes}
+                            qtdtimes={Torneio.qtdtimes}
                             local={Torneio.local}
                             />
                         ))}

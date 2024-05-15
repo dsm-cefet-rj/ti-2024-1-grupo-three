@@ -1,7 +1,7 @@
 import React from "react";
 import "./meustorneioscomponent.css";
 
-function Torneiomjr({ id, nome, qtdPartidas, tipoTorneio, local }) {
+function Torneiomjr({ id, nome, qtdtimes, tipoTorneio, local }) {
     return (
         <div className="TorneioContainer">
             <div className="dividir2">
@@ -11,7 +11,7 @@ function Torneiomjr({ id, nome, qtdPartidas, tipoTorneio, local }) {
                     </div>
                     <div className="dividir1">
                         <div className="infos1">
-                            <h2>{qtdPartidas}</h2>
+                            <h2>{qtdtimes}</h2>
                             <h2>{tipoTorneio}</h2>
                         </div>
                         <div className="">
