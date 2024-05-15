@@ -1,7 +1,6 @@
 import { React, useState } from "react";
 import Jogador from "../../components/jogador/jogador";
 import Button from "../../components/button/button";
-import JogadorN from "../../components/jogadorN/jogadorN";
 import "../partida/partida.css";
 import NavBar from "../../components/navBar/navBar";
 
@@ -25,53 +24,29 @@ const Partida = ({ id }) => {
 
   return (
     <div>
-      <NavBar/>
+      <NavBar />
       <div>
         <h1>{time1}</h1>
         {show ? (
           <div>
-            {!jogadoresNota ? (
-              <div>
-                {jogadores.map((jogador, i) => (
-                  <Jogador nome={jogador.nome} id={jogador.id} />
-                ))}
-              </div>
-            ) : (
-              <div>
-                {jogadoresNota.map((jogadorN, i) => (
-                  <JogadorN
-                    nome={jogadorN.nome}
-                    id={jogadorN.id}
-                    nota={jogadorN.nota}
-                    votos={jogadorN.votos}
-                  />
-                ))}
-              </div>
-            )}
+            <div>
+              {jogadores.map((jogador, i) => (
+                <Jogador nome={jogador.nome} id={jogador.id} />
+              ))}
+            </div>
+
             <div>
               <Button show={show} setShow={setShow} />
             </div>
           </div>
         ) : (
           <div>
-            {!jogadoresNota ? (
-              <div>
-                {jogadores.slice(0, 2).map((jogador, i) => (
-                  <Jogador nome={jogador.nome} id={jogador.id} />
-                ))}
-              </div>
-            ) : (
-              <div>
-                {jogadoresNota.slice(0, 2).map((jogadorN, i) => (
-                  <JogadorN
-                    nome={jogadorN.nome}
-                    id={jogadorN.id}
-                    nota={jogadorN.nota}
-                    votos={jogadorN.votos}
-                  />
-                ))}
-              </div>
-            )}
+            <div>
+              {jogadores.slice(0, 2).map((jogador, i) => (
+                <Jogador nome={jogador.nome} id={jogador.id} />
+              ))}
+            </div>
+
             <div>
               <Button show={show} setShow={setShow} />
             </div>

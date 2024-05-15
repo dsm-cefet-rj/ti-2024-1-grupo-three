@@ -1,7 +1,6 @@
 import { React, useState, useEffect } from "react";
 import Button from "../../components/button/button";
 import NavBar from "../../components/navBar/navBar";
-import JogadorN from "../../components/jogadorN/jogadorN";
 import PartidaComponente from "../../components/partidaComponent/partidaComponente";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Navigate } from "react-router-dom";
