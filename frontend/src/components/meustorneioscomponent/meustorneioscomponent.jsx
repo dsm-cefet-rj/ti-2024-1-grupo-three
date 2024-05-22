@@ -14,7 +14,7 @@ function Torneiomjr({ id, nome, qtdtimes, tipoTorneio, local }) {
                             <h2>{qtdtimes}</h2>
                             <h2>{tipoTorneio}</h2>
                         </div>
-                        <div className="">
+                        <div className="infos2">
                             <h2>{local}</h2>
                         </div>
                     </div>

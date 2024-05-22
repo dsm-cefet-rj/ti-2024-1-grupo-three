@@ -22,7 +22,8 @@
 .infos1{
     display: flex;
     flex-direction: column;
-    justify-items: center
+    
+
 }
 .dividir1 h2{
     color: white;
@@ -32,4 +33,8 @@
     flex-direction: column;
     align-items: center;
     width: 16rem;
+}
+.infos2{
+    align-items: center;
+    margin-left: 1.5rem;
 }
