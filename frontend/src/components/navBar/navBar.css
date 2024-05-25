@@ -58,6 +58,11 @@
   border: none;
   background-color: #222232;
 }
+
+.menuHamButton:hover {
+  cursor: pointer;
+}
+
 .menu {
   position: absolute;
   z-index: 13102003;
@@ -179,4 +184,45 @@ a {
 }
 a:visited {
   color: inherit;
+}
+
+@media (min-width: 769px) {
+  .menu {
+    width: 14.5rem;
+    background-color: #222232;
+  }
+  .botao1 {
+    width: 14.5rem;
+  }
+  .botao1::before {
+    width: 14.5rem;
+  }
+  .botao1::after {
+    width: 14.5rem;
+  }
+  .botao2 {
+    width: 14.5rem;
+  }
+  .botao2::before {
+    width: 14.5rem;
+  }
+
+  .botao2::after {
+    width: 14.5rem;
+  }
+  .botao3 {
+    width: 14.5rem;
+  }
+  .botao3::before {
+    width: 14.5rem;
+  }
+  .botao3::after {
+    width: 14.5rem;
+  }
+  .logout {
+    width: 14.5rem;
+  }
+  .logout::before {
+    width: 14.5rem;
+  }
 }

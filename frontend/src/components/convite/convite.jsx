@@ -42,7 +42,7 @@ const Convite = () => {
         <Modal isOpen={isOpen} onClose={handleCloseModal}>
           <div className="container-convites">
             <h1 className="tituloconvites">seus convites</h1>
-            {/* //modal entra aqui */}
+
             <div>
               {conviiites.map((convite, i) => (
                 <div className="conteudo-convites">

@@ -8,6 +8,9 @@
   color: white;
   background-color: #0c87d1;
 }
+.vermais:hover {
+  cursor: pointer;
+}
 
 .botao {
   display: flex;
