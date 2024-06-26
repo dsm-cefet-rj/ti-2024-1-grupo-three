@@ -1,0 +1,50 @@
+.envio-convite-container {
+    width: 300px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .envio-convite-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .envio-convite-form div {
+    margin-bottom: 10px;
+  }
+  
+  .envio-convite-form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .envio-convite-form input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 14px;
+  }
+  
+  .envio-convite-form button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .envio-convite-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  .envio-convite-form button:active {
+    background-color: #0056b3;
+    transform: translateY(1px);
+  }
+  

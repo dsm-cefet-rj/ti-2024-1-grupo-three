@@ -50,6 +50,12 @@
       "email": "cefet2@gmail.com",
       "user": "cefet2",
       "senha": "cefet2"
+    },
+    {
+      "id": "0dacef1d-119a-4496-8d82-c7e7c39f2383",
+      "email": "Franc",
+      "user": "isco",
+      "senha": "prot"
     }
   ],
   "Torneio": [
@@ -137,7 +143,19 @@
   ],
   "convites": [
     {
-
+      "id": "971c"
+    },
+    {
+      "id": "0dabef1d-119a-4496-8d82-c7e7c39f2383",
+      "idTimeConvite": "97197986-1721-4020-8a42-5ad1d308a554",
+      "idCriadorConvite": "d25e274f-8a27-4262-aecf-b88bdf673af0",
+      "idDestinatario": "5a5793d9-146b-4996-829b-178d416fe9ad"
+    },
+    {
+      "id": "cd33",
+      "idTimeConvite": "",
+      "idCriadorConvite": "",
+      "idDestinatario": "5a5793d9-146b-4996-829b-178d416fe9ad"
     }
   ]
 }

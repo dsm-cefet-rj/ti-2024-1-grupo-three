@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./convite.css";
 
 const Modal = ({ isOpen, onClose, children }) => {
@@ -21,12 +22,24 @@ const Modal = ({ isOpen, onClose, children }) => {
 };
 
 const Convite = () => {
-  const conviiites = [
-    { id: "1", nome: "vasco" },
-    { id: "2", nome: "flumkimnnse" },
-    { id: "3", nome: "flaemngo" },
-  ];
+  const [convites, setConvites] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
+
+  useEffect(() => {
+    const fetchConvites = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3004/convites?idDestinatario=${loggedUser.id}`);
+        setConvites(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar convites", error);
+      }
+    };
+
+    if (loggedUser) {
+      fetchConvites();
+    }
+  }, [loggedUser]);
 
   const handleOpenModal = () => {
     setIsOpen(true);
@@ -36,22 +49,30 @@ const Convite = () => {
     setIsOpen(false);
   };
 
+  const handleRejeitar = (idConvite) => {
+    // Lógica para rejeitar o convite com o idConvite
+  };
+
+  const handleAceitar = (idConvite) => {
+    // Lógica para aceitar o convite com o idConvite
+  };
+
   return (
     <div>
       {isOpen ? (
         <Modal isOpen={isOpen} onClose={handleCloseModal}>
           <div className="container-convites">
-            <h1 className="tituloconvites">seus convites</h1>
+            <h1 className="tituloconvites">Seus Convites</h1>
 
             <div>
-              {conviiites.map((convite, i) => (
-                <div className="conteudo-convites">
-                  <p className="testetetete">{convite.nome}</p>
-                  <button type="submit" className="btn-recusa">
-                    rejeitar
+              {convites.map((convite, i) => (
+                <div key={convite.idConvite}className="conteudo-convites">
+                  <p className="testetetete">{convite.idTimeConvite}</p>
+                  <button type="button" className="btn-recusa" onClick={() => handleRejeitar(convite.idConvite)}>
+                    Rejeitar
                   </button>
-                  <button type="submit" className="btn-aceita">
-                    aceitar
+                  <button type="button" className="btn-aceita" onClick={() => handleAceitar(convite.idConvite)}>
+                    Aceitar
                   </button>
                 </div>
               ))}

@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 const initialState = {
-    idConvite: "", //qual o id do Convite
+    id: "", //qual o id do Convite
     idTimeConvite: "",  //o convidado está sendo convidado para qual time?
     idCriadorConvite:"", //quem está convidando
-    nomeDestinatario:"", //quem vai receber o convite
+    idDestinatario:"", //quem vai receber o convite
   };
 
 const enviarConviteAsync = createAsyncThunk("convite/enviarConviteAsync", async (data) => {
@@ -35,7 +35,7 @@ const conviteSlice = createSlice({
       state.idConvite = "";
       state.idTimeConvite = "";
       state.idCriadorConvite = "";
-      state.nomeDestinatario = "";
+      state.idDestinatario = "";
     },
   },
   extraReducers: (builder) => {
@@ -45,7 +45,7 @@ const conviteSlice = createSlice({
         state.idConvite = id;
         state.idTimeConvite = idTimeConvite;
         state.idCriadorConvite = idCriadorConvite;
-        state.nomeDestinatario = nomeDestinatario;
+        state.idDestinatario = nomeDestinatario;
       })
       .addCase(cancelarConviteAsync.fulfilled, (state, action) => {
         const idConviteCancelado = action.payload;
@@ -53,20 +53,20 @@ const conviteSlice = createSlice({
           state.idConvite = "";
           state.idTimeConvite = "";
           state.idCriadorConvite = "";
-          state.nomeDestinatario = "";
+          state.idDestinatario = "";
         }
       })
       .addCase(aceitarConviteAsync.fulfilled, (state) => {
         state.idConvite = "";
         state.idTimeConvite = "";
         state.idCriadorConvite = "";
-        state.nomeDestinatario = "";
+        state.idDestinatario = "";
       })
       .addCase(recusarConviteAsync.fulfilled, (state) => {
         state.idConvite = "";
         state.idTimeConvite = "";
         state.idCriadorConvite = "";
-        state.nomeDestinatario = "";
+        state.idDestinatario = "";
       });
   },
 });
