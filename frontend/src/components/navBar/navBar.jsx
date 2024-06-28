@@ -9,6 +9,7 @@ import Time from "../../pages/time/time";
 import { useDispatch, useSelector } from "react-redux";
 import { addLoggedUser, logoutUser } from "../../redux/user/slice";
 import { useNavigate, Navigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 function NavBar() {
   const [aberto, setAberto] = useState(false);
@@ -47,12 +48,10 @@ function NavBar() {
           <div className="menu">
             <div className="botoesDiv">
               <button className="botao1">
-                <a href="/meustorneios">Torneios</a>
+                <Link to="/meustorneios">Torneios</Link>
               </button>
               <button className="botao2">
-                <a className="timelink" href="/Time">
-                  Time
-                </a>
+              <Link to="/Time">Time</Link>
               </button>
               <button className="botao3">
                 <Convite />
