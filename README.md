@@ -3,10 +3,10 @@ Projeto para a matéria de PSW, desenvolvemos um programa chamado Futebrol, que 
 
 # INSTRUÇÕES PARA O CÓDIGO:
 
-> cd frontend
-> npm install
-> npm run json-server
+ cd frontend;
+ npm install;
+ npm run json-server;
 
-> novo terminal
-> cd frontend
-> npm run dev
+( novo terminal )
+ cd frontend;
+ npm run dev;
