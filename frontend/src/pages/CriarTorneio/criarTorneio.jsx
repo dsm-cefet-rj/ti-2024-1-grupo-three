@@ -11,7 +11,7 @@ const TorneioForm = () => {
   const navigate = useNavigate();
   const currentUser = useSelector(rootReducer => rootReducer.user);
   const [nomeTorneio, setNomeTorneio] = useState('');
-  const [tipoTorneio, setTipoTorneio] = useState('aberto');
+  const [tipoTorneio, setTipoTorneio] = useState('Aberto');
   const [quantidadeTimes, setQuantidadeTimes] = useState('2');
   const[ localTorneio, setlocalTorneio] = useState('');
 
