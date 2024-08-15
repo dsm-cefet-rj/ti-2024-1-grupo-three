@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addUser } from "../../redux/user/slice";
+import { addUser, addLoggedUser, logoutUser } from "../../redux/user/slice";
 import { v4 as idGen } from "uuid";
-import { addLoggedUser, logoutUser } from "../../redux/user/slice";
 import axios from "axios";
 import "../Cadastro/cadastro.css";
 import "../Login/login.css";
@@ -11,15 +10,13 @@ import "../Login/login.css";
 const Login = () => {
   const [user, setUser] = useState("");
   const [senha, setSenha] = useState("");
-  const [submitUser, setSubmitUser] = useState("");
   const [inputErrorUser, setInputErrorUser] = useState(false);
   const [inputErrorSenha, setInputErrorSenha] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [submitSenha, setSubmitSenha] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  async function Autentica(info) {
+  async function Autentica(submitUser, submitSenha) {
     const response = await axios.get("http://localhost:3004/users");
     const users = response.data;
 
@@ -28,19 +25,22 @@ const Login = () => {
         dispatch(addLoggedUser(user));
         //  dispatch(getTimesByUserID(user.id));
         //  dispatch(getPartidasByUserID(user.id));
-        alert("autenticado");
-        navigate("/meustorneios");
+        alert("Autenticado");
+        navigate("/Time");
         return;
       }
     }
-    alert("usuario invalido");
+    alert("Usuário inválido");
   }
+
   function handleChangeUser(e) {
     setUser(e.target.value);
   }
+
   function handleChangeSenha(e) {
     setSenha(e.target.value);
   }
+
   function handleSubmit(e) {
     e.preventDefault();
     if (!user.trim() || !senha.trim()) {
@@ -54,15 +54,15 @@ const Login = () => {
       } else {
         setInputErrorSenha(false);
       }
-
       return;
     }
-    setSubmitUser(user);
-    setSubmitSenha(senha);
+    Autentica(user, senha);
   }
+
   const handleTogglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
+
   return (
     <div className="login-container">
       <div>
@@ -70,13 +70,7 @@ const Login = () => {
           <h1>Login</h1>
         </div>
         <div className="box-login">
-          <form
-            // onSubmit={handleSubmit}
-            onSubmit={(values) => {
-              handleSubmit(values);
-              Autentica(values);
-            }}
-          >
+          <form onSubmit={handleSubmit}>
             <h3>Usuario:</h3>
             <input
               type="text"
