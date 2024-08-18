@@ -30,6 +30,7 @@ const torneioSchema = new Schema(
     Participantes: {
       type: [partidaSchema], //aqui seria timeschema ou partidaschema
     },
+    //algo relacionado para convidar os times para o torneio
   },
   { timestamps: true }
 );

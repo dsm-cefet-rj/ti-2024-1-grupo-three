@@ -20,6 +20,7 @@ const timeSchema = new Schema(
       },
     ],
     //algo relacionado a convites para entrar em torneio?
+    //e para convidar jogador
   },
   { timestamps: true }
 );
