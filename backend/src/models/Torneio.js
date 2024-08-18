@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { partidaSchema } from "./Partida.js";
+import { timeSchema } from "./Time.js";
 const { Schema } = mongoose;
 const torneioSchema = new Schema(
   {
@@ -27,9 +27,11 @@ const torneioSchema = new Schema(
       type: String,
       required: true,
     },
-    Participantes: {
-      type: [partidaSchema], //aqui seria timeschema ou partidaschema
-    },
+    Participantes: [
+      {
+      type: timeSchema, //aqui seria timeschema ou partidaschema
+      },
+    ],
     //algo relacionado para convidar os times para o torneio
   },
   { timestamps: true }

@@ -7,9 +7,11 @@ const partidaSchema = new Schema(
       type: String,
       required: true,
     },
-    idTimes: {
-      type: [timeSchema],
-    },
+    idTimes: [
+      {
+      type: timeSchema,
+      },
+    ],
     //para nome da partida, acho que dá pra acessar o time pelo id e buscar o nomeTime
   },
   { timestamps: true }

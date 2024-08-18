@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { userSchema } from "./User";
 const { Schema } = mongoose;
 const timeSchema = new Schema(
   {
@@ -16,7 +17,7 @@ const timeSchema = new Schema(
     },
     userId: [
       {
-        type: String,
+        type: userSchema,
       },
     ],
     //algo relacionado a convites para entrar em torneio?
