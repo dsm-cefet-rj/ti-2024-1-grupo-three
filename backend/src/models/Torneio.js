@@ -1,18 +1,16 @@
 import mongoose from "mongoose";
 import { timeSchema } from "./Time.js";
+import { chatSchema } from "./Chat.js";
+import { userSchema } from "./User.js";
 const { Schema } = mongoose;
 const torneioSchema = new Schema(
   {
-    id: {
-      type: String,
-      required: true,
-    },
     nomeTorneio: {
       type: String,
       required: true,
     },
     userIdDonoTorneio: {
-      type: String,
+      type: userSchema,
       required: true,
     },
     tipoTorneio: {
@@ -25,6 +23,10 @@ const torneioSchema = new Schema(
     },
     localTorneio: {
       type: String,
+      required: true,
+    },
+    chat: {
+      type:chatSchema,
       required: true,
     },
     Participantes: [

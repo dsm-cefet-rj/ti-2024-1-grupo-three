@@ -1,19 +1,41 @@
+import mongoose from "mongoose";
 import { Time } from "../models/Time.js";
+import { User } from "../models/User.js";
 const timeController = {
   create: async (req, res) => {
     try {
-      const time = {
-        id: req.body.id,
-        nomeTime: req.body.nometime,
-        userIdDono: req.body.useriddono,
-        userId: req.body.userid,
-        //algo de convites
-      };
+      const { nomeTime, userIdDono, userId } = req.body;
+      // Buscar o usuário pelo ID fornecido (userIdDono)
+      const dono = await User.findById(userIdDono);
+      if (!dono) {
+        return res.status(404).json({ message: "Usuário dono do time não encontrado" });
+      }
+      // Criar o time com o ID do usuário dono
+      const novoTime = new Time({
+        nomeTime,
+        userIdDono: dono, // Linka o usuário ao time
+        userId, // IDs de outros usuários membros, se houver
+      });
 
-      const response = await Time.create(time);
+      const response = await novoTime.save();
       res.status(201).json({ response, msg: "Time criado com sucesso" });
     } catch (error) {
-      console.log(error);
+      console.error("Erro ao criar time:", error);
+      res.status(500).json({ error: `Erro ao criar time: ${error.message}` });
+    }
+  },
+   getByOwner : async (req, res) => {
+    try {
+      const { userIdDono } = req.params;
+      const time = await Time.findOne({ userIdDono: userIdDono });
+  
+      if (!time) {
+        return res.status(404).json({ message: "Time não encontrado" });
+      }
+  
+      return res.status(200).json(time);
+    } catch (error) {
+      return res.status(500).json({ message: "Erro ao buscar o time", error });
     }
   },
   getAll: async (req, res) => {

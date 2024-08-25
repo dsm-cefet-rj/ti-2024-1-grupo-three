@@ -6,6 +6,7 @@ import routes from "./routes/app.js";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import {User} from "./models/User.js";
 
 const app = express();
 app.use(cors());
@@ -14,15 +15,17 @@ conn();
 //rotas
 app.use("/api", routes);
 
-mongoose.connect(`mongodb+srv://${dbUser}:${dbPassword}@futebrol.9krww.mongodb.net/?retryWrites=true&w=majority&appName=FuteBRol`).then(() => {
- app.listen(3000, function () {
-  console.log("Servidor Online");
-}); 
+//mongoose.connect(`mongodb+srv://${dbUser}:${dbPassword}@futebrol.9krww.mongodb.net/?retryWrites=true&w=majority&appName=FuteBRol`).then(() => {
+// app.listen(3000, function () {
+//  console.log("Servidor Online");
+//});
+//})
+//.catch((err)=> console.log(err))
+app.listen(3004, function () {
+  console.log("Servidor Online!")
 })
-.catch((err)=> console.log(err))
-
 //models
-const User = require(`./models/User`)
+
 
 //credenciais
 const dbUser = process.env.DB_USER

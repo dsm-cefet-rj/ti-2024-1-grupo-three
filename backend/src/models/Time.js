@@ -1,18 +1,14 @@
 import mongoose from "mongoose";
-import { userSchema } from "./User";
+import { userSchema } from "./User.js";
 const { Schema } = mongoose;
 const timeSchema = new Schema(
   {
-    id: {
-      type: String,
-      required: true,
-    },
     nomeTime: {
       type: String,
       required: true,
     },
     userIdDono: {
-      type: String,
+      type: userSchema,
       required: true,
     },
     userId: [

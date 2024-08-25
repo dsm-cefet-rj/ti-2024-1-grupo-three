@@ -2,17 +2,19 @@ import express from "express";
 import timeController from "../controllers/timeController.js";
 
 const timeRoutes = express.Router();
-timeRoutes.route("/times").post((req, res) => timeController.create(req, res));
+// Rota para criar um novo time (POST)
+timeRoutes.post("/time", timeController.create);
 
-timeRoutes.route("/times").get((req, res) => timeController.getAll(req, res));
+// Rota para obter todos os times (GET)
+timeRoutes.get("/time", timeController.getAll);
 
-timeRoutes.route("/times/:id").get((req, res) => timeController.get(req, res));
-timeRoutes
-  .route("/times/:id")
-  .delete((req, res) => timeController.delete(req, res));
+// Rota para obter um time específico por ID (GET)
+timeRoutes.get("/time/:id", timeController.get);
 
-timeRoutes
-  .route("/times/:id")
-  .put((req, res) => timeController.update(req, res));
+// Rota para deletar um time específico por ID (DELETE)
+timeRoutes.delete("/time/:id", timeController.delete);
+
+// Rota para atualizar um time específico por ID (PUT)
+timeRoutes.put("/time/:id", timeController.update);
 
 export default timeRoutes;

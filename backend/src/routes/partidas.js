@@ -21,4 +21,7 @@ partidaRoutes
   .route("/partidas/:id")
   .put((req, res) => partidaController.update(req, res));
 
+ partidaRoutes
+  .route("/partidas/:id/placar")
+  .put((req, res) => partidaController.updatePlacar(req, res));
 export default partidaRoutes;

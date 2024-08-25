@@ -1,24 +1,24 @@
 import express from "express";
-import conviteController from "../controllers/conviteController.js";
+import conviteController from "../controllers/conviteController.js"; // Ajuste o caminho conforme necessário
 
 const conviteRoutes = express.Router();
-conviteRoutes
-  .route("/convite")
-  .post((req, res) => conviteController.create(req, res));
 
-  conviteRoutes
-  .route("/convite")
-  .get((req, res) => conviteController.getAll(req, res));
+// Rota para criar um novo convite
+conviteRoutes.post("/convite", conviteController.create);
 
-  conviteRoutes
-  .route("/convite/:id")
-  .get((req, res) => conviteController.get(req, res));
-  conviteRoutes
-  .route("/convite/:id")
-  .delete((req, res) => conviteController.delete(req, res));
+// Rota para obter todos os convites
+conviteRoutes.get("/convites", conviteController.getAll);
 
-  conviteRoutes
-  .route("/convite/:id")
-  .put((req, res) => conviteController.update(req, res));
+// Rota para aceitar um convite por ID
+conviteRoutes.post("/convite/:conviteId/aceitar", conviteController.aceitarConvite);
+
+// Rota para obter um convite específico por ID
+conviteRoutes.get("/convite/:id", conviteController.get);
+
+// Rota para deletar um convite específico por ID
+conviteRoutes.delete("/convite/:id", conviteController.delete);
+
+// Rota para atualizar um convite específico por ID
+conviteRoutes.put("/convite/:id", conviteController.update);
 
 export default conviteRoutes;

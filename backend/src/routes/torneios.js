@@ -2,23 +2,19 @@ import express from "express";
 import torneioController from "../controllers/torneioController.js";
 
 const torneioRoutes = express.Router();
-torneioRoutes
-  .route("/torneios")
-  .post((req, res) => torneioController.create(req, res));
 
+// Rotas para todos os torneios (criação e obtenção de todos)
 torneioRoutes
-  .route("/torneios")
-  .get((req, res) => torneioController.getAll(req, res));
+  .route("/torneio")
+  .post(torneioController.create)  // Criação de torneio
+  .get(torneioController.getAll);  // Obtenção de todos os torneios
 
+// Rotas para operações em torneios específicos (obtenção, atualização e exclusão)
 torneioRoutes
-  .route("/torneios/:id")
-  .get((req, res) => torneioController.get(req, res));
-torneioRoutes
-  .route("/torneios/:id")
-  .delete((req, res) => torneioController.delete(req, res));
-
-torneioRoutes
-  .route("/torneios/:id")
-  .put((req, res) => torneioController.update(req, res));
+  .route("/torneio/:id")
+  .get(torneioController.get)      // Obtenção de um torneio específico
+  .put(torneioController.update)   // Atualização de um torneio específico
+  .delete(torneioController.delete); // Exclusão de um torneio específico
 
 export default torneioRoutes;
+

@@ -1,14 +1,18 @@
 import { Partida } from "../models/Partida.js";
+import { Time } from "../models/Time.js";
 
 const partidaController = {
   create: async (req, res) => {
     try {
-      const partida = {
-        id: req.body.id,
-        idTimes: req.body.idtimes,
-      };
-
-      const response = await Partida.create(partida);
+      const { timeMandante, timeVisitante} = req.body;
+      const Mandante = await Time.findById(timeMandante);
+      const Visitante = await Time.findById(timeVisitante);
+      const novaPartida = new Partida({
+        timeMandante: Mandante,
+        timeVisitante: Visitante,
+        placar: "0 x 0"
+      })
+      const response = await novaPartida.save();
       res.status(201).json({ response, msg: "partida criada com sucesso" });
     } catch (error) {
       console.log(error);
@@ -37,18 +41,21 @@ const partidaController = {
   },
   delete: async (req, res) => {
     try {
-      const id = req.params.id;
+      const { id } = req.params; // Pegue o ID da partida da URL
+  
+      // Encontrar a partida pelo ID
       const partida = await Partida.findById(id);
       if (!partida) {
-        res.status(404).json({ msg: "erro, não encontrado" });
-        return;
+        return res.status(404).json({ msg: "Partida não encontrada" });
       }
-
-      const deletedpartida = await partida.findByIdAndDelete(id);
-
-      res.status(200).json({ deletedpartida, msg: "partida excluido" });
+  
+      // Usar Partida.findByIdAndDelete diretamente no modelo, não na instância
+      await Partida.findByIdAndDelete(id);
+  
+      res.status(200).json({ msg: "Partida excluída com sucesso" });
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      res.status(500).json({ message: "Erro ao excluir a partida", error });
     }
   },
   update: async (req, res) => {
@@ -63,6 +70,29 @@ const partidaController = {
       return;
     }
     res.status(200).json({ partida, msg: "serviço atualizado com sucesso" });
+  },
+  updatePlacar: async (req, res) => {
+    try {
+      const { id } = req.params; // ID da partida que será atualizada
+      const { placar } = req.body; // Novo placar fornecido no corpo da requisição
+
+      // Encontrar a partida pelo ID
+      const partida = await Partida.findById(id);
+      if (!partida) {
+        return res.status(404).json({ message: "Partida não encontrada" });
+      }
+
+      // Atualizar o placar
+      partida.placar = placar;
+
+      // Salvar a partida atualizada
+      await partida.save();
+
+      res.status(200).json({ partida, message: "Placar atualizado com sucesso" });
+    } catch (error) {
+      console.error("Erro ao atualizar o placar:", error);
+      res.status(500).json({ message: "Erro ao atualizar o placar", error });
+    }
   },
 };
 export default partidaController;

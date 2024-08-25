@@ -1,24 +1,26 @@
-import { user } from "../models/User";
+import { User } from "../models/User.js";
 const userController = {
-  create: async (req, res) => {                   // falta adicionar verificação
+  create: async (req, res) => {
     try {
-      const userReq = {
-        id: req.body.id,
-        nome: req.body.nomeUser,
-        email: req.body.emailUser,
-        senha: req.body.userPass,
-      };
+      const {nome, email, senha } = req.body;
 
-      const response = await user.create(userReq);
+      const newUser = new User({        
+        nome,
+        email,
+        senha,
+      });
+
+      const response = await newUser.save();
       res.status(201).json({ response, msg: "Usuário criado com sucesso" });
     } catch (error) {
-      console.log(error);
+      console.error("Erro ao criar usuário:", error);
+      res.status(500).json({ error: "Erro ao criar usuário" });
     }
   },
   getAll: async (req, res) => {
     try {
-      const userRes = await user.find();
-      req.json(userRes);
+      const userRes = await User.find();
+      res.json(userRes);
     } catch (error) {
       console.log(error);
     }
@@ -26,7 +28,7 @@ const userController = {
   get: async (req, res) => {
     try {
       const id = req.params.id;
-      const userRes = await user.findById(id);
+      const userRes = await User.findById(id);
       if (!userRes) {
         res.status(404).json({ msg: "erro, não encontrado" });
         return;
@@ -39,13 +41,13 @@ const userController = {
   delete: async (req, res) => {
     try {
       const id = req.params.id;
-      const userReq = await user.findById(id);
+      const userReq = await User.findById(id);
       if (!userReq) {
         res.status(404).json({ msg: "erro, não encontrado" });
         return;
       }
 
-      const deletedUser = await user.findByIdAndDelete(id);
+      const deletedUser = await User.findByIdAndDelete(id);
 
       res.status(200).json({ deletedUser, msg: "Usuário excluido" });
     } catch (error) {
@@ -60,7 +62,7 @@ const userController = {
         email: req.body.emailUser,
         senha: req.body.userPass,
     };
-    const updatedUser = await user.findByIdAndUpdate(id, userReq);
+    const updatedUser = await User.findByIdAndUpdate(id, userReq);
     if (!updatedUser) {
       res.status(404).json({ msg: "erro, não encontrado" });
       return;
