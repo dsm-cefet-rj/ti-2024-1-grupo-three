@@ -85,10 +85,23 @@ const EnvioConvite = () => {
       {isOpen ? (
         <Modal isOpen={isOpen} onClose={handleCloseModal}>
           <div className="envio-convite-container">
-            <h2>Enviar Convite</h2>
+            <h2>enviar convite</h2>
             <form onSubmit={handleSubmit} className="envio-convite-form">
+              <div className="tipoTorneio">
+                <label htmlFor="tipoTorneio">você quer convidar:</label>
+                <select
+                  className="form-select"
+                  id="tipoTorneio"
+                  // value={tipoConvite}
+                  // onChange={(event) => setTipoConvite(event.target.value)}
+                  // required
+                >
+                  <option value="Jogador">jogador</option>
+                  <option value="Time">time</option>
+                </select>
+              </div>
               <div>
-                <label htmlFor="idDestinatario">ID do Destinatário:</label>
+                <label htmlFor="idDestinatario">ID do destinatário:</label>
                 <input
                   className="caixa-destinatario"
                   type="text"
@@ -98,7 +111,7 @@ const EnvioConvite = () => {
                   required
                 />
               </div>
-              <button type="submit">Enviar Convite</button>
+              <button type="submit">enviar convite</button>
             </form>
           </div>
         </Modal>

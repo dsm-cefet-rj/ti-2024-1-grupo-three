@@ -29,7 +29,9 @@ const Convite = () => {
   useEffect(() => {
     const fetchConvites = async () => {
       try {
-        const response = await axios.get(`http://localhost:3004/convites?idDestinatario=${loggedUser.id}`);
+        const response = await axios.get(
+          `http://localhost:3004/convites?idDestinatario=${loggedUser.id}`
+        );
         setConvites(response.data);
       } catch (error) {
         console.error("Erro ao buscar convites", error);
@@ -62,16 +64,24 @@ const Convite = () => {
       {isOpen ? (
         <Modal isOpen={isOpen} onClose={handleCloseModal}>
           <div className="container-convites">
-            <h1 className="tituloconvites">Seus Convites</h1>
+            <h1 className="tituloconvites">seus convites</h1>
 
             <div>
               {convites.map((convite, i) => (
-                <div key={convite.idConvite}className="conteudo-convites">
+                <div key={convite.idConvite} className="conteudo-convites">
                   <p className="testetetete">{convite.idTimeConvite}</p>
-                  <button type="button" className="btn-recusa" onClick={() => handleRejeitar(convite.idConvite)}>
+                  <button
+                    type="button"
+                    className="btn-recusa"
+                    onClick={() => handleRejeitar(convite.idConvite)}
+                  >
                     Rejeitar
                   </button>
-                  <button type="button" className="btn-aceita" onClick={() => handleAceitar(convite.idConvite)}>
+                  <button
+                    type="button"
+                    className="btn-aceita"
+                    onClick={() => handleAceitar(convite.idConvite)}
+                  >
                     Aceitar
                   </button>
                 </div>
