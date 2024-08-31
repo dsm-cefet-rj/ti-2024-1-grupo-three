@@ -2,7 +2,7 @@ import { React, useState, useEffect } from "react";
 import Button from "../../components/button/button";
 import NavBar from "../../components/navBar/navBar";
 import PartidaComponente from "../../components/partidaComponent/partidaComponente";
-import EnviarConvite from "../../components/EnvioConvite/EnvioConvite"
+import EnviarConvite from "../../components/EnvioConvite/EnvioConvite";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Navigate } from "react-router-dom";
 import "./time.css";
@@ -97,7 +97,7 @@ const Time = () => {
           <h1 className="nomeTime">{nomeTime}</h1>
           <div>
             <h1 className="tituloPag">Jogadores</h1>
-            <EnviarConvite/>
+            {/* <EnviarConvite/> */}
             {show ? (
               <div>
                 <div>

@@ -1,50 +1,115 @@
 .envio-convite-container {
-    width: 300px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .envio-convite-form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .envio-convite-form div {
-    margin-bottom: 10px;
-  }
-  
-  .envio-convite-form label {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  .envio-convite-form input[type="text"] {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    font-size: 14px;
-  }
-  
-  .envio-convite-form button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  
-  .envio-convite-form button:hover {
-    background-color: #0056b3;
-  }
-  
-  .envio-convite-form button:active {
-    background-color: #0056b3;
-    transform: translateY(1px);
-  }
-  
+  width: 300px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.envio-convite-form {
+  display: flex;
+  flex-direction: column;
+  margin: 0px 2rem;
+}
+
+.envio-convite-form div {
+  margin-bottom: 10px;
+}
+
+.envio-convite-form label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.envio-convite-form input[type="text"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+.envio-convite-form button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.envio-convite-form button:hover {
+  background-color: #0056b3;
+}
+
+.envio-convite-form button:active {
+  background-color: #0056b3;
+  transform: translateY(1px);
+}
+
+.modal-container {
+  height: 100vh;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal {
+  position: relative;
+}
+
+.fechar {
+  z-index: 222222;
+  position: absolute;
+  right: -1rem;
+  width: 35px;
+  height: 35px;
+  border: 4px solid #000000;
+  border-radius: 50%;
+  background-color: #000000;
+  color: #e7e7e7;
+  text-align: center;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 100%; /* 3rem */
+  cursor: pointer;
+}
+
+.envio-convite-container {
+  padding: 3rem 0rem;
+
+  margin-left: 1.5rem;
+  border-radius: 5px;
+  align-items: center;
+  width: 18.75rem;
+  background-color: #09090e;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+.envio-convite-container h2 {
+  font-family: "Roboto Flex", sans-serif;
+  font-size: 1.25rem;
+  color: white;
+  font-weight: 600;
+  margin-top: 0rem;
+  margin-bottom: 2rem;
+}
+
+.caixa-destinatario {
+  background-color: #09090e !important;
+  border: none;
+  border-radius: 15px;
+  color: #ffffff;
+  padding: 5px;
+  margin-top: 1.5rem;
+}

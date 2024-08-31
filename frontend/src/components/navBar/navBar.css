@@ -136,6 +136,7 @@
   border: none;
   height: 5vh;
   position: relative;
+  margin-bottom: 5vh;
   background-color: #222232;
   color: #acacac;
 }
@@ -150,6 +151,33 @@
   top: -0.3vh;
 }
 .botao3::after {
+  content: "";
+  display: flex;
+  position: absolute;
+  background-color: #4d4d4d;
+  left: 0vw;
+  width: 30vw;
+  height: 0.2vh;
+  top: 4.5vh;
+}
+.botao4 {
+  border: none;
+  height: 5vh;
+  position: relative;
+  background-color: #222232;
+  color: #acacac;
+}
+.botao4::before {
+  content: "";
+  display: flex;
+  position: absolute;
+  background-color: #4d4d4d;
+  left: 0vw;
+  width: 30vw;
+  height: 0.2vh;
+  top: -0.3vh;
+}
+.botao4::after {
   content: "";
   display: flex;
   position: absolute;
@@ -217,6 +245,15 @@ a:visited {
     width: 14.5rem;
   }
   .botao3::after {
+    width: 14.5rem;
+  }
+  .botao4 {
+    width: 14.5rem;
+  }
+  .botao4::before {
+    width: 14.5rem;
+  }
+  .botao4::after {
     width: 14.5rem;
   }
   .logout {
