@@ -10,3 +10,9 @@ Projeto para a matéria de PSW, desenvolvemos um programa chamado Futebrol, que 
 ( novo terminal )
  cd frontend;
  npm run dev;
+
+
+
+( novo terminal)
+cd backend;
+npm run start;
