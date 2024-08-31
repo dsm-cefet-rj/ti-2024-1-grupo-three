@@ -6,7 +6,7 @@ import { v4 as idGen } from "uuid";
 import "../Cadastro/cadastro.css";
 
 const Cadastro = () => {
-  const [user, setUser] = useState("");
+  const [nome, setUser] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [inputErrorUser, setInputErrorUser] = useState(false);
@@ -15,11 +15,6 @@ const Cadastro = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const values123 = {
-    email: email,
-    user: user,
-    senha: senha,
-  };
   const handleTogglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
@@ -32,11 +27,11 @@ const Cadastro = () => {
   function handleChangeEmail(e) {
     setEmail(e.target.value);
   }
-  function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     console.log(e);
     e.preventDefault();
-    if (!user.trim() || !email.trim() || !senha.trim()) {
-      if (!user.trim()) {
+    if (!nome.trim() || !email.trim() || !senha.trim()) {
+      if (!nome.trim()) {
         setInputErrorUser(true);
       } else {
         setInputErrorUser(false);
@@ -57,9 +52,28 @@ const Cadastro = () => {
     setInputErrorSenha(false);
     setInputErrorEmail(false);
     setInputErrorUser(false);
-    dispatch(addUser({ ...values123, id: idGen() }));
+    try {
+      const response = await fetch("http://localhost:3004/api/user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ nome, email, senha }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Usuário cadastrado com sucesso!");
+      } else {
+        alert(`Erro: ${data.error}`);
+      }
+    } catch (error) {
+      alert("Erro ao conectar ao servidor");
+    }
     navigate("/login");
-  }
+  };
+
   function handleClickLogin(e) {
     e.preventDefault();
     navigate("/login");
@@ -71,12 +85,7 @@ const Cadastro = () => {
           <h1>cadastro</h1>
         </div>
         <div className="box-cadastro">
-          <form
-            onSubmit={(values) => {
-              handleSubmit(values);
-            }}
-            className="form-cadastro"
-          >
+          <form onSubmit={handleSubmit} className="form-cadastro">
             <div>
               <div>
                 <h3>seu email:</h3>
@@ -93,7 +102,7 @@ const Cadastro = () => {
                 <input
                   type="text"
                   name="mensagem"
-                  value={user}
+                  value={nome}
                   onChange={handleChangeUser}
                   className={inputErrorUser ? "input-error" : "input-certo"}
                 ></input>
