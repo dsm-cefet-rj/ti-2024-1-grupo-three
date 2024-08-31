@@ -63,6 +63,10 @@ const Login = () => {
     setPasswordVisible(!passwordVisible);
   };
 
+  function handleClickCadastro(e) {
+    e.preventDefault();
+    navigate("/");
+  }
   return (
     <div className="login-container">
       <div>
@@ -70,8 +74,8 @@ const Login = () => {
           <h1>Login</h1>
         </div>
         <div className="box-login">
-          <form onSubmit={handleSubmit}>
-            <h3>Usuario:</h3>
+          <form className="form-login" onSubmit={handleSubmit}>
+            <h3>usuario:</h3>
             <input
               type="text"
               name="mensagem"
@@ -79,7 +83,7 @@ const Login = () => {
               onChange={handleChangeUser}
               className={inputErrorUser ? "input-error" : "input-certo"}
             ></input>
-            <h3>Senha:</h3>
+            <h3>senha:</h3>
             <input
               type={passwordVisible ? "text" : "password"}
               name="mensagem"
@@ -103,9 +107,18 @@ const Login = () => {
                 mostrar senha
               </label>
             </div>
-            <button type="submit" className="btn-login">
-              Logar
-            </button>
+            <div className="botoes">
+              <button type="submit" className="btn-login">
+                logar
+              </button>
+              <p className="pergunta-login">quer criar uma conta?</p>
+              <a
+                className="entrar-cadastro-login"
+                onClick={handleClickCadastro}
+              >
+                cadastrar
+              </a>
+            </div>
           </form>
         </div>
       </div>

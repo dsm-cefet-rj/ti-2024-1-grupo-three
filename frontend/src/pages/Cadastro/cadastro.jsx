@@ -60,7 +60,7 @@ const Cadastro = () => {
     dispatch(addUser({ ...values123, id: idGen() }));
     navigate("/login");
   }
-  function handleClickLogin(e){
+  function handleClickLogin(e) {
     e.preventDefault();
     navigate("/login");
   }
@@ -131,10 +131,12 @@ const Cadastro = () => {
               </div>
             </div>
             <button type="submit" className="btn-cadastro">
-              Cadastrar
+              cadastrar
             </button>
-            <p className="pergunta-cadastro">Já tem uma conta?</p>
-            <a className="entrar-login-cadastro" onClick={handleClickLogin}>entrar</a>
+            <p className="pergunta-cadastro">já tem uma conta?</p>
+            <a className="entrar-login-cadastro" onClick={handleClickLogin}>
+              entrar
+            </a>
           </form>
         </div>
       </div>
