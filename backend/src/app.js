@@ -3,10 +3,11 @@ import mongoose from "mongoose";
 import cors from "cors";
 import conn from "./db/conn.js";
 import routes from "./routes/app.js";
-import dotenv from "dotenv";
+import * as dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { User } from "./models/User.js";
+dotenv.config();
 
 const app = express();
 app.use(cors());
