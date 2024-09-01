@@ -17,9 +17,11 @@ function checkToken(req, res, next) {
     res.status(400).json({ msg: "token invalido!" });
   }
 }
-
 const userRoutes = express.Router();
 userRoutes.route("/user").post((req, res) => userController.create(req, res));
+
+// userRoutes.post("/login", AuthControllers.login);
+// userRoutes.post("/Time", AuthControllers.checkToken);
 
 userRoutes.route("/user").get((req, res) => userController.getAll(req, res));
 

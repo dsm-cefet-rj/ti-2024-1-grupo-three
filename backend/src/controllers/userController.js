@@ -78,4 +78,5 @@ const userController = {
     res.status(200).json({ userReq, msg: "Usuário atualizado com sucesso" });
   },
 };
+
 export default userController;
