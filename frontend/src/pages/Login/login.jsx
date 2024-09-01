@@ -8,7 +8,7 @@ import "../Cadastro/cadastro.css";
 import "../Login/login.css";
 
 const Login = () => {
-  const [user, setUser] = useState("");
+  const [email, setUser] = useState("");
   const [senha, setSenha] = useState("");
   const [inputErrorUser, setInputErrorUser] = useState(false);
   const [inputErrorSenha, setInputErrorSenha] = useState(false);
@@ -17,20 +17,30 @@ const Login = () => {
   const dispatch = useDispatch();
 
   async function Autentica(submitUser, submitSenha) {
-    const response = await axios.get("http://localhost:3004/users");
-    const users = response.data;
+    try {
+      const response = await axios.post("http://localhost:3004/auth/login", {
+        email: submitUser,
+        senha: submitSenha,
+      });
 
-    for (let user of users) {
-      if (user.user === submitUser && user.senha === submitSenha) {
-        dispatch(addLoggedUser(user));
-        //  dispatch(getTimesByUserID(user.id));
-        //  dispatch(getPartidasByUserID(user.id));
-        alert("Autenticado");
+      const data = response.data;
+
+      // Se a autenticação for bem-sucedida, você pode armazenar o token JWT
+      if (response.status === 200) {
+        alert("Autenticado com sucesso!");
+        // Armazene o token JWT (por exemplo, no localStorage)
+        localStorage.setItem("token", data.token);
+
+        // Despachar usuário logado para o Redux, se necessário
+        dispatch(addLoggedUser(data.email));
+
+        // Navegar para a página do Time
         navigate("/Time");
-        return;
       }
+    } catch (error) {
+      console.error("Erro durante a autenticação", error);
+      alert("Usuário ou senha inválidos!");
     }
-    alert("Usuário inválido");
   }
 
   function handleChangeUser(e) {
@@ -43,8 +53,8 @@ const Login = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!user.trim() || !senha.trim()) {
-      if (!user.trim()) {
+    if (!email.trim() || !senha.trim()) {
+      if (!email.trim()) {
         setInputErrorUser(true);
       } else {
         setInputErrorUser(false);
@@ -56,7 +66,7 @@ const Login = () => {
       }
       return;
     }
-    Autentica(user, senha);
+    Autentica(email, senha);
   }
 
   const handleTogglePasswordVisibility = () => {
@@ -79,7 +89,7 @@ const Login = () => {
             <input
               type="text"
               name="mensagem"
-              value={user}
+              value={email}
               onChange={handleChangeUser}
               className={inputErrorUser ? "input-error" : "input-certo"}
             ></input>
