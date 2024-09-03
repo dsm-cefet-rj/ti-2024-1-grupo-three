@@ -12,11 +12,25 @@ const CriarTime = () => {
     const [nomeTime,setNomeTime]=useState("");
     const navigate = useNavigate();
     const currentUser = useSelector(rootReducer => rootReducer.user);
-    const handleSubmitForm = (value) => {
-        
-        dispatch(addTimeAsync({nomeTime:initialValues.nomeTime, userIdDono:initialValues.userIdDono, id:idGen(), idUser:initialValues.idUser}))
-        navigate("/time")
-    }
+    const handleSubmitForm = async (e) => {
+        e.preventDefault();
+        try {
+          const timeData = {
+            nomeTime: nomeTime,
+            userIdDono: currentUser.user?.id,
+            userId: [currentUser.user?.id],
+          };
+          
+  console.log(`id ususario: ${currentUser.user?.id}`);
+
+          await dispatch(addTimeAsync(timeData));
+          navigate("/time");
+        } catch (error) {
+          console.error("Erro ao criar o time:", error);
+          alert("Erro ao criar o time. Por favor, tente novamente.");
+          // Aqui você pode verificar o tipo de erro e, se necessário, redirecionar para a página de login
+        }
+      };
     function handleChange(e){
         setNomeTime(e.target.value);
     }
@@ -27,8 +41,8 @@ const CriarTime = () => {
      
     const initialValues = {
         nomeTime: nomeTime,
-        userIdDono: currentUser.user.id,
-        idUser: [currentUser.user.id],     
+        userIdDono: currentUser.user?.id,
+        idUser: [currentUser.user?.id],     
     }
     
     return(

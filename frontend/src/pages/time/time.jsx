@@ -50,7 +50,7 @@ const Time = () => {
     },
   ];
   const currentUser = useSelector((rootReducer) => rootReducer.user);
-  if (!currentUser.logged) {
+  if (!currentUser || !currentUser.logged) {
     return <Navigate to="/login" />;
   }
   const [nomeTime, setNomeTime] = useState("");
@@ -79,9 +79,8 @@ const Time = () => {
         console.error("Erro ao buscar o nome do time:", error);
       }
     };
-
     fetchTime();
-  }, [currentUser.user.id]);
+  }, [currentUser.user?.id]);
 
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);

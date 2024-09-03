@@ -5,15 +5,10 @@ const timeController = {
   create: async (req, res) => {
     try {
       const { nomeTime, userIdDono, userId } = req.body;
-      // Buscar o usuário pelo ID fornecido (userIdDono)
-      const dono = await User.findById(userIdDono);
-      if (!dono) {
-        return res.status(404).json({ message: "Usuário dono do time não encontrado" });
-      }
       // Criar o time com o ID do usuário dono
       const novoTime = new Time({
         nomeTime,
-        userIdDono: dono, // Linka o usuário ao time
+        userIdDono, // Linka o usuário ao time
         userId, // IDs de outros usuários membros, se houver
       });
 

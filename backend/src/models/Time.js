@@ -8,12 +8,14 @@ const timeSchema = new Schema(
       required: true,
     },
     userIdDono: {
-      type: userSchema,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User", // Referencia o modelo User
       required: true,
     },
     userId: [
       {
-        type: userSchema,
+        type: mongoose.Schema.Types.ObjectId,
+      ref: "User", // Referencia o modelo User
       },
     ],
     //algo relacionado a convites para entrar em torneio?

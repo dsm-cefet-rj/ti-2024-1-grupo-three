@@ -9,8 +9,13 @@ const initialState = {
 };
 
 const addTimeAsync = createAsyncThunk("time/addTimeAsync", async (data) => {
-  const response = await axios.post("http://localhost:3004/time", data);
-  return response.data;
+  try {
+    const response = await axios.post("http://localhost:3004/time", data);
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao criar o time:", error);
+    throw error; // Opcional: lançar o erro para tratamento no componente
+  }
 });
 const getTimeByUserId = createAsyncThunk('time/getTimeAsync', async (userId) => {
     const response = await axios.get(`http://localhost:3004/time?userId=${userId}`);
