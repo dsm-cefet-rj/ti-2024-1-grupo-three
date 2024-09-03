@@ -16,3 +16,7 @@ Projeto para a matéria de PSW, desenvolvemos um programa chamado Futebrol, que 
 ( novo terminal)
 cd backend;
 npm run start;
+
+# ADICIONAR .ENV
+DB_USER=mongodb+srv://calmon:calmon@futebrol.9krww.mongodb.net/?retryWrites=true&w=majority&appName=FuteBRol
+SECRET=SAHDASHUDSAHUSAHASUDHUDAHDUASDHASUDHASUDAHUDASHU
