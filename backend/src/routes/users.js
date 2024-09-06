@@ -1,5 +1,6 @@
 import express from "express";
 import userController from "../controllers/userController.js";
+import jwt from "jsonwebtoken";
 function checkToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split("")[1];

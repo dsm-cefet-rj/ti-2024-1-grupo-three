@@ -36,7 +36,7 @@ const timeController = {
   getAll: async (req, res) => {
     try {
       const times = await Time.find();
-      req.json(times);
+      res.json(times);
     } catch (error) {
       console.log(error);
     }

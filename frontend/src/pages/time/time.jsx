@@ -54,10 +54,11 @@ const Time = () => {
     return <Navigate to="/login" />;
   }
   const [nomeTime, setNomeTime] = useState("");
+  const token = useSelector((state) => state.auth.token);
   useEffect(() => {
     const fetchTime = async () => {
       try {
-        const response = await axios.get("http://localhost:3004/time");
+        const response = await axios.get("http://localhost:3004/api/time");
         const times = response.data;
         const userTeam = times.find(
           (time) =>
@@ -67,7 +68,7 @@ const Time = () => {
           setNomeTime(userTeam.nomeTime);
           const userDetailsPromises = userTeam.idUser.map(async (userId) => {
             const userResponse = await axios.get(
-              `http://localhost:3004/users/${userId}`
+              `http://localhost:3004/api/user/:id`
             );
             return userResponse.data;
           });
