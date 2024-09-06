@@ -1,9 +1,11 @@
 import express from "express";
 import userController from "../controllers/userController.js";
 import jwt from "jsonwebtoken";
+//import { useDispatch, useSelector } from "react-redux";
 function checkToken(req, res, next) {
   const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split("")[1];
+  const token = authHeader && authHeader.split(" ")[1];
+  //const token1 = useSelector((state) => state.auth.token);
 
   if (!token) {
     return res.status(401).json({ msg: "Acesso negado!" });

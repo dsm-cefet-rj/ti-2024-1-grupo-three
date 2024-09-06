@@ -19,15 +19,30 @@ const timeController = {
       res.status(500).json({ error: `Erro ao criar time: ${error.message}` });
     }
   },
-   getByOwner : async (req, res) => {
+  getByOwner: async (req, res) => {
     try {
-      const { userIdDono } = req.params;
-      const time = await Time.findOne({ userIdDono: userIdDono });
-  
+      const userIdDono = req.params.userIdDono; // Corrigido para req.params
+      const time = await Time.findOne({ userIdDono: userIdDono }); // Confere se userIdDono é o campo correto
+
       if (!time) {
         return res.status(404).json({ message: "Time não encontrado" });
       }
-  
+
+      return res.status(200).json(time);
+    } catch (error) {
+      return res.status(500).json({ message: "Erro ao buscar o time", error });
+    }
+  },
+
+  getByUser: async (req, res) => {
+    try {
+      const userId = req.params.userId; // Corrigido para req.params
+      const time = await Time.findOne({ userId: userId }); // Confere se userId é o campo correto
+
+      if (!time) {
+        return res.status(404).json({ message: "Time não encontrado" });
+      }
+
       return res.status(200).json(time);
     } catch (error) {
       return res.status(500).json({ message: "Erro ao buscar o time", error });

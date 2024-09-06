@@ -8,6 +8,7 @@ import { useNavigate, Navigate } from "react-router-dom";
 import "./time.css";
 import axios from "axios";
 import Jogador from "../../components/jogador/jogador";
+import { jwtDecode } from "jwt-decode";
 
 const Time = () => {
   const navigate = useNavigate();
@@ -49,26 +50,34 @@ const Time = () => {
       local: "São Janu",
     },
   ];
-  const currentUser = useSelector((rootReducer) => rootReducer.user);
-  if (!currentUser || !currentUser.logged) {
+
+  const token = useSelector((state) => state.auth.token);
+  const decodedToken = jwtDecode(token);
+  console.log(decodedToken);
+  if (!token) {
     return <Navigate to="/login" />;
   }
   const [nomeTime, setNomeTime] = useState("");
-  const token = useSelector((state) => state.auth.token);
+
   useEffect(() => {
     const fetchTime = async () => {
       try {
-        const response = await axios.get("http://localhost:3004/api/time");
-        const times = response.data;
-        const userTeam = times.find(
-          (time) =>
-            time.idUser && time.idUser.some((id) => id === currentUser.user.id)
+        const response = await axios.get(
+          `http://localhost:3004/api/time/oi/${decodedToken.id}`
         );
-        if (userTeam) {
-          setNomeTime(userTeam.nomeTime);
-          const userDetailsPromises = userTeam.idUser.map(async (userId) => {
+        const time = response.data;
+        console.log(time);
+
+        if (time) {
+          setNomeTime(time.nomeTime);
+          const userDetailsPromises = time.userId.map(async (userId) => {
             const userResponse = await axios.get(
-              `http://localhost:3004/api/user/:id`
+              `http://localhost:3004/api/user/${userId}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`, // Enviando o token no cabeçalho
+                },
+              }
             );
             return userResponse.data;
           });
@@ -81,7 +90,9 @@ const Time = () => {
       }
     };
     fetchTime();
-  }, [currentUser.user?.id]);
+  }, [decodedToken.id]);
+
+  console.log(jogadores);
 
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
@@ -102,8 +113,8 @@ const Time = () => {
               <div>
                 <div>
                   {jogadores.map((jogador) => (
-                    <div key={jogador.id}>
-                      <Jogador nome={jogador.user} />
+                    <div key={jogador._id}>
+                      <Jogador nome={jogador.nome} />
                     </div>
                   ))}
                 </div>
@@ -115,8 +126,8 @@ const Time = () => {
               <div>
                 <div>
                   {jogadores.slice(0, 2).map((jogador) => (
-                    <div key={jogador.id}>
-                      <Jogador nome={jogador.user} />
+                    <div key={jogador._id}>
+                      <Jogador nome={jogador.nome} />
                     </div>
                   ))}
                 </div>
