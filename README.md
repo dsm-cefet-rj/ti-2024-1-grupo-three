@@ -3,19 +3,24 @@ Projeto para a matéria de PSW, desenvolvemos um programa chamado Futebrol, que 
 
 # INSTRUÇÕES PARA O CÓDIGO:
 
- cd frontend;
- npm install;
- npm run json-server;
+1. No primeiro terminal:
+    ```bash
+    cd frontend
+    npm install
+    npm run json-server
+    ```
 
-( novo terminal )
- cd frontend;
- npm run dev;
+2. No segundo terminal:
+    ```bash
+    cd frontend
+    npm run dev
+    ```
 
-
-
-( novo terminal)
-cd backend;
-npm run start;
+3. No terceiro terminal:
+    ```bash
+    cd backend
+    npm run start
+    ```
 
 # ADICIONAR .ENV
 DB_USER=mongodb+srv://calmon:calmon@futebrol.9krww.mongodb.net/?retryWrites=true&w=majority&appName=FuteBRol
