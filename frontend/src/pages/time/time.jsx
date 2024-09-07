@@ -28,7 +28,7 @@ const Time = () => {
     const fetchTime = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3004/api/time/oi/${decodedToken.id}`
+          `http://localhost:3004/api/time/user/${decodedToken.id}`
         );
         const time = response.data;
         console.log(time);

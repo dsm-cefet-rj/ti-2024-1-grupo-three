@@ -15,6 +15,13 @@ torneioRoutes
   .get(torneioController.get)      // Obtenção de um torneio específico
   .put(torneioController.update)   // Atualização de um torneio específico
   .delete(torneioController.delete); // Exclusão de um torneio específico
+torneioRoutes
+  .route("/torneio/dono/:userIdDonoTorneio")
+  .get(torneioController.getByOwner)
+
+torneioRoutes
+  .route("/torneio/time/:timeId")
+  .get(torneioController.getTorneiosByTime);  
 
 export default torneioRoutes;
 

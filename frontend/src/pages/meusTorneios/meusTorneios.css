@@ -21,7 +21,7 @@
   margin-top: 2vh !important;
 }
 .botaoCrieCampeonato {
-  position: absolute !important;
+  margin: 1rem;
   bottom: 5rem;
   font-size: 1.25rem;
   font-family: Jockey One;

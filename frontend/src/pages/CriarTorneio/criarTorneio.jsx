@@ -4,7 +4,9 @@ import { addTorneio, addTorneioAsync } from '../../redux/torneios/slice';
 import { v4 as idGen } from "uuid";
 import { useNavigate, Navigate } from "react-router-dom";
 import "./criartorneio.css";
+import axios from "axios";
 import NavBar from "../../components/navBar/navBar";
+import { jwtDecode } from "jwt-decode";
 
 const TorneioForm = () => {
   const dispatch = useDispatch();
@@ -14,39 +16,55 @@ const TorneioForm = () => {
   const [tipoTorneio, setTipoTorneio] = useState('Aberto');
   const [quantidadeTimes, setQuantidadeTimes] = useState('2');
   const[ localTorneio, setlocalTorneio] = useState('');
-
+  const token = useSelector((state) => state.auth.token);
+  const decodedToken = jwtDecode(token);
+  console.log(decodedToken);
+  if (!token) {
+    return <Navigate to="/login" />;
+  }
+   const userIdDonoTorneio = decodedToken.id
   const handleSubmitForm = async (event) => {
     event.preventDefault();
-
+  
     if (!nomeTorneio || !tipoTorneio || !quantidadeTimes || !localTorneio) {
       alert('Por favor, preencha todos os campos.');
       return;
     }
-
-    const initialValues = {
-      nomeTorneio: nomeTorneio,
-      userIdDonoTorneio: currentUser.user.id,
-      tipoTorneio: tipoTorneio,
-      qtdTimes: quantidadeTimes,
-      localTorneio: localTorneio
-    };
-
+   
+    // const initialValues = {
+    //   nomeTorneio: nomeTorneio,
+    //   userIdDonoTorneio: decodedToken.id,  // Obtém o ID do token JWT decodificado
+    //   tipoTorneio: tipoTorneio,
+    //   qtdTimes: quantidadeTimes,
+    //   localTorneio: localTorneio
+    // };
+    const qtdTimes = quantidadeTimes
     try {
-      const response = dispatch(addTorneioAsync({
-        nomeTorneio: initialValues.nomeTorneio,
-        userIdDonoTorneio: initialValues.userIdDonoTorneio,
-        id: idGen(),
-        qtdTimes: initialValues.qtdTimes,
-        tipoTorneio: initialValues.tipoTorneio,
-        localTorneio: initialValues.localTorneio
-      }));
-        navigate("/torneiocriado");
-       
+      // Faz a requisição POST para o back-end
+      const response = await fetch ('http://localhost:3004/api/torneio', {
+        method: "POST",
+        headers: {
+          'Authorization': `Bearer ${token}`, // Passa o token de autenticação
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({nomeTorneio, userIdDonoTorneio,tipoTorneio, qtdTimes, localTorneio})
+      });
+  
+      if (response.ok) { // Utiliza response.ok para checar se o status é 2xx
+        alert('Torneio criado com sucesso!');
+        navigate("/meustorneios"); // Redireciona para a página de sucesso
+      } else {
+        // Lê a resposta do servidor para mostrar detalhes sobre o erro
+        const errorData = await response.json();
+        console.error('Erro ao criar torneio:', errorData);
+        alert(`Erro ao criar torneio: ${errorData.message || 'Erro desconhecido'}`);
+      }
     } catch (error) {
       console.error('Erro ao criar torneio:', error);
       alert('Erro ao criar torneio.');
     }
   };
+  
 
 //  if (!currentUser.logged) {
 //    return <Navigate to="/login" />;

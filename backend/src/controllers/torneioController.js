@@ -10,8 +10,7 @@ const TorneioController = {
         userIdDonoTorneio,
         tipoTorneio,
         qtdTimes,
-        localTorneio,
-        participantesIds = [], // Inicializa como array vazio se não for fornecido
+        localTorneio, // Inicializa como array vazio se não for fornecido
       } = req.body;
 
       // Procurar o usuário pelo ID fornecido
@@ -26,13 +25,9 @@ const TorneioController = {
       });
       await novoChat.save();
 
-      // Pega os times participantes pelo ID (se houver)
-      if (participantesIds){
-        const participantes = await Time.find({
-          _id: { $in: participantesIds },
-        });
-      }
       
+      
+
 
       // Cria o novo torneio com o chat associado e os times participantes
       const novoTorneio = new Torneio({
@@ -51,6 +46,41 @@ const TorneioController = {
       res.status(500).json({ message: "Erro ao criar o torneio", error: error.message || error });
     }
   },
+  getTorneiosByTime: async (req, res) => {
+    try {
+      const timeId = req.params.timeId; // Obtém o ID do time dos parâmetros da URL
+
+      // Busca os torneios onde o time é participante
+      const torneios = await Torneio.find({ 
+        Participantes: { 
+          $elemMatch: { $eq: timeId } 
+        } 
+      });
+
+      if (!torneios) {
+        return res.status(404).json({ msg: "Nenhum torneio encontrado para esse time" });
+      }
+
+      res.status(200).json(torneios);
+    } catch (error) {
+      console.error("Erro ao buscar torneios para o time:", error);
+      res.status(500).json({ message: "Erro ao buscar torneios", error });
+    }
+  },
+  getByOwner: async (req, res) => {
+    try {
+      const userIdDonoTorneio = req.params.userIdDonoTorneio; 
+      const torneio = await Torneio.findOne({ userIdDonoTorneio: userIdDonoTorneio }); 
+      if (!torneio) {
+        return res.status(404).json({ message: "Torneio não encontrado" });
+      }
+
+      return res.status(200).json(torneio);
+    } catch (error) {
+      return res.status(500).json({ message: "Erro ao buscar o torneio", error });
+    }
+  },
+
   getAll: async (req, res) => {
     try {
       const torneios = await Torneio.find();

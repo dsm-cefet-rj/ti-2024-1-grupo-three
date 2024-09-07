@@ -10,7 +10,7 @@ const torneioSchema = new Schema(
       required: true,
     },
     userIdDonoTorneio: {
-      type: userSchema,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
     tipoTorneio: {
@@ -26,12 +26,12 @@ const torneioSchema = new Schema(
       required: true,
     },
     chat: {
-      type:chatSchema,
+      type:mongoose.Schema.Types.ObjectId,
       required: true,
     },
     Participantes: [
       {
-      type: timeSchema, //aqui seria timeschema ou partidaschema
+      type: mongoose.Schema.Types.ObjectId, //aqui seria timeschema ou partidaschema
       },
     ],
     //algo relacionado para convidar os times para o torneio

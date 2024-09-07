@@ -11,9 +11,9 @@ timeRoutes.get("/time", timeController.getAll);
 // Rota para obter um time específico por ID (GET)
 timeRoutes.get("/time/:id", timeController.get);
 
-timeRoutes.get("/time/oi/:userId", timeController.getByUser);
+timeRoutes.get("/time/user/:userId", timeController.getByUser);
 
-timeRoutes.get("/time/oii/:userIdDono", timeController.getByOwner);
+timeRoutes.get("/time/dono/:userIdDono", timeController.getByOwner);
 
 // Rota para deletar um time específico por ID (DELETE)
 timeRoutes.delete("/time/:id", timeController.delete);
