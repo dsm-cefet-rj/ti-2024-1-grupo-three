@@ -1,5 +1,6 @@
 # ProjetoPSW-Futebrol
 Projeto para a matéria de PSW, desenvolvemos um programa chamado Futebrol, que serve como organizador de jogos para torneios de peladeiros.
+Utilize a branch mais atualizada.
 
 # INSTRUÇÕES PARA O CÓDIGO:
 
@@ -7,18 +8,13 @@ Projeto para a matéria de PSW, desenvolvemos um programa chamado Futebrol, que 
     ```bash
     cd frontend
     npm install
-    npm run json-server
+    npm run dev
     ```
 
 2. No segundo terminal:
     ```bash
-    cd frontend
-    npm run dev
-    ```
-
-3. No terceiro terminal:
-    ```bash
     cd backend
+    npm install
     npm run start
     ```
 
