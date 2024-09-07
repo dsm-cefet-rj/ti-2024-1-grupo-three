@@ -25,15 +25,17 @@ const Modal = ({ isOpen, onClose, children }) => {
 
 const EnvioConvite = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [idDestinatario, setIdDestinatario] = useState("");
-  const loggedUser = useSelector((state) => state.user.loggedUser); // Assumindo que o usuário logado está armazenado no state.user.loggedUser
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]); // Armazena os resultados da busca
+  const [selectedUser, setSelectedUser] = useState(null); // Armazena o usuário selecionado
+  const loggedUser = useSelector((state) => state.user.loggedUser); // Usuário logado
   const dispatch = useDispatch();
   const [idTimeConvite, setIdTimeConvite] = useState("");
   const [idCriadorConvite, setIdCriadorConvite] = useState("");
 
   useEffect(() => {
     if (loggedUser) {
-      buscarInformacoesUsuario(loggedUser.id);
+      buscarInformacoesUsuario(loggedUser._id);
     }
   }, [loggedUser]);
 
@@ -56,21 +58,47 @@ const EnvioConvite = () => {
     }
   };
 
+  const handleSearchChange = async (e) => {
+    const searchValue = e.target.value;
+    setSearchTerm(searchValue);
+  
+    if (searchValue.length > 2) { // Busca apenas se houver mais de 2 caracteres
+      try {
+        const response = await axios.get(
+          `http://localhost:3004/user?nome_like=${searchValue}`
+        );
+        setSearchResults(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar usuários:", error);
+      }
+    } else {
+      setSearchResults([]); // Limpa os resultados se o termo de busca for muito curto
+    }
+  };
+
+  const handleUserSelect = (user) => {
+    setSelectedUser(user);
+    setSearchTerm(user.nome); // Atualiza o campo de busca com o nome do usuário selecionado
+    setSearchResults([]); // Limpa a lista de sugestões após a seleção
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    //*if (!idTimeConvite || !idCriadorConvite || !idDestinatario) {
-    //  alert("Por favor, preencha todos os campos");
-    //  return;
-    // }
+
+    if (!idTimeConvite || !idCriadorConvite || !selectedUser) {
+      alert("Por favor, preencha todos os campos");
+      return;
+    }
 
     const convite = {
       idTimeConvite,
       idCriadorConvite,
-      idDestinatario,
+      idDestinatario: selectedUser.id, // Usar o ID do usuário selecionado
     };
 
     dispatch(enviarConviteAsync(convite));
-    setIdDestinatario("");
+    setSelectedUser(null);
+    setSearchTerm("");
   };
   const handleOpenModal = () => {
     setIsOpen(true);
@@ -85,33 +113,47 @@ const EnvioConvite = () => {
       {isOpen ? (
         <Modal isOpen={isOpen} onClose={handleCloseModal}>
           <div className="envio-convite-container">
-            <h2>enviar convite</h2>
+            <h2>Enviar Convite</h2>
             <form onSubmit={handleSubmit} className="envio-convite-form">
               <div className="tipoTorneio">
-                <label htmlFor="tipoTorneio">você quer convidar:</label>
-                <select
-                  className="form-select"
-                  id="tipoTorneio"
-                  // value={tipoConvite}
-                  // onChange={(event) => setTipoConvite(event.target.value)}
-                  // required
-                >
-                  <option value="Jogador">jogador</option>
-                  <option value="Time">time</option>
+                <label htmlFor="tipoTorneio">Você quer convidar:</label>
+                <select className="form-select" id="tipoTorneio" required>
+                  <option value="Jogador">Jogador</option>
+                  <option value="Time">Time</option>
                 </select>
               </div>
               <div>
-                <label htmlFor="idDestinatario">ID do destinatário:</label>
+                <label htmlFor="searchUser">Nome do destinatário:</label>
                 <input
                   className="caixa-destinatario"
                   type="text"
-                  id="idDestinatario"
-                  value={idDestinatario}
-                  onChange={(e) => setIdDestinatario(e.target.value)}
+                  id="searchUser"
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                  placeholder="Digite o nome do usuário"
                   required
                 />
+                {/* Exibir sugestões de usuários */}
+                {searchResults.length > 0 && (
+                  <ul className="search-results">
+                    {searchResults.map((user) => (
+                      <li
+                        key={user.id}
+                        onClick={() => handleUserSelect(user)}
+                        className="search-result-item"
+                      >
+                        {user.nome}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
-              <button type="submit">enviar convite</button>
+              {selectedUser && (
+                <div>
+                  <p>Usuário selecionado: {selectedUser.nome}</p>
+                </div>
+              )}
+              <button type="submit">Enviar Convite</button>
             </form>
           </div>
         </Modal>

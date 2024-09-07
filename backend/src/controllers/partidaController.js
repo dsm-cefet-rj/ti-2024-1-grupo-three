@@ -4,12 +4,14 @@ import { Time } from "../models/Time.js";
 const partidaController = {
   create: async (req, res) => {
     try {
-      const { timeMandante, timeVisitante} = req.body;
+      const { timeMandante, timeVisitante, data, local} = req.body;
       const Mandante = await Time.findById(timeMandante);
       const Visitante = await Time.findById(timeVisitante);
       const novaPartida = new Partida({
         timeMandante: Mandante,
         timeVisitante: Visitante,
+        data: data,
+        local: local,
         placar: "0 x 0"
       })
       const response = await novaPartida.save();
@@ -70,6 +72,39 @@ const partidaController = {
       return;
     }
     res.status(200).json({ partida, msg: "serviço atualizado com sucesso" });
+  },
+  getPartidasByTime: async (req, res) => {
+    try {
+      const { timeId } = req.params;
+
+      // Buscando todas as partidas em que o time é o mandante ou visitante
+      const partidas = await Partida.find({
+        $or: [{ "timeMandante._id": timeId }, { "timeVisitante._id": timeId }]
+      });
+
+      // Preparando a resposta para incluir o nome do adversário
+      const partidasComAdversario = partidas.map((partida) => {
+        let adversario;
+        if (partida.timeMandante._id.toString() === timeId) {
+          adversario = partida.timeVisitante.nomeTime;
+        } else {
+          adversario = partida.timeMandante.nomeTime;
+        }
+        return {
+          _id: partida._id,
+          data: partida.data,
+          local: partida.local,
+          placar: partida.placar,
+          adversario,
+          isMandante: partida.timeMandante._id.toString() === timeId
+        };
+      });
+
+      res.status(200).json(partidasComAdversario);
+    } catch (error) {
+      console.error("Erro ao buscar partidas:", error);
+      res.status(500).json({ message: "Erro ao buscar partidas", error });
+    }
   },
   updatePlacar: async (req, res) => {
     try {

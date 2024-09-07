@@ -19,7 +19,7 @@ const MeusTorneios = () => {
       try {
         const response = await axios.get("http://localhost:3004/Torneio");
         const torneiosData = response.data;
-
+        
         const userTorneios = torneiosData.filter(
           (torneio) => torneio.userIdDonoTorneio === currentUser.user.id
         );
@@ -83,7 +83,7 @@ const MeusTorneios = () => {
               <h1 className="espaço2">vamos resolver isso?</h1>
             </div>
             <div className="Mensagens">
-              <h1>você pode buscar um torneio aberto, criar o seu, ou aceitar um convite.</h1>
+              <h1>você pode criar o seu ou aceitar um convite.</h1>
             </div>
           </div>
           <div className="textocontent">

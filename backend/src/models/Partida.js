@@ -11,6 +11,14 @@ const partidaSchema = new Schema(
       type: timeSchema,
       required: true
     },
+    data:{
+      type: String,
+      required: true
+    }, 
+    local:{
+      type: String,
+      required: true
+    },
     placar :{
       type: String,
       required: false

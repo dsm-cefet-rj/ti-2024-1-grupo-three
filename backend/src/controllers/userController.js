@@ -27,7 +27,19 @@ const userController = {
   },
   getAll: async (req, res) => {
     try {
+      const { nome_like } = req.query;
+      let userRes;
+      if (nome_like) {
+        userRes = await User.findAll({
+          where: {
+            nome: {
+              [Op.like]: `%${nome_like}%`, // Faz a busca por nome com LIKE (se for Sequelize)
+            },
+          },
+        });
+      } else {
       const userRes = await User.find();
+      }      
       res.json(userRes);
     } catch (error) {
       console.log(error);

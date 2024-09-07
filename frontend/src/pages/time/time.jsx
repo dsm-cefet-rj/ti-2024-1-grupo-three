@@ -13,43 +13,8 @@ import { jwtDecode } from "jwt-decode";
 const Time = () => {
   const navigate = useNavigate();
   const [jogadores, setJogadores] = useState([]);
-  const partidaDados = [
-    {
-      id: "1",
-      nome: "vs Flamengo",
-      resultado: "6x4",
-      data: "23/04/24",
-      local: "Maraca",
-    },
-    {
-      id: "2",
-      nome: "vs Botafogo",
-      resultado: "6x4",
-      data: "22/04/24",
-      local: "Tapetinho",
-    },
-    {
-      id: "3",
-      nome: "vs Internacional",
-      resultado: "6x6",
-      data: "21/04/24",
-      local: "Beira-rio",
-    },
-    {
-      id: "4",
-      nome: "vs River Plate",
-      resultado: "6x4",
-      data: "20/04/24",
-      local: "Monumental",
-    },
-    {
-      id: "5",
-      nome: "vs Vascão",
-      resultado: "0x6",
-      data: "19/04/24",
-      local: "São Janu",
-    },
-  ];
+  const [partidas, setPartidas] = useState([]);
+  
 
   const token = useSelector((state) => state.auth.token);
   const decodedToken = jwtDecode(token);
@@ -70,6 +35,14 @@ const Time = () => {
 
         if (time) {
           setNomeTime(time.nomeTime);
+          const partidaResponse = await axios.get(
+            `http://localhost:3004/api/partidas/time/${time._id}`
+          );
+          const partidas = partidaResponse.data;
+          console.log(partidas);
+          if(partidas){
+            setPartidas(partidas);
+          }
           const userDetailsPromises = time.userId.map(async (userId) => {
             const userResponse = await axios.get(
               `http://localhost:3004/api/user/${userId}`,
@@ -91,6 +64,9 @@ const Time = () => {
     };
     fetchTime();
   }, [decodedToken.id]);
+
+  
+
 
   console.log(jogadores);
 
@@ -139,15 +115,14 @@ const Time = () => {
           </div>
           <div>
             <h1 className="tituloPag">Partidas</h1>
-            {show2 ? (
+            {partidas.length > 0 ? (
               <div>
                 <div>
-                  {partidaDados.map((partida, i) => (
+                  {partidas.map((partida) => (
                     <PartidaComponente
-                      key={partida.id}
-                      id={partida.id}
-                      nome={partida.nome}
-                      resultado={partida.resultado}
+                      key={partida._id}
+                      nome={partida.isMandante ? `vs. ${partida.adversario}` : `@${partida.adversario}`}
+                      resultado={partida.placar}
                       data={partida.data}
                       local={partida.local}
                     />
@@ -160,16 +135,15 @@ const Time = () => {
             ) : (
               <div>
                 <div>
-                  {partidaDados.slice(0, 2).map((partida, i) => (
+                 
                     <PartidaComponente
-                      key={partida.id}
-                      id={partida.id}
-                      nome={partida.nome}
-                      resultado={partida.resultado}
-                      data={partida.data}
-                      local={partida.local}
+                      key="nenhuma-partida"
+                      nome="Nenhuma partida encontrada"
+                      resultado=""
+                      data=""
+                      local=""
                     />
-                  ))}
+                  
                 </div>
                 <div>
                   <Button show={show2} setShow={setShow2} />

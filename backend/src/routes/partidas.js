@@ -16,7 +16,9 @@ partidaRoutes
 partidaRoutes
   .route("/partidas/:id")
   .delete((req, res) => partidaController.delete(req, res));
-
+partidaRoutes
+    .route("/partidas/time/:timeId")
+    .get((req, res) => (partidaController.getPartidasByTime(req,res)));
 partidaRoutes
   .route("/partidas/:id")
   .put((req, res) => partidaController.update(req, res));
