@@ -37,7 +37,9 @@ const timeController = {
   getByUser: async (req, res) => {
     try {
       const userId = req.params.userId; // Corrigido para req.params
-      const time = await Time.findOne({ userId: userId }); // Confere se userId é o campo correto
+      const time = await Time.findOne({  userId: { 
+        $elemMatch: { $eq: userId } 
+      }  }); // Confere se userId é o campo correto
 
       if (!time) {
         return res.status(404).json({ message: "Time não encontrado" });
@@ -50,8 +52,17 @@ const timeController = {
   },
   getAll: async (req, res) => {
     try {
-      const times = await Time.find();
-      res.json(times);
+      const { nome_like } = req.query;
+      let timeRes;
+      if (nome_like) {
+        // Usando $regex para simular o LIKE no MongoDB
+        timeRes = await Time.find({
+          nomeTime: { $regex: nome_like, $options: "i" } // 'i' é para case-insensitive
+        });
+      } else {
+        timeRes = await Time.find(); // O MongoDB usa find() para buscar todos os registros
+      };
+      res.json(timeRes);
     } catch (error) {
       console.log(error);
     }

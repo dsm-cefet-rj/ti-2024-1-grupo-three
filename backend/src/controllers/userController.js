@@ -29,22 +29,23 @@ const userController = {
     try {
       const { nome_like } = req.query;
       let userRes;
+  
       if (nome_like) {
-        userRes = await User.findAll({
-          where: {
-            nome: {
-              [Op.like]: `%${nome_like}%`, // Faz a busca por nome com LIKE (se for Sequelize)
-            },
-          },
+        // Usando $regex para simular o LIKE no MongoDB
+        userRes = await User.find({
+          nome: { $regex: nome_like, $options: "i" } // 'i' é para case-insensitive
         });
       } else {
-      const userRes = await User.find();
-      }      
+        userRes = await User.find(); // O MongoDB usa find() para buscar todos os registros
+      }
+  
       res.json(userRes);
     } catch (error) {
-      console.log(error);
+      console.error("Erro ao buscar usuários:", error);
+      res.status(500).json({ msg: "Erro no servidor" });
     }
   },
+  
   get: async (req, res) => {
     try {
       const id = req.params.id;

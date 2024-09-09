@@ -7,7 +7,7 @@ const conviteRoutes = express.Router();
 conviteRoutes.post("/convite", conviteController.create);
 
 // Rota para obter todos os convites
-conviteRoutes.get("/convites", conviteController.getAll);
+conviteRoutes.get("/convite", conviteController.getAll);
 
 // Rota para aceitar um convite por ID
 conviteRoutes.post("/convite/:conviteId/aceitar", conviteController.aceitarConvite);
@@ -15,6 +15,7 @@ conviteRoutes.post("/convite/:conviteId/aceitar", conviteController.aceitarConvi
 // Rota para obter um convite específico por ID
 conviteRoutes.get("/convite/:id", conviteController.get);
 
+conviteRoutes.get("/convite/destinatario/:idDest", conviteController.getByDestinatario)
 // Rota para deletar um convite específico por ID
 conviteRoutes.delete("/convite/:id", conviteController.delete);
 

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./convite.css";
-
+import { useDispatch, useSelector } from "react-redux";
+import { jwtDecode } from "jwt-decode";
 const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 
@@ -25,23 +26,26 @@ const Convite = () => {
   const [convites, setConvites] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
-
+  const token = useSelector((state) => state.auth.token);
+  const decodedToken = jwtDecode(token);
+  const userId = decodedToken.id;
   useEffect(() => {
     const fetchConvites = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3004/convites?idDestinatario=${loggedUser.id}`
+          `http://localhost:3004/api/convite?idDestinatario=${userId}`
         );
         setConvites(response.data);
+        console.log(response.data)
       } catch (error) {
         console.error("Erro ao buscar convites", error);
       }
     };
 
-    if (loggedUser) {
+    if (userId) {
       fetchConvites();
     }
-  }, [loggedUser]);
+  }, [userId]);
 
   const handleOpenModal = () => {
     setIsOpen(true);

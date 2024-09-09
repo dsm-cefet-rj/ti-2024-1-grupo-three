@@ -5,70 +5,80 @@ import { Torneio } from "../models/Torneio.js";
 const conviteController = {
   create: async (req, res) => {
     try {
-      const { tipoConvite, usuarioRemetenteId, usuarioDestinatarioId, timeId } = req.body;
-
+      const { tipoConviteEnvio, usuarioRemetenteId, usuarioDestinatarioId, timeId, torneio } = req.body;
+  
       let novoConvite;
-
-      if (tipoConvite === "usuario_para_time") {
-        // Verificar se o remetente (dono do time), destinatário (usuário) e time existem
-        const usuarioRemetente = await User.findById(usuarioRemetenteId); // Dono do time
-        const usuarioDestinatario = await User.findById(usuarioDestinatarioId); // Usuário que vai ser convidado
-        const timeRemetente = await Time.findOne({ userIdDono: usuarioRemetenteId }); // Time de quem enviou o convite
-
-        if (!usuarioRemetente || !usuarioDestinatario || !timeRemetente) {
-          return res.status(404).json({ message: "Usuário ou Time não encontrado" });
+  
+      // Verificar se o tipo de convite foi enviado
+      if (!tipoConviteEnvio) {
+        return res.status(400).json({ message: "Tipo de convite não especificado" });
+      }
+  
+      // Se o tipo de convite for "usuario_para_usuario"
+      if (tipoConviteEnvio === "usuario_para_usuario") {
+        // Verificar se os parâmetros necessários foram enviados
+        if (!usuarioRemetenteId || !usuarioDestinatarioId) {
+          return res.status(400).json({ message: "Dados insuficientes para convite de usuário para time" });
         }
-
+  
+        // Verificar se o remetente (dono do time), destinatário (usuário) e time existem
+        const usuarioRemetente = usuarioRemetenteId; // Dono do time
+        const usuarioDestinatario = usuarioDestinatarioId; // Usuário que vai ser convidado
+        const timeRemetente = await Time.findOne({ userIdDono: usuarioRemetenteId });
+  
+        if (!timeRemetente) {
+          return res.status(404).json({ message: "Time não encontrado" });
+        }
+  
         // Criar o convite para o usuário se juntar ao time
         novoConvite = new Convite({
-          usuarioRemetente: usuarioRemetente,
-          usuarioDestinatario: usuarioDestinatario,
-          timeRemetente: timeRemetente,
-          tipoConvite: tipoConvite,
+          usuarioRemetente,
+          usuarioDestinatario,
+          timeRemetente: timeRemetente._id,
+          tipoConvite: tipoConviteEnvio,
         });
-      } else if (tipoConvite === "torneio_para_time") {
-        // Verificar se o torneio e o time existem
-        const timeDestinatario = await Time.findById(timeId); // Time que será convidado para o torneio
-        const usuarioDestinatario = await User.findById(timeDestinatario.userIdDono)
-        const usuarioRemetente = await User.findById(usuarioRemetenteId); // Torneio que está convidando o time
-        const torneio = await Torneio.findOne({"userIdDonoTorneio._id": usuarioRemetenteId})
-
-        if (!timeDestinatario) {
-          return res.status(404).json({ message: "timeDestinatario não encontrado" });
+  
+      // Se o tipo de convite for "torneio_para_time"
+      } else if (tipoConviteEnvio === "torneio_para_time") {
+        // Verificar se os parâmetros necessários foram enviados
+        if (!torneio || !timeId || !usuarioRemetenteId) {
+          return res.status(400).json({ message: "Dados insuficientes para convite de torneio para time" });
         }
-        if (!usuarioDestinatario ) {
-          return res.status(404).json({ message: "usuarioDestinatario não encontrado" });
-        }
-        if (!usuarioRemetente) {
-          return res.status(404).json({ message: "usuarioRemetente não encontrado" });
-        }
-        if (!torneio) {
-          return res.status(404).json({ message: "torneio não encontrado" });
-        }
-
+  
         // Criar o convite para o time se juntar ao torneio
         novoConvite = new Convite({
-          usuarioRemetente: usuarioRemetente,
-          torneio: torneio, 
-          timeDestinatario: timeDestinatario,
-          usuarioDestinatario : usuarioDestinatario,
-          tipoConvite: tipoConvite,
+          usuarioRemetente: usuarioRemetenteId,
+          torneio,
+          timeDestinatario: timeId,
+          tipoConvite: tipoConviteEnvio,
         });
+  
       } else {
         return res.status(400).json({ message: "Tipo de convite inválido" });
       }
-
+  
+      // Salvar o convite no banco
       await novoConvite.save();
-      res.status(201).json({ message: "Convite criado com sucesso", convite: novoConvite });
+      return res.status(201).json({ message: "Convite criado com sucesso", convite: novoConvite });
+  
     } catch (error) {
       console.error("Erro ao criar convite:", error);
-      res.status(500).json({ message: "Erro ao criar convite", error });
+      return res.status(500).json({ message: "Erro ao criar convite", error });
     }
   },
     getAll: async (req, res) => {
         try {
-          const convite = await Convite.find();
-          req.json(convite);
+          const {idDestinatario} = req.query;
+          let resConvite;
+          if(idDestinatario){
+            resConvite = await Convite.find({
+              usuarioDestinatario : idDestinatario
+            });
+          }else{
+            resConvite = await Convite.find();
+          }
+          
+          res.json(resConvite);
         } catch (error) {
           console.log(error);
         }
@@ -90,7 +100,7 @@ const conviteController = {
           }
     
           // Processamento de convite baseado no tipo de convite
-          if (convite.tipoConvite === "usuario_para_time") {
+          if (convite.tipoConvite === "usuario_para_usuario") {
             // Adicionar o usuário destinatário ao time
             const time = await Time.findById(convite.timeRemetente._id);
             if (!time) {
@@ -152,7 +162,19 @@ const conviteController = {
           console.error("Erro ao aceitar convite:", error);
           res.status(500).json({ message: "Erro ao aceitar convite", error });
         }
-      },    
+      },
+      getByDestinatario: async (req,res) => {
+        try{
+          const idDest = req.params.idDest
+          const convite = await Convite.find({usuarioDestinatario: idDest})
+          res.json(convite);
+        } catch (error) {
+          console.log(error.message)
+          res.status(500).json({ message: "Erro ao buscar convite", error });
+        }
+          
+
+      },   
       get: async (req, res) => {
         try {
           const id = req.params.id;
