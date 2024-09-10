@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios"; // ou use fetch
+import axios from "axios";
+import { debounce } from "lodash"; // Importa o debounce do lodash
 import "../gerarPartida/gerarPartida.css";
 
 const Modal = ({ isOpen, onClose, children }) => {
@@ -24,19 +25,57 @@ const Modal = ({ isOpen, onClose, children }) => {
 const GerarPartida = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const [searchResults, setSearchResults] = useState([]); // Para armazenar os resultados da busca
+  const [selectedTorneio, setSelectedTorneio] = useState(null); // Para armazenar o torneio selecionado
+
+  // Função com debounce para limitar as chamadas da API
+  const debouncedSearch = debounce(async (searchValue) => {
+    if (searchValue.length > 1) { // Busca apenas se houver mais de 1 caractere
+      try {
+        const response = await axios.get(
+          `http://localhost:3004/api/torneio?nome_like=${searchValue}`
+        );
+        setSearchResults(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar torneios:", error);
+      }
+    } else {
+      setSearchResults([]); // Limpa os resultados se o termo de busca for muito curto
+    }
+  }, 300); // Aguarda 300ms antes de fazer a requisição
+
+  const handleSearchChange = (e) => {
+    const searchValue = e.target.value;
+    setInputValue(searchValue);
+    debouncedSearch(searchValue); // Chama a função de busca com debounce
+  };
+
+  const handleTorneioSelect = (torneio) => {
+    setSelectedTorneio(torneio);
+    setInputValue(torneio.nome); // Atualiza o campo de busca com o nome do torneio selecionado
+    setSearchResults([]); // Limpa a lista de sugestões após a seleção
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!selectedTorneio) {
+      alert("Por favor, selecione um torneio!");
+      return;
+    }
+
     try {
       const response = await axios.post(
-        `http://localhost:3004/api/partidas/${inputValue}`
+        `http://localhost:3004/api/partidas/${selectedTorneio._id}`
       );
       console.log("Resposta da API:", response.data);
+      alert("Partidas geradas com sucesso!");
     } catch (error) {
       console.error("Erro ao chamar a API:", error);
+      alert("Erro ao gerar partidas");
     }
   };
+
   const handleOpenModal = () => {
     setIsOpen(true);
   };
@@ -51,18 +90,43 @@ const GerarPartida = () => {
         {isOpen ? (
           <Modal isOpen={isOpen} onClose={handleCloseModal}>
             <div className="envio-convite-container">
-              <h2>Digite o ID do Torneio:</h2>
+              <h2>Digite o nome do Torneio:</h2>
               <form className="envio-convite-form" onSubmit={handleSubmit}>
                 <label>
-                  Digite um valor:
+                  Nome do torneio:
                   <input
                     className="input"
                     type="text"
                     value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
+                    onChange={handleSearchChange}
+                    placeholder="Digite o nome do torneio"
+                    required
                   />
                 </label>
-                <button type="submit">Enviar</button>
+
+                {/* Exibir sugestões de torneios */}
+                {searchResults.length > 0 && (
+                  <ul className="search-results">
+                    {searchResults.map((torneio) => (
+                      <li
+                        key={torneio._id}
+                        onClick={() => handleTorneioSelect(torneio)}
+                        className="search-result-item"
+                      >
+                        {torneio.nomeTorneio}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {/* Exibir torneio selecionado */}
+                {selectedTorneio && (
+                  <div>
+                    <p>Torneio selecionado: {selectedTorneio.nomeTorneio}</p>
+                  </div>
+                )}
+
+                <button type="submit">Gerar Partidas</button>
               </form>
             </div>
           </Modal>
