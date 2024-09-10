@@ -1,11 +1,64 @@
 import { React, useState } from "react";
 import Jogador from "../../components/jogador/jogador";
 import Button from "../../components/button/button";
-import JogadorN from "../../components/jogadorN/jogadorN";
 import "../partida/partida.css";
 import NavBar from "../../components/navBar/navBar";
+// import conn from "../../../../backend/src/db/conn";
+// import { partidaSchema } from "../../../../backend/src/models/Partida";
+// import { torneioSchema } from "../../../../backend/src/models/Torneio";
 
-const Partida = ({ id }) => {
+// // Criando os modelos
+// const Torneio = mongoose.model("Torneio", torneioSchema);
+// const Partida = mongoose.model("Partida", partidaSchema);
+
+// async function alocarPartidas() {
+//   try {
+//     // Obtém o torneio (substitua por um filtro caso tenha mais de um torneio)
+//     const torneio = await Torneio.findOne({
+//       /* filtro se necessário */
+//     });
+
+//     if (
+//       !torneio ||
+//       !torneio.participantes ||
+//       torneio.participantes.length < 2
+//     ) {
+//       console.log("Participantes insuficientes ou torneio não encontrado.");
+//       return;
+//     }
+
+//     const participantes = torneio.participantes;
+
+//     // Itera pelos participantes em pares e cria as partidas
+//     for (let i = 0; i < participantes.length; i += 2) {
+//       if (i + 1 < participantes.length) {
+//         // Certifica-se de que há um par
+//         const timeMandante = participantes[i];
+//         const timeVisitante = participantes[i + 1];
+
+//         // Cria a partida
+//         const partida = new Partida({
+//           timeMandante: timeMandante,
+//           timeVisitante: timeVisitante,
+//         });
+
+//         // Insere a partida na coleção de partidas
+//         await partida.save();
+//         console.log(
+//           `Partida entre ${timeMandante} e ${timeVisitante} criada com sucesso!`
+//         );
+//       }
+//     }
+
+//     console.log("Todas as partidas foram alocadas com sucesso!");
+//   } catch (err) {
+//     console.error("Erro ao alocar partidas:", err);
+//   }
+// }
+
+// // Conectando ao banco e chamando a função
+// conn().then(() => alocarPartidas());
+const Partidas = ({ id }) => {
   const jogadores = [
     { id: "1", nome: "Cristiano Gornaldo" },
     { id: "2", nome: "Sósia do Neymar" },
@@ -25,53 +78,29 @@ const Partida = ({ id }) => {
 
   return (
     <div>
-      <NavBar/>
+      <NavBar />
       <div>
         <h1>{time1}</h1>
         {show ? (
           <div>
-            {!jogadoresNota ? (
-              <div>
-                {jogadores.map((jogador, i) => (
-                  <Jogador nome={jogador.nome} id={jogador.id} />
-                ))}
-              </div>
-            ) : (
-              <div>
-                {jogadoresNota.map((jogadorN, i) => (
-                  <JogadorN
-                    nome={jogadorN.nome}
-                    id={jogadorN.id}
-                    nota={jogadorN.nota}
-                    votos={jogadorN.votos}
-                  />
-                ))}
-              </div>
-            )}
+            <div>
+              {jogadores.map((jogador, i) => (
+                <Jogador nome={jogador.nome} id={jogador.id} />
+              ))}
+            </div>
+
             <div>
               <Button show={show} setShow={setShow} />
             </div>
           </div>
         ) : (
           <div>
-            {!jogadoresNota ? (
-              <div>
-                {jogadores.slice(0, 2).map((jogador, i) => (
-                  <Jogador nome={jogador.nome} id={jogador.id} />
-                ))}
-              </div>
-            ) : (
-              <div>
-                {jogadoresNota.slice(0, 2).map((jogadorN, i) => (
-                  <JogadorN
-                    nome={jogadorN.nome}
-                    id={jogadorN.id}
-                    nota={jogadorN.nota}
-                    votos={jogadorN.votos}
-                  />
-                ))}
-              </div>
-            )}
+            <div>
+              {jogadores.slice(0, 2).map((jogador, i) => (
+                <Jogador nome={jogador.nome} id={jogador.id} />
+              ))}
+            </div>
+
             <div>
               <Button show={show} setShow={setShow} />
             </div>
@@ -108,4 +137,4 @@ const Partida = ({ id }) => {
   );
 };
 
-export default Partida;
+export default Partidas;

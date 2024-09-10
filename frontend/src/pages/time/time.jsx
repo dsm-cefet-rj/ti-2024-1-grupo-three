@@ -1,93 +1,95 @@
 import { React, useState, useEffect } from "react";
 import Button from "../../components/button/button";
 import NavBar from "../../components/navBar/navBar";
-import JogadorN from "../../components/jogadorN/jogadorN";
 import PartidaComponente from "../../components/partidaComponent/partidaComponente";
+import EnviarConvite from "../../components/EnvioConvite/EnvioConvite";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Navigate } from "react-router-dom";
 import "./time.css";
 import axios from "axios";
 import Jogador from "../../components/jogador/jogador";
+import { jwtDecode } from "jwt-decode";
 
+/**
+ * Componente Time.
+ *
+ * Este componente exibe as informações de um time específico, incluindo jogadores e partidas.
+ * O usuário deve estar autenticado para visualizar esta página.
+ * Faz chamadas à API para buscar dados do time, jogadores e partidas.
+ *
+ * @component
+ */
 const Time = () => {
-  const navigate = useNavigate();
-  const [jogadores, setJogadores] = useState([]);
-  const partidaDados = [
-    {
-      id: "1",
-      nome: "vs Flamengo",
-      resultado: "6x4",
-      data: "23/04/24",
-      local: "Maraca",
-    },
-    {
-      id: "2",
-      nome: "vs Botafogo",
-      resultado: "6x4",
-      data: "22/04/24",
-      local: "Tapetinho",
-    },
-    {
-      id: "3",
-      nome: "vs Internacional",
-      resultado: "6x6",
-      data: "21/04/24",
-      local: "Beira-rio",
-    },
-    {
-      id: "4",
-      nome: "vs River Plate",
-      resultado: "6x4",
-      data: "20/04/24",
-      local: "Monumental",
-    },
-    {
-      id: "5",
-      nome: "vs Vascão",
-      resultado: "0x6",
-      data: "19/04/24",
-      local: "São Janu",
-    },
-  ];
-  const currentUser = useSelector((rootReducer) => rootReducer.user);
-  if (!currentUser.logged) {
+  const navigate = useNavigate(); // Hook para navegação
+  const [jogadores, setJogadores] = useState([]); // Estado para armazenar jogadores do time
+  const [partidas, setPartidas] = useState([]); // Estado para armazenar partidas do time
+  const [nomeTime, setNomeTime] = useState(""); // Estado para armazenar o nome do time
+  const [show, setShow] = useState(false); // Estado para controlar a exibição de jogadores
+  const [show2, setShow2] = useState(false); // Estado para controlar a exibição de partidas
+
+  const token = useSelector((state) => state.auth.token); // Seleciona o token de autenticação do estado Redux
+  const decodedToken = jwtDecode(token); // Decodifica o token JWT
+
+  // Redireciona para a página de login se o token não estiver presente
+  if (!token) {
     return <Navigate to="/login" />;
   }
-  const [nomeTime, setNomeTime] = useState("");
+
   useEffect(() => {
+    /**
+     * Busca as informações do time do usuário autenticado.
+     * Realiza chamadas à API para buscar dados do time, jogadores e partidas.
+     *
+     * @async
+     * @function fetchTime
+     */
     const fetchTime = async () => {
       try {
-        const response = await axios.get("http://localhost:3004/time");
-        const times = response.data;
-        const userTeam = times.find(
-          (time) =>
-            time.idUser && time.idUser.some((id) => id === currentUser.user.id)
+        const response = await axios.get(
+          `http://localhost:3004/api/time/user/${decodedToken.id}`
         );
-        if (userTeam) {
-          setNomeTime(userTeam.nomeTime);
-          const userDetailsPromises = userTeam.idUser.map(async (userId) => {
+        const time = response.data;
+
+        if (time) {
+          setNomeTime(time.nomeTime);
+          const partidaResponse = await axios.get(
+            `http://localhost:3004/api/partidas/time/${time._id}`
+          );
+          const partidas = partidaResponse.data;
+          if (partidas) {
+            setPartidas(partidas);
+          }
+          const userDetailsPromises = time.userId.map(async (userId) => {
             const userResponse = await axios.get(
-              `http://localhost:3004/users/${userId}`
+              `http://localhost:3004/api/user/${userId}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`, // Enviando o token no cabeçalho
+                },
+              }
             );
             return userResponse.data;
           });
           const userDetails = await Promise.all(userDetailsPromises);
-          console.log(userDetails);
           setJogadores(userDetails);
         }
       } catch (error) {
         console.error("Erro ao buscar o nome do time:", error);
       }
     };
-
     fetchTime();
-  }, [currentUser.user.id]);
+  }, [decodedToken.id]);
 
-  const [show, setShow] = useState(false);
-  const [show2, setShow2] = useState(false);
+  /**
+   * Manipula o clique do botão para criar um time.
+   * Redireciona para a página de criação de time.
+   *
+   * @function handleClickCriarTime
+   */
   const handleClickCriarTime = () => {
     navigate("/criartime");
   };
+
   return (
     <div>
       <NavBar />
@@ -101,8 +103,8 @@ const Time = () => {
               <div>
                 <div>
                   {jogadores.map((jogador) => (
-                    <div key={jogador.id}>
-                      <Jogador nome={jogador.user} />
+                    <div key={jogador._id}>
+                      <Jogador nome={jogador.nome} />
                     </div>
                   ))}
                 </div>
@@ -114,8 +116,8 @@ const Time = () => {
               <div>
                 <div>
                   {jogadores.slice(0, 2).map((jogador) => (
-                    <div key={jogador.id}>
-                      <Jogador nome={jogador.user} />
+                    <div key={jogador._id}>
+                      <Jogador nome={jogador.nome} />
                     </div>
                   ))}
                 </div>
@@ -127,15 +129,18 @@ const Time = () => {
           </div>
           <div>
             <h1 className="tituloPag">Partidas</h1>
-            {show2 ? (
+            {partidas.length > 0 ? (
               <div>
                 <div>
-                  {partidaDados.map((partida, i) => (
+                  {partidas.map((partida) => (
                     <PartidaComponente
-                      key={partida.id}
-                      id={partida.id}
-                      nome={partida.nome}
-                      resultado={partida.resultado}
+                      key={partida._id}
+                      nome={
+                        partida.isMandante
+                          ? ` vs. ${partida.adversario}`
+                          : ` vs. ${partida.adversario}`
+                      }
+                      resultado={partida.placar}
                       data={partida.data}
                       local={partida.local}
                     />
@@ -148,16 +153,13 @@ const Time = () => {
             ) : (
               <div>
                 <div>
-                  {partidaDados.slice(0, 2).map((partida, i) => (
-                    <PartidaComponente
-                      key={partida.id}
-                      id={partida.id}
-                      nome={partida.nome}
-                      resultado={partida.resultado}
-                      data={partida.data}
-                      local={partida.local}
-                    />
-                  ))}
+                  <PartidaComponente
+                    key="nenhuma-partida"
+                    nome="Nenhuma partida encontrada"
+                    resultado=""
+                    data=""
+                    local=""
+                  />
                 </div>
                 <div>
                   <Button show={show2} setShow={setShow2} />

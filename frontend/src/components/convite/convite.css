@@ -6,109 +6,62 @@
   color: #acacac;
 }
 
-.modal {
-  position: fixed;
-  z-index: 200011;
-
-  display: flex;
-  margin-left: 5px;
-  align-items: center;
-  background: #09090e;
-
-  border: 5px solid #0a0a0a;
-  position: relative;
-  top: -15vh;
-  left: 10vw;
-}
-.modal-container {
-  width: 80vw;
-}
-.fechar {
-  z-index: 222222;
-  position: absolute;
-  top: -15px;
-  right: -15px;
-  width: 35px;
-  height: 35px;
-  border: 4px solid #000000;
-  border-radius: 50%;
-  background-color: #000000;
-  color: #e7e7e7;
-  text-align: center;
-  font-size: 1.5rem;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 100%; /* 3rem */
+.buttonconvite:hover {
   cursor: pointer;
 }
-.testetetete {
-  color: #fff;
-  text-align: center;
-  font-size: 1.5rem;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 100%;
-}
 
-.modal input {
+.modal-container {
+  height: 100vh;
   width: 100%;
-  padding: 0.7rem 0.5rem;
-  box-sizing: border-box;
-}
-
-/* .modal button[type="submit"] {
-  display: block;
-  background: #006739;
-  border: none;
-  border-radius: 4px;
-  padding: 0.7rem 2rem;
-  font-size: 1rem;
-  color: #f8f8f8;
-  margin-top: 1rem;
-  font-weight: 600;
-  width: 100%;
-} */
-
-.container-convites {
-  padding: 3rem 0rem;
-
-  margin-top: 1rem;
-  margin-left: 1.5rem;
-  border-radius: 5px;
-  align-items: center;
-  width: 18.75rem;
-  background-color: #09090e;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.modal {
   position: relative;
 }
-.container-convites h2 {
-  font-size: 1rem;
+
+.container-convites {
+  padding: 3rem;
+  background-color: #09090e;
+  border-radius: 5px;
+  width: 300px; /* Ajuste o tamanho aqui */
+  text-align: center; /* Centraliza o texto e os botões */
 }
 
 .tituloconvites {
   font-family: "Roboto Flex", sans-serif;
-  position: absolute;
-  top: 10px;
-  left: 5px;
-  font-size: 1.25rem !important;
-  color: white !important;
-  font-weight: 600 !important;
-  margin-top: 0rem !important;
-  margin-left: 0.938rem !important;
+  font-size: 1.25rem;
+  color: white;
+  font-weight: 600;
+  margin-bottom: 1rem;
 }
-.conteudo-convites {
-  margin-top: 20px;
-}
-.tudodo {
-  display: flex;
-}
-.btn-aceita {
-  margin-top: 3vh;
-  margin-bottom: 3vh;
-  margin-left: 10vw;
+
+.convites-title {
   font-size: 1rem;
-  width: fit-content;
+  color: #acacac;
+  margin-bottom: 1rem;
+}
+
+.conteudo-convites {
+  margin-bottom: 1.5rem;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.btn-aceita {
+  font-size: 1rem;
   padding: 10px;
   border-radius: 0.313rem;
   color: white;
@@ -120,9 +73,9 @@
   background-color: #115a28;
   cursor: pointer;
 }
+
 .btn-recusa {
   font-size: 1rem;
-  width: fit-content;
   padding: 10px;
   border-radius: 0.313rem;
   color: white;

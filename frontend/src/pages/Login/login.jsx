@@ -1,50 +1,99 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addUser } from "../../redux/user/slice";
+import { addUser, addLoggedUser, logoutUser } from "../../redux/user/slice";
 import { v4 as idGen } from "uuid";
-import { addLoggedUser, logoutUser } from "../../redux/user/slice";
 import axios from "axios";
 import "../Cadastro/cadastro.css";
 import "../Login/login.css";
+import { setToken } from "../../redux/authSlice.js";
 
+/**
+ * Componente de Login.
+ *
+ * Este componente permite que um usuário faça login na aplicação.
+ * Realiza uma chamada de API para autenticação e armazena o token no estado do Redux.
+ *
+ * @component
+ */
 const Login = () => {
-  const [user, setUser] = useState("");
-  const [senha, setSenha] = useState("");
-  const [submitUser, setSubmitUser] = useState("");
-  const [inputErrorUser, setInputErrorUser] = useState(false);
-  const [inputErrorSenha, setInputErrorSenha] = useState(false);
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const [submitSenha, setSubmitSenha] = useState("");
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const [email, setUser] = useState(""); // Estado para o campo de email
+  const [senha, setSenha] = useState(""); // Estado para o campo de senha
+  const [error, setError] = useState(null); // Estado para mensagens de erro
+  const [inputErrorUser, setInputErrorUser] = useState(false); // Estado para o erro de input de usuário
+  const [inputErrorSenha, setInputErrorSenha] = useState(false); // Estado para o erro de input de senha
+  const [passwordVisible, setPasswordVisible] = useState(false); // Estado para visibilidade da senha
+  const navigate = useNavigate(); // Hook para navegação de rotas
+  const dispatch = useDispatch(); // Hook para despachar ações do Redux
 
-  async function Autentica(info) {
-    const response = await axios.get("http://localhost:3004/users");
-    const users = response.data;
+  /**
+   * Manipula o evento de login.
+   * Envia os dados do usuário para o endpoint de login da API.
+   *
+   * @async
+   * @function handleLogin
+   * @param {Object} e - O evento de submissão do formulário.
+   */
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError(null);
 
-    for (let user of users) {
-      if (user.user === submitUser && user.senha === submitSenha) {
-        dispatch(addLoggedUser(user));
-        //  dispatch(getTimesByUserID(user.id));
-        //  dispatch(getPartidasByUserID(user.id));
-        alert("autenticado");
-        navigate("/meustorneios");
-        return;
+    try {
+      const response = await axios.post("http://localhost:3004/auth/login", {
+        email,
+        senha,
+      });
+
+      // Armazena o token no Redux
+      dispatch(setToken(response.data.token));
+      dispatch(addLoggedUser(response.data.user));
+
+      const data = response.data;
+
+      if (response.status === 200) {
+        alert("Autenticado com sucesso!");
+        navigate("/Time");
+      }
+    } catch (error) {
+      if (error.response && error.response.data) {
+        setError(error.response.data.msg);
+      } else {
+        setError("Erro no servidor. Tente novamente mais tarde.");
       }
     }
-    alert("usuario invalido");
-  }
+  };
+
+  /**
+   * Manipula a mudança de input do usuário.
+   *
+   * @function handleChangeUser
+   * @param {Object} e - O evento de mudança de input.
+   */
   function handleChangeUser(e) {
     setUser(e.target.value);
   }
+
+  /**
+   * Manipula a mudança de input da senha.
+   *
+   * @function handleChangeSenha
+   * @param {Object} e - O evento de mudança de input.
+   */
   function handleChangeSenha(e) {
     setSenha(e.target.value);
   }
+
+  /**
+   * Manipula o evento de submissão do formulário.
+   * Valida os inputs de email e senha.
+   *
+   * @function handleSubmit
+   * @param {Object} e - O evento de submissão do formulário.
+   */
   function handleSubmit(e) {
     e.preventDefault();
-    if (!user.trim() || !senha.trim()) {
-      if (!user.trim()) {
+    if (!email.trim() || !senha.trim()) {
+      if (!email.trim()) {
         setInputErrorUser(true);
       } else {
         setInputErrorUser(false);
@@ -54,15 +103,31 @@ const Login = () => {
       } else {
         setInputErrorSenha(false);
       }
-
       return;
     }
-    setSubmitUser(user);
-    setSubmitSenha(senha);
+    email, senha;
   }
+
+  /**
+   * Alterna a visibilidade da senha.
+   *
+   * @function handleTogglePasswordVisibility
+   */
   const handleTogglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
+
+  /**
+   * Manipula o evento de clique para a página de cadastro.
+   *
+   * @function handleClickCadastro
+   * @param {Object} e - O evento de clique.
+   */
+  function handleClickCadastro(e) {
+    e.preventDefault();
+    navigate("/");
+  }
+
   return (
     <div className="login-container">
       <div>
@@ -70,27 +135,23 @@ const Login = () => {
           <h1>Login</h1>
         </div>
         <div className="box-login">
-          <form
-            // onSubmit={handleSubmit}
-            onSubmit={(values) => {
-              handleSubmit(values);
-              Autentica(values);
-            }}
-          >
-            <h3>Usuario:</h3>
+          <form className="form-login" onSubmit={handleLogin}>
+            <h3>email:</h3>
             <input
               type="text"
               name="mensagem"
-              value={user}
+              value={email}
               onChange={handleChangeUser}
+              required
               className={inputErrorUser ? "input-error" : "input-certo"}
             ></input>
-            <h3>Senha:</h3>
+            <h3>senha:</h3>
             <input
               type={passwordVisible ? "text" : "password"}
               name="mensagem"
               value={senha}
               onChange={handleChangeSenha}
+              required
               className={inputErrorSenha ? "input-error" : "input-certo"}
             ></input>
             <div>
@@ -109,9 +170,18 @@ const Login = () => {
                 mostrar senha
               </label>
             </div>
-            <button type="submit" className="btn-login">
-              Logar
-            </button>
+            <div className="botoes">
+              <button type="submit" className="btn-login">
+                logar
+              </button>
+              <p className="pergunta-login">quer criar uma conta?</p>
+              <a
+                className="entrar-cadastro-login"
+                onClick={handleClickCadastro}
+              >
+                cadastrar
+              </a>
+            </div>
           </form>
         </div>
       </div>

@@ -1,53 +1,103 @@
-// import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// import axios from "axios";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+const initialState = {
+  id: "", //qual o id do Convite
+  idTimeConvite: "", //o convidado está sendo convidado para qual time?
+  // idTorneioConvite: "",
+  idCriadorConvite: "", //quem está convidando
+  idDestinatario: "", //quem vai receber o convite
+};
 
-// const initialState = {
-//   idConvite: "",
-//   idUser: "",
-//   idTime: "",
-// };
+const enviarConviteAsync = createAsyncThunk(
+  "convite/enviarConviteAsync",
+  async (data) => {
+    const response = await axios.post("http://localhost:3004/convites", data);
+    return response.data;
+  }
+);
 
-// const addConviteAsync = createAsyncThunk("time/addTimeAsync", async (data) => {
-//   const response = await axios.post("http://localhost:3004/time", data);
-//   return response.data;
-// });
-// const getConviteByUserId = createAsyncThunk('time/getTimeAsync', async (userId) => {
-//     const response = await axios.get(`http://localhost:3004/time?userId=${userId}`);
-//     return response.data;
-// });
+const cancelarConviteAsync = createAsyncThunk(
+  "convite/cancelarConviteAsync",
+  async (idConvite) => {
+    await axios.delete(`http://localhost:3004/convites/${idConvite}`);
+    return idConvite;
+  }
+);
 
-// const updateConvite = createAsyncThunk("time/updateTimeAsync", async (data) => {
-//   await axios.put(`http://localhost:3004/time/${data.id}`, data);
-// });
+const aceitarConviteAsync = createAsyncThunk(
+  "convite/aceitarConviteAsync",
+  async (idConvite) => {
+    const response = await axios.put(
+      `http://localhost:3004/convites/${idConvite}`,
+      { status: "aceito" }
+    );
+    return response.data;
+  }
+);
 
-// const deleteConviteByUserId = createAsyncThunk('time/deleteTimeAsync', async (userIdDono) => {
-//     await axios.delete(`http://localhost:3004/time?userId=${userId}`);
-// });
+const recusarConviteAsync = createAsyncThunk(
+  "convite/recusarConviteAsync",
+  async (idConvite) => {
+    const response = await axios.put(
+      `http://localhost:3004/convites/${idConvite}`,
+      { status: "recusado" }
+    );
+    return response.data;
+  }
+);
 
-// const deleteConvite = createAsyncThunk("time/deleteTimeAsync", async (id) => {
-//   await axios.delete(`http://localhost:3004/time/${id}`);
-// });
+const conviteSlice = createSlice({
+  name: "convite",
+  initialState,
+  reducers: {
+    clearConvite: (state) => {
+      state.idConvite = "";
+      state.idTimeConvite = "";
+      state.idCriadorConvite = "";
+      state.idDestinatario = "";
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(enviarConviteAsync.fulfilled, (state, action) => {
+        const { id, idTimeConvite, idCriadorConvite, nomeDestinatario } =
+          action.payload;
+        state.idConvite = id;
+        state.idTimeConvite = idTimeConvite;
+        state.idCriadorConvite = idCriadorConvite;
+        state.idDestinatario = nomeDestinatario;
+      })
+      .addCase(cancelarConviteAsync.fulfilled, (state, action) => {
+        const idConviteCancelado = action.payload;
+        if (state.idConvite === idConviteCancelado) {
+          state.idConvite = "";
+          state.idTimeConvite = "";
+          state.idCriadorConvite = "";
+          state.idDestinatario = "";
+        }
+      })
+      .addCase(aceitarConviteAsync.fulfilled, (state) => {
+        state.idConvite = "";
+        state.idTimeConvite = "";
+        state.idCriadorConvite = "";
+        state.idDestinatario = "";
+      })
+      .addCase(recusarConviteAsync.fulfilled, (state) => {
+        state.idConvite = "";
+        state.idTimeConvite = "";
+        state.idCriadorConvite = "";
+        state.idDestinatario = "";
+      });
+  },
+});
 
-// const timeSlice = createSlice({
-//   name: "convites",
-//   initialState,
-//   reducers: {
-//     addConvite: (state, action) => {
-//         state.idConvite = action.payload.idConvite;
-//         state.idUser = action.payload.idUser;
-//         state.idTime = action.payload.nomeTime;
-//     },
-//     aceitaConvite(state, action){
-//         const index = state.findIndex(invite => invite.id === action.payload);
-//         if (index !== -1) {
-//             state.splice(index, 1);
-//           }
-//     }
-//   },
-// });
+export const { clearConvite } = conviteSlice.actions;
 
-// export const { addConvite, aceitaConvite } = timeSlice.actions;
+export {
+  enviarConviteAsync,
+  cancelarConviteAsync,
+  aceitarConviteAsync,
+  recusarConviteAsync,
+};
 
-// export { addConviteAsync, getConviteByUserId, updateConvite, deleteConviteByUserId, deleteConvite };
-
-// export default conviteSlice.reducer;
+export default conviteSlice.reducer;

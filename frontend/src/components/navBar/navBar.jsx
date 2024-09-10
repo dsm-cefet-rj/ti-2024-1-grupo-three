@@ -5,11 +5,14 @@ import User from "../../assets/user.svg";
 import Lupa from "../../assets/lupa.svg";
 import "./navBar.css";
 import Convite from "../convite/convite";
+import EnviarConvite from "../../components/EnvioConvite/EnvioConvite";
 import Time from "../../pages/time/time";
 import { useDispatch, useSelector } from "react-redux";
 import { addLoggedUser, logoutUser } from "../../redux/user/slice";
 import { useNavigate, Navigate } from "react-router-dom";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import EnvioConvite from "../../components/EnvioConvite/EnvioConvite";
+import GerarPartida from "../gerarPartida/GerarPartida";
 
 function NavBar() {
   const [aberto, setAberto] = useState(false);
@@ -17,13 +20,12 @@ function NavBar() {
   const abrirMenu = () => {
     setAberto(!aberto);
   };
-    const currentUser = useSelector(rootReducer => rootReducer.user);
-    const dispatch = useDispatch();
-    function handleLogOut(){
-            dispatch(logoutUser());
+  const currentUser = useSelector((rootReducer) => rootReducer.user);
+  const dispatch = useDispatch();
+  function handleLogOut() {
+    dispatch(logoutUser());
+  }
 
-    }
-    
   return (
     <div className="navBar">
       <div className="navbar-container">
@@ -51,15 +53,21 @@ function NavBar() {
                 <Link to="/meustorneios">Torneios</Link>
               </button>
               <button className="botao2">
-              <Link to="/Time">Time</Link>
+                <Link to="/Time">Time</Link>
               </button>
               <button className="botao3">
                 <Convite />
               </button>
+              <button className="botao4">
+                <EnvioConvite />
+              </button>
+              <button className="botao5">
+                <GerarPartida />
+              </button>
             </div>
             <button className="logout" onClick={handleLogOut}>
-                <a href="/login">Logout</a>
-              </button>
+              <a href="/login">Logout</a>
+            </button>
           </div>
         ) : (
           <div></div>

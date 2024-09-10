@@ -1,0 +1,24 @@
+DELETE  http://localhost:3004/api/torneio/66ca8183e3958570cc59b107
+//Content-Type: application/json
+
+//{
+//    "placar": "3 x 0"
+//}
+//
+//{
+//  "tipoConvite": "torneio_para_time",
+//  "usuarioRemetenteId": "66ca4fbf1fcb6ff73514ac2c",
+//  "timeId": "66ca3e302c3c011fa7c582b5",
+//  "usuarioDestinatarioId" : ""
+//}
+
+//POST http://localhost:3004/api/user
+//Content-Type: application/json
+//
+//{
+//    "nome":"Teste3User",
+//    "email" : "email@teste.com.br",
+//    "senha" : "Senha@2024"
+//
+//}
+//GET http://localhost:3004/api/torneio

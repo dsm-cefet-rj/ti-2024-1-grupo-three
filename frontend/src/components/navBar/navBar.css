@@ -58,6 +58,11 @@
   border: none;
   background-color: #222232;
 }
+
+.menuHamButton:hover {
+  cursor: pointer;
+}
+
 .menu {
   position: absolute;
   z-index: 13102003;
@@ -131,6 +136,7 @@
   border: none;
   height: 5vh;
   position: relative;
+  margin-bottom: 5vh;
   background-color: #222232;
   color: #acacac;
 }
@@ -145,6 +151,61 @@
   top: -0.3vh;
 }
 .botao3::after {
+  content: "";
+  display: flex;
+  position: absolute;
+  background-color: #4d4d4d;
+  left: 0vw;
+  width: 30vw;
+  height: 0.2vh;
+  top: 4.5vh;
+}
+.botao4 {
+  border: none;
+  height: 5vh;
+  margin-bottom: 5vh;
+  position: relative;
+  background-color: #222232;
+  color: #acacac;
+}
+.botao4::before {
+  content: "";
+  display: flex;
+  position: absolute;
+  background-color: #4d4d4d;
+  left: 0vw;
+  width: 30vw;
+  height: 0.2vh;
+  top: -0.3vh;
+}
+.botao4::after {
+  content: "";
+  display: flex;
+  position: absolute;
+  background-color: #4d4d4d;
+  left: 0vw;
+  width: 30vw;
+  height: 0.2vh;
+  top: 4.5vh;
+}
+.botao5 {
+  border: none;
+  height: 5vh;
+  position: relative;
+  background-color: #222232;
+  color: #acacac;
+}
+.botao5::before {
+  content: "";
+  display: flex;
+  position: absolute;
+  background-color: #4d4d4d;
+  left: 0vw;
+  width: 30vw;
+  height: 0.2vh;
+  top: -0.3vh;
+}
+.botao5::after {
   content: "";
   display: flex;
   position: absolute;
@@ -179,4 +240,63 @@ a {
 }
 a:visited {
   color: inherit;
+}
+
+@media (min-width: 769px) {
+  .menu {
+    width: 14.5rem;
+    background-color: #222232;
+  }
+  .botao1 {
+    width: 14.5rem;
+  }
+  .botao1::before {
+    width: 14.5rem;
+  }
+  .botao1::after {
+    width: 14.5rem;
+  }
+  .botao2 {
+    width: 14.5rem;
+  }
+  .botao2::before {
+    width: 14.5rem;
+  }
+
+  .botao2::after {
+    width: 14.5rem;
+  }
+  .botao3 {
+    width: 14.5rem;
+  }
+  .botao3::before {
+    width: 14.5rem;
+  }
+  .botao3::after {
+    width: 14.5rem;
+  }
+  .botao4 {
+    width: 14.5rem;
+  }
+  .botao4::before {
+    width: 14.5rem;
+  }
+  .botao4::after {
+    width: 14.5rem;
+  }
+  .botao5 {
+    width: 14.5rem;
+  }
+  .botao5::before {
+    width: 14.5rem;
+  }
+  .botao5::after {
+    width: 14.5rem;
+  }
+  .logout {
+    width: 14.5rem;
+  }
+  .logout::before {
+    width: 14.5rem;
+  }
 }
