@@ -13,10 +13,7 @@ const torneioSchema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
-    tipoTorneio: {
-      type: String,
-      required: true,
-    },
+    
     qtdTimes: {
       type: Number,
       required: true,

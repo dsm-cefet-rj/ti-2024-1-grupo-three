@@ -10,10 +10,12 @@ conviteRoutes.post("/convite", conviteController.create);
 conviteRoutes.get("/convite", conviteController.getAll);
 
 // Rota para aceitar um convite por ID
-conviteRoutes.post("/convite/:conviteId/aceitar", conviteController.aceitarConvite);
+conviteRoutes.put("/convite/aceitar/:conviteId", conviteController.aceitarConvite);
 
 // Rota para obter um convite específico por ID
 conviteRoutes.get("/convite/:id", conviteController.get);
+
+conviteRoutes.get("/convite/time/:destinatario", conviteController.getByTimeDest);
 
 conviteRoutes.get("/convite/destinatario/:idDest", conviteController.getByDestinatario)
 // Rota para deletar um convite específico por ID

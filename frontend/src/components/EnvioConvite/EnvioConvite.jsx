@@ -107,11 +107,13 @@ const EnvioConvite = () => {
     let remetenteUnico = true;
     if (tipoConvite == `Jogador`) {
       if(selectedUser){
+        console.log("1")
         const responseVerificacao = await axios.get(`http://localhost:3004/api/time/user/${selectedUser._id}`)
-        if(responseVerificacao.data){
+        if(responseVerificacao.status = 200){
           timeDoUsuario = responseVerificacao.data
         }
         const responseVerificacaoConvite = await axios.get(`http://localhost:3004/api/convite/destinatario/${selectedUser._id}`)
+        console.log("2")
         if(responseVerificacaoConvite && responseVerificacaoConvite.data.length > 0){
           convites = responseVerificacaoConvite.data
           convites.forEach((convite) => {
@@ -119,16 +121,26 @@ const EnvioConvite = () => {
               remetenteUnico = false;
             }
           });
+          console.log("3")
         }
         if(!remetenteUnico){
           setMensagemAviso(`Usuário já possui convite!`)
         }else{
-          if(Array.isArray(timeDoUsuario)){
+          console.log("4")
+          if(!Array.isArray(timeDoUsuario) && timeDoUsuario.data){
             setMensagemAviso(`Usuário já possui um time!`)
           }else{
+            console.log("5")
             setTipoConviteEnvio("usuario_para_usuario")
             setUsuarioRemetenteId(userId)
             setUsuarioDestinatarioId(selectedUser._id)
+            console.log({
+              tipoConviteEnvio,
+              usuarioRemetenteId,
+              usuarioDestinatarioId,
+              timeId,
+              torneio,
+            });
             const response = await fetch("http://localhost:3004/api/convite", {
               method: "POST",
               headers: {
@@ -136,6 +148,8 @@ const EnvioConvite = () => {
               },
               body: JSON.stringify({ tipoConviteEnvio, usuarioRemetenteId, usuarioDestinatarioId, timeId, torneio}),
             });
+            console.log(response.data)
+            alert("Convite Enviado!")
             setMensagemAviso(`Convite enviado com sucesso!`)
           }
         }
@@ -148,13 +162,22 @@ const EnvioConvite = () => {
     }else{
       
       if(selectedUser){
-        const responseDono = await axios.get(`http://localhost:3004/api/torneio/dono/${selectedUser._id}`)
+        const responseDono = await axios.get(`http://localhost:3004/api/torneio/dono/${userId}`)
         torneioUsuario = responseDono.data
-        if(!Array.isArray(timeDoUsuario)){
+        
+        if(!Array.isArray(torneioUsuario)){
+          
           setTipoConviteEnvio("torneio_para_time")
           setUsuarioRemetenteId(userId)
           setTimeId(selectedUser._id)
           setTorneio(torneioUsuario._id)
+          console.log({
+            tipoConviteEnvio,
+            usuarioRemetenteId,
+            usuarioDestinatarioId,
+            timeId,
+            torneio,
+          });
           const response = await fetch("http://localhost:3004/api/convite", {
             method: "POST",
             headers: {
@@ -162,6 +185,7 @@ const EnvioConvite = () => {
             },
             body: JSON.stringify({ tipoConviteEnvio, usuarioRemetenteId, usuarioDestinatarioId, timeId, torneio}),
           });
+          alert('Convite Enviado!')
           setMensagemAviso(`Convite enviado com sucesso!`)
         }else{
           setMensagemAviso(`Você não é dono de nenhum torneio!`)

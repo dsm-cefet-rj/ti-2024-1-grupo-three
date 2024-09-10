@@ -12,6 +12,7 @@ const conviteController = {
       // Verificar se o tipo de convite foi enviado
       if (!tipoConviteEnvio) {
         return res.status(400).json({ message: "Tipo de convite não especificado" });
+        console.log("Parou em tipo convite")
       }
   
       // Se o tipo de convite for "usuario_para_usuario"
@@ -48,7 +49,7 @@ const conviteController = {
         // Criar o convite para o time se juntar ao torneio
         novoConvite = new Convite({
           usuarioRemetente: usuarioRemetenteId,
-          torneio,
+          torneio: torneio,
           timeDestinatario: timeId,
           tipoConvite: tipoConviteEnvio,
         });
@@ -83,17 +84,37 @@ const conviteController = {
           console.log(error);
         }
       },
+      getByTimeDest: async (req, res) => {
+        try {
+          const { destinatario } = req.params;  // Obtendo destinatário da rota
+      
+          // Verifique se o id do time destinatário foi enviado
+          if (!destinatario) {
+            return res.status(400).json({ message: "ID do destinatário não fornecido!" });
+          }
+      
+          // Realiza a busca com o id do time destinatário
+          const resConvite = await Convite.find({ timeDestinatario: destinatario });
+      
+          // Verifique se encontrou algum convite
+          if (resConvite.length > 0) {
+            return res.json(resConvite);
+          } else {
+            return res.status(404).json({ message: "Nenhum convite encontrado para o time destinatário." });
+          }
+      
+        } catch (error) {
+          console.error("Erro ao buscar convite:", error);
+          return res.status(500).json({ message: "Erro ao buscar convite", error });
+        }
+      },
+      
       aceitarConvite: async (req, res) => {
         try {
-          const { conviteId } = req.params;
+          const  conviteId  = req.params.conviteId;
     
           // Buscar o convite pelo ID
-          const convite = await Convite.findById(conviteId)
-            .populate("usuarioDestinatario")
-            .populate("timeRemetente")
-            .populate("usuarioRemetente")
-            .populate("torneio")
-            .populate("timeDestinatario");
+          const convite = await Convite.findById(conviteId);
     
           if (!convite) {
             return res.status(404).json({ message: "Convite não encontrado" });
@@ -102,14 +123,14 @@ const conviteController = {
           // Processamento de convite baseado no tipo de convite
           if (convite.tipoConvite === "usuario_para_usuario") {
             // Adicionar o usuário destinatário ao time
-            const time = await Time.findById(convite.timeRemetente._id);
+            const time = await Time.findById(convite.timeRemetente);
             if (!time) {
               return res.status(404).json({ message: "Time não encontrado" });
             }
     
             // Verificar se o usuário já faz parte do time comparando pelo _id
             const isAlreadyMember = time.userId.some(
-              (user) => user._id === convite.usuarioDestinatario._id
+              (user) => user._id === convite.usuarioDestinatario
             );
     
             if (isAlreadyMember) {
@@ -127,11 +148,11 @@ const conviteController = {
     
           } else if (convite.tipoConvite === "torneio_para_time") {
             // Adicionar o time ao torneio
-            const time = await Time.findById(convite.timeDestinatario._id);
+            const time = await Time.findById(convite.timeDestinatario);
             if (!time) {
               return res.status(404).json({ message: "Time não encontrado" });
             }
-            const torneio = await Torneio.findById(convite.torneio._id)
+            const torneio = await Torneio.findById(convite.torneio)
             if(!torneio) {
               return res.status(404).json({ message: "Torneio não encontrado" });
             }
@@ -140,7 +161,7 @@ const conviteController = {
             }
             // Verificar se o time já está no torneio
             const isAlreadyInTournament = torneio.Participantes.some(
-              (time) => time._id === convite.timeRemetente._id
+              (time) => time._id === convite.timeRemetente
             );
     
             if (isAlreadyInTournament) {

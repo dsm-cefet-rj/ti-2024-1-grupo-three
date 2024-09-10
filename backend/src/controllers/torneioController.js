@@ -1,6 +1,7 @@
 import { Torneio } from "../models/Torneio.js";
 import { Chat } from "../models/Chat.js";
 import {User} from "../models/User.js";
+import mongoose from 'mongoose';
 import {Time} from "../models/Time.js";
 const TorneioController = {
   create: async (req, res) => {
@@ -8,17 +9,16 @@ const TorneioController = {
       const {
         nomeTorneio,
         userIdDonoTorneio,
-        tipoTorneio,
+        
         qtdTimes,
         localTorneio, // Inicializa como array vazio se não for fornecido
       } = req.body;
-
-      // Procurar o usuário pelo ID fornecido
-      const donoTorneio = await User.findById(userIdDonoTorneio);
-      if (!donoTorneio) {
-        return res.status(404).json({ message: "Usuário não encontrado" });
+      let torneiosAntigos = []
+      torneiosAntigos =  await Torneio.find({userIdDonoTorneio: userIdDonoTorneio})
+      if(torneiosAntigos.length > 0){
+        res.status(500).json({ message: "usuário já é dono de um torneio", error: error.message || error });
+        return
       }
-      
       // Cria um novo chat para o torneio
       const novoChat = new Chat({
         mensagens: [],
@@ -32,8 +32,7 @@ const TorneioController = {
       // Cria o novo torneio com o chat associado e os times participantes
       const novoTorneio = new Torneio({
         nomeTorneio,
-        userIdDonoTorneio: donoTorneio,
-        tipoTorneio,
+        userIdDonoTorneio,
         qtdTimes,
         localTorneio,
         chat: novoChat, // associa o chat ao torneio
@@ -91,22 +90,31 @@ const TorneioController = {
   },
   get: async (req, res) => {
     try {
-      const id = req.params.id;
-      const torneio = await Torneio.findById(id).populate("Participantes").populate("chat");
+      const { id } = req.params;
+  
+      // Verifique se o ID está presente
+      if (!id) {
+        return res.status(400).json({ msg: "ID não fornecido." });
+      }
+  
+      // Verifique se o ID é um ObjectId válido
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ msg: "ID inválido." });
+      }
+  
+      // Realize a busca no banco de dados
+      const torneio = await Torneio.findById(id);
+  
+      // Verifique se o torneio foi encontrado
       if (!torneio) {
-        res.status(404).json({ msg: "erro, não encontrado" });
-        return;
+        return res.status(404).json({ msg: "Torneio não encontrado." });
       }
-      // Checa se o usuário é participante do torneio
-      const isParticipante = torneio.Participantes.some(
-        (participante) => participante.userId === req.user.id
-      );
-      if (!isParticipante) {
-        return res.status(403).json({ message: "Você não tem acesso a este torneio" });
-      }
-      res.status(200).json(torneio);
+  
+      // Retorne o torneio encontrado
+      return res.status(200).json(torneio);
     } catch (error) {
-      console.log(error);
+      console.error("Erro ao buscar torneio:", error);
+      return res.status(500).json({ msg: "Erro ao buscar torneio", error });
     }
   },
   delete: async (req, res) => {

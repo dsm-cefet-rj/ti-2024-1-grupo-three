@@ -5,6 +5,7 @@
   background-color: #222232;
   color: #acacac;
 }
+
 .buttonconvite:hover {
   cursor: pointer;
 }
@@ -21,82 +22,46 @@
   justify-content: center;
   align-items: center;
 }
+
 .modal {
   position: relative;
 }
-.container-convites {
-  border: 5px solid #000000;
-  padding: 200px 144px;
-}
-
-.testetetete {
-  color: #fff;
-  text-align: center;
-  font-size: 1.5rem;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 100%;
-}
-
-.modal input {
-  width: 100%;
-  padding: 0.7rem 0.5rem;
-  box-sizing: border-box;
-}
-
-/* .modal button[type="submit"] {
-  display: block;
-  background: #006739;
-  border: none;
-  border-radius: 4px;
-  padding: 0.7rem 2rem;
-  font-size: 1rem;
-  color: #f8f8f8;
-  margin-top: 1rem;
-  font-weight: 600;
-  width: 100%;
-} */
 
 .container-convites {
-  padding: 3rem 0rem;
-
-  margin-top: 1rem;
-  margin-left: 1.5rem;
-  border-radius: 5px;
-  align-items: center;
-  width: 18.75rem;
+  padding: 3rem;
   background-color: #09090e;
-  display: flex;
-  justify-content: center;
-  position: relative;
-}
-.container-convites h2 {
-  font-size: 1rem;
+  border-radius: 5px;
+  width: 300px; /* Ajuste o tamanho aqui */
+  text-align: center; /* Centraliza o texto e os botões */
 }
 
 .tituloconvites {
   font-family: "Roboto Flex", sans-serif;
-  position: absolute;
-  top: 10px;
-  left: 5px;
-  font-size: 1.25rem !important;
-  color: white !important;
-  font-weight: 600 !important;
-  margin-top: 0rem !important;
-  margin-left: 0.938rem !important;
+  font-size: 1.25rem;
+  color: white;
+  font-weight: 600;
+  margin-bottom: 1rem;
 }
-.conteudo-convites {
-  margin-top: 20px;
-}
-.tudodo {
-  display: flex;
-}
-.btn-aceita {
-  margin-top: 3vh;
-  margin-bottom: 3vh;
-  margin-left: 3rem;
+
+.convites-title {
   font-size: 1rem;
-  width: fit-content;
+  color: #acacac;
+  margin-bottom: 1rem;
+}
+
+.conteudo-convites {
+  margin-bottom: 1.5rem;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.btn-aceita {
+  font-size: 1rem;
   padding: 10px;
   border-radius: 0.313rem;
   color: white;
@@ -108,9 +73,9 @@
   background-color: #115a28;
   cursor: pointer;
 }
+
 .btn-recusa {
   font-size: 1rem;
-  width: fit-content;
   padding: 10px;
   border-radius: 0.313rem;
   color: white;

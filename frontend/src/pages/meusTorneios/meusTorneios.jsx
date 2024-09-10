@@ -27,21 +27,30 @@ const MeusTorneios = () => {
       try {
         let torneiosTime = [];
         let torneiosDono = [];
-        
-        // Busca os torneios onde o usuário é o dono
-        const responseTorneioDono = await axios.get(
-          `http://localhost:3004/api/torneio/dono/${decodedToken.id}`
-        );
-
-        if (responseTorneioDono.status === 200 && responseTorneioDono.data) {
-          torneiosDono = responseTorneioDono.data;
+        try{
+          const responseTorneioDono = await axios.get(
+            `http://localhost:3004/api/torneio/dono/${decodedToken.id}`
+          );
+          if (responseTorneioDono.status === 200 && responseTorneioDono.data) {
+            torneiosDono = responseTorneioDono.data;
+            setTorneiosDono(torneiosDono);
+          }
+        }catch(error){
+          if (error.response && error.response.status === 404) {
+            console.log("Nenhum torneio encontrado para este dono.");
+          } else {
+            console.error("Erro ao buscar torneios do dono:", error);
+          }
         }
+        // Busca os torneios onde o usuário é o dono
+        
 
-        const responseTime = await axios.get(
-          `http://localhost:3004/api/time/user/${decodedToken.id}`
-        );
-
-        const time = responseTime.data;
+        
+        try{
+          const responseTime = await axios.get(
+            `http://localhost:3004/api/time/user/${decodedToken.id}`
+          );
+          const time = responseTime.data;
         console.log('Time:',time);
         console.log('Time ID:', time._id);
         if (time) {
@@ -49,16 +58,28 @@ const MeusTorneios = () => {
           const responseTorneio = await axios.get(
             `http://localhost:3004/api/torneio/time/${time._id}`
           );
+        
+          torneiosTime = responseTorneio.data;
+          console.log('123546:', responseTorneio)
+          setTorneiosParticipante(torneiosTime);
+        }
+
+          
+        }catch (error){
+
+        }
+        
+
+        
           
        
 
-            torneiosTime = responseTorneio.data;
-            console.log('123546:', responseTorneio)
+            
           
-        }
+        
 
-        setTorneiosDono(torneiosDono); // Mesmo que vazio, não causará erro
-        setTorneiosParticipante(torneiosTime); // Mesmo que vazio, não causará erro
+         // Mesmo que vazio, não causará erro
+         // Mesmo que vazio, não causará erro
         console.log(torneiosDono)
         console.log('Torneios Participantes:', torneiosTime)
       } catch (error) {

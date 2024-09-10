@@ -25,7 +25,7 @@ const timeController = {
       const time = await Time.findOne({ userIdDono: userIdDono }); // Confere se userIdDono é o campo correto
 
       if (!time) {
-        return res.status(404).json({ message: "Time não encontrado" });
+        return //res.status(404).json({ message: "Time não encontrado" });
       }
 
       return res.status(200).json(time);
@@ -42,7 +42,7 @@ const timeController = {
       }  }); // Confere se userId é o campo correto
 
       if (!time) {
-        return res.status(404).json({ message: "Time não encontrado" });
+        return res.status(200).json({ message: "Time não encontrado" });
       }
 
       return res.status(200).json(time);
