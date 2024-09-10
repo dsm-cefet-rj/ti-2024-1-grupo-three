@@ -13,7 +13,6 @@ const MeusTorneios = () => {
   const currentUser = useSelector((rootReducer) => rootReducer.user);
   const token = useSelector((state) => state.auth.token);
   const decodedToken = jwtDecode(token);
-  console.log(decodedToken);
   const [torneiosDono, setTorneiosDono] = useState([]);
   const [torneiosParticipante, setTorneiosParticipante] = useState([]);
   const [show, setShow] = useState(false);
@@ -37,7 +36,6 @@ const MeusTorneios = () => {
           }
         }catch(error){
           if (error.response && error.response.status === 404) {
-            console.log("Nenhum torneio encontrado para este dono.");
           } else {
             console.error("Erro ao buscar torneios do dono:", error);
           }
@@ -51,8 +49,6 @@ const MeusTorneios = () => {
             `http://localhost:3004/api/time/user/${decodedToken.id}`
           );
           const time = responseTime.data;
-        console.log('Time:',time);
-        console.log('Time ID:', time._id);
         if (time) {
           // Busca os torneios que o time está participando
           const responseTorneio = await axios.get(
@@ -60,7 +56,6 @@ const MeusTorneios = () => {
           );
         
           torneiosTime = responseTorneio.data;
-          console.log('123546:', responseTorneio)
           setTorneiosParticipante(torneiosTime);
         }
 
@@ -80,8 +75,6 @@ const MeusTorneios = () => {
 
          // Mesmo que vazio, não causará erro
          // Mesmo que vazio, não causará erro
-        console.log(torneiosDono)
-        console.log('Torneios Participantes:', torneiosTime)
       } catch (error) {
         console.error("Erro ao buscar os torneios:", error);
       }

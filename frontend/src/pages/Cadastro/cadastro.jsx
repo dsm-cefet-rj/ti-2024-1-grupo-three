@@ -72,7 +72,6 @@ const Cadastro = () => {
    * @param {Object} e - O evento de submissão do formulário.
    */
   const handleSubmit = async (e) => {
-    console.log(e);
     e.preventDefault();
     if (!nome.trim() || !email.trim() || !senha.trim()) {
       if (!nome.trim()) {

@@ -29,7 +29,6 @@ const Time = () => {
 
   const token = useSelector((state) => state.auth.token); // Seleciona o token de autenticação do estado Redux
   const decodedToken = jwtDecode(token); // Decodifica o token JWT
-  console.log(decodedToken);
 
   // Redireciona para a página de login se o token não estiver presente
   if (!token) {
@@ -50,7 +49,6 @@ const Time = () => {
           `http://localhost:3004/api/time/user/${decodedToken.id}`
         );
         const time = response.data;
-        console.log(time);
 
         if (time) {
           setNomeTime(time.nomeTime);
@@ -58,7 +56,6 @@ const Time = () => {
             `http://localhost:3004/api/partidas/time/${time._id}`
           );
           const partidas = partidaResponse.data;
-          console.log(partidas);
           if (partidas) {
             setPartidas(partidas);
           }
@@ -74,7 +71,6 @@ const Time = () => {
             return userResponse.data;
           });
           const userDetails = await Promise.all(userDetailsPromises);
-          console.log(userDetails);
           setJogadores(userDetails);
         }
       } catch (error) {

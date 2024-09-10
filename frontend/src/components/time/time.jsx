@@ -4,14 +4,12 @@ import axios from "axios";
 
 const Time = ({id}) => {
   const [nomeTime, setNomeTime] = useState("");
-  console.log(id);
   useEffect(() => {
   const fetchTime = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3004/api/time/user/${id}`
+        `http://localhost:3004/api/time/${id}`
       );
-      console.log(response);
       const time = response.data;
       if (time) {
         setNomeTime(time.nomeTime);

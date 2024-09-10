@@ -15,7 +15,6 @@ const MostrarTorneio = () => {
   const [times, setTimes] = useState([]);
   const [partidas, setPartidas] = useState([]);
   const { id } = useParams(); // Extrai o parâmetro 'id' da URL
-  console.log(id);
 
   const token = useSelector((state) => state.auth.token);
 
@@ -29,12 +28,12 @@ const MostrarTorneio = () => {
         const response = await axios.get(
           `http://localhost:3004/api/torneio/meutime/${id}`
         );
-        setTimes(response.data);
+        setTimes(response.data.Participantes);
 
         if (times) {
           const partidaDetailsPromises = times.map(async (times) => {
             const partidaResponse = await axios.get(
-              `http://localhost:3004/partidas/time/${times}`,
+              `http://localhost:3004/api/partidas/time/${times}`,
             );
             return partidaResponse.data;
           });
@@ -46,7 +45,7 @@ const MostrarTorneio = () => {
       }
     };
     fetchTime();
-  }, [times]);
+  }, [id, partidas, times]);
 
 
 
@@ -61,10 +60,10 @@ const MostrarTorneio = () => {
             {show ? (
               <div>
                 <div>
-                  {times.map((time) => (
-                    <div key={time}>
+                  {times.map((id) => (
+                    <div key={id}>
                       <Time 
-                      id={time}
+                      id={id}
                       />
                     </div>
                   ))}
@@ -76,9 +75,9 @@ const MostrarTorneio = () => {
             ) : (
               <div>
                 <div>
-                  {times.slice(0, 2).map((time) => (
-                    <div key={time._id}>
-                      <Time nome={time.nome} />
+                  {times.slice(0, 2).map((id) => (
+                    <div key={id}>
+                      <Time id={id} />
                     </div>
                   ))}
                 </div>
@@ -92,21 +91,47 @@ const MostrarTorneio = () => {
             <h1 className="tituloPag">Partidas</h1>
             {partidas.length > 0 ? (
               <div>
+              {show2 ? (
                 <div>
-                  {partidas.map((partida) => (
-                    <PartidaComponente
-                      key={partida._id}
-                      nome={partida.isMandante ? `vs. ${partida.adversario}` : `@${partida.adversario}`}
-                      resultado={partida.placar}
-                      data={partida.data}
-                      local={partida.local}
-                    />
+                  {partidas.slice(0, 2).map((partida, index) => (
+                    <div key={index}>
+                      {partida.map((dado) => (
+                        <PartidaComponente
+                          key={dado._id}
+                          nome={dado.isMandante ? `vs ${dado.adversario}` : `vs ${dado.adversario}`}
+                          resultado={dado.placar}
+                          data={dado.data}
+                          local={dado.local}
+                        />
+                      ))}
+                    </div>
                   ))}
+                  <div>
+                    <Button show={show2} setShow={setShow2} />
+                  </div>
                 </div>
+              ) : (
+                // Removei as chaves desnecessárias e organizei corretamente o JSX no else
                 <div>
-                  <Button show={show2} setShow={setShow2} />
+                  {partidas.slice(0, 2).map((partida, index) => (
+                    <div key={index}>
+                      {partida.slice(0, 1).map((dado) => (
+                        <PartidaComponente
+                          key={dado._id}
+                          nome={dado.isMandante ? `vs ${dado.adversario}` : `vs ${dado.adversario}`}
+                          resultado={dado.placar}
+                          data={dado.data}
+                          local={dado.local}
+                        />
+                      ))}
+                    </div>
+                  ))}
+                  <div>
+                    <Button show={show2} setShow={setShow2} />
+                  </div>
                 </div>
-              </div>
+              )}
+            </div>
             ) : (
               <div>
                 <div>

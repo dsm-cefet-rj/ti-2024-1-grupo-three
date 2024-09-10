@@ -26,7 +26,6 @@ const TorneioForm = () => {
   const [localTorneio, setlocalTorneio] = useState(''); // Estado para armazenar o local do torneio
   const token = useSelector((state) => state.auth.token); // Seleciona o token de autenticação do estado Redux
   const decodedToken = jwtDecode(token); // Decodifica o token JWT
-  console.log(decodedToken);
 
   // Redireciona para a página de login se o token não estiver presente
   if (!token) {
@@ -64,8 +63,6 @@ const TorneioForm = () => {
         body: JSON.stringify({ nomeTorneio, userIdDonoTorneio, qtdTimes, localTorneio })
       });
 
-      console.log(response);
-      console.log("Olá");
 
       if (response.ok) { // Utiliza response.ok para checar se o status é 2xx
         alert('Torneio criado com sucesso!');

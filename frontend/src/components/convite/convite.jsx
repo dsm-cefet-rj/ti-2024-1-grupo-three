@@ -46,6 +46,7 @@ const Convite = () => {
         }
 
         // Buscar convites para torneios
+<<<<<<< Updated upstream
 
         const responseDono = await axios.get(
           `http://localhost:3004/api/time/dono/${userId}`
@@ -60,6 +61,23 @@ const Convite = () => {
           //console.log(responseTorneio.data)
           setConvitesTorneio(responseTorneio.data);
         }
+=======
+        
+          const responseDono = await axios.get(
+          `http://localhost:3004/api/time/dono/${userId}`)          
+          if (responseDono.data) {
+            const timeUser = responseDono.data;
+            const responseTorneio = await axios.get(
+              `http://localhost:3004/api/convite/time/${timeUser._id}`
+            );
+            setConvitesTorneio(responseTorneio.data);
+          }
+        
+          
+          
+        
+        
+>>>>>>> Stashed changes
       } catch (error) {
         console.error("Erro ao buscar convites", error);
       }
@@ -84,6 +102,7 @@ const Convite = () => {
     };
     const fetchTorneioNames = async () => {
       const namesTorneio = {};
+<<<<<<< Updated upstream
       for (const convite of convitesTorneio) {
         if (!torneioNames[convite.torneio]) {
           try {
@@ -93,6 +112,12 @@ const Convite = () => {
             );
             console.log(convite.torneio);
             console.log(response.data.nomeTorneio);
+=======
+      for(const convite of convitesTorneio) {
+        if(!torneioNames[convite.torneio]){
+          try{
+            const response = await axios.get(`http://localhost:3004/api/torneio/${convite.torneio}`)
+>>>>>>> Stashed changes
             namesTorneio[convite.torneio] = response.data.nomeTorneio;
           } catch (error) {
             console.error("Erro ao buscar nome do torneio:", error);
@@ -137,8 +162,11 @@ const Convite = () => {
   };
 
   const handleAceitar = async (idConvite) => {
+<<<<<<< Updated upstream
     console.log("chamou");
     console.log(idConvite);
+=======
+>>>>>>> Stashed changes
     // Lógica para aceitar o convite com o idConvite
     const response = await axios.put(
       `http://localhost:3004/api/convite/aceitar/${idConvite}`

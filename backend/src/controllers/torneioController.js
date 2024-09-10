@@ -54,7 +54,7 @@ const TorneioController = {
       if (!torneio) {
         return res.status(404).json({ msg: "Nenhum time encontrado neste torneio" });
       }
-      const times = torneio.Participantes
+      const times = torneio;
       return res.status(200).json(times);
     } catch (error) {
       console.error("Erro ao buscar times do torneio", error);

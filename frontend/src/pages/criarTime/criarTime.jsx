@@ -24,7 +24,6 @@ const CriarTime = () => {
   const userId = decodedToken.id; // ID do usuário decodificado do token
   const userIdDono = decodedToken.id; // ID do dono do time (o usuário que está criando o time)
   
-  console.log(decodedToken.id);
 
   /**
    * Manipula a submissão do formulário para criar um novo time.
@@ -37,7 +36,6 @@ const CriarTime = () => {
   const handleSubmitForm = async (e) => {
     e.preventDefault();
     try {
-      console.log(`id ususario: ${decodedToken.id}`);
 
       const response = await fetch("http://localhost:3004/api/time", {
         method: "POST",
@@ -49,7 +47,6 @@ const CriarTime = () => {
 
       navigate("/time"); // Redireciona para a página do time após a criação
     } catch (error) {
-      console.log(`id ususario: ${decodedToken.id}`);
       console.error("Erro ao criar o time:", error);
       alert("Erro ao criar o time. Por favor, tente novamente.");
     }

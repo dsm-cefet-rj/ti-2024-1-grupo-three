@@ -12,7 +12,6 @@ const conviteController = {
       // Verificar se o tipo de convite foi enviado
       if (!tipoConviteEnvio) {
         return res.status(400).json({ message: "Tipo de convite não especificado" });
-        console.log("Parou em tipo convite")
       }
   
       // Se o tipo de convite for "usuario_para_usuario"
