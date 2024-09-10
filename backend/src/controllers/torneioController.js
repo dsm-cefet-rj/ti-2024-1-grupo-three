@@ -98,8 +98,17 @@ const TorneioController = {
 
   getAll: async (req, res) => {
     try {
-      const torneios = await Torneio.find();
-      res.json(torneios);
+      const {nome_like} = req.query;
+      let resTorneio;
+      if(nome_like){
+        resTorneio = await Torneio.find({
+          nomeTorneio :{ $regex: nome_like, $options: "i" }
+        });
+      }else{
+        resTorneio = await Torneio.find();
+      }
+      
+      res.json(resTorneio);
     } catch (error) {
       console.log(error);
     }
