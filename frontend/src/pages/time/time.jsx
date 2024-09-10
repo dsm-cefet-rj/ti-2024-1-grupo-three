@@ -10,20 +10,40 @@ import axios from "axios";
 import Jogador from "../../components/jogador/jogador";
 import { jwtDecode } from "jwt-decode";
 
+/**
+ * Componente Time.
+ *
+ * Este componente exibe as informações de um time específico, incluindo jogadores e partidas.
+ * O usuário deve estar autenticado para visualizar esta página.
+ * Faz chamadas à API para buscar dados do time, jogadores e partidas.
+ *
+ * @component
+ */
 const Time = () => {
-  const navigate = useNavigate();
-  const [jogadores, setJogadores] = useState([]);
-  const [partidas, setPartidas] = useState([]);
+  const navigate = useNavigate(); // Hook para navegação
+  const [jogadores, setJogadores] = useState([]); // Estado para armazenar jogadores do time
+  const [partidas, setPartidas] = useState([]); // Estado para armazenar partidas do time
+  const [nomeTime, setNomeTime] = useState(""); // Estado para armazenar o nome do time
+  const [show, setShow] = useState(false); // Estado para controlar a exibição de jogadores
+  const [show2, setShow2] = useState(false); // Estado para controlar a exibição de partidas
 
-  const token = useSelector((state) => state.auth.token);
-  const decodedToken = jwtDecode(token);
+  const token = useSelector((state) => state.auth.token); // Seleciona o token de autenticação do estado Redux
+  const decodedToken = jwtDecode(token); // Decodifica o token JWT
   console.log(decodedToken);
+
+  // Redireciona para a página de login se o token não estiver presente
   if (!token) {
     return <Navigate to="/login" />;
   }
-  const [nomeTime, setNomeTime] = useState("");
 
   useEffect(() => {
+    /**
+     * Busca as informações do time do usuário autenticado.
+     * Realiza chamadas à API para buscar dados do time, jogadores e partidas.
+     *
+     * @async
+     * @function fetchTime
+     */
     const fetchTime = async () => {
       try {
         const response = await axios.get(
@@ -64,13 +84,16 @@ const Time = () => {
     fetchTime();
   }, [decodedToken.id]);
 
-  console.log(jogadores);
-
-  const [show, setShow] = useState(false);
-  const [show2, setShow2] = useState(false);
+  /**
+   * Manipula o clique do botão para criar um time.
+   * Redireciona para a página de criação de time.
+   *
+   * @function handleClickCriarTime
+   */
   const handleClickCriarTime = () => {
     navigate("/criartime");
   };
+
   return (
     <div>
       <NavBar />
@@ -80,7 +103,6 @@ const Time = () => {
           <h1 className="nomeTime">{nomeTime}</h1>
           <div>
             <h1 className="tituloPag">Jogadores</h1>
-            {/* <EnviarConvite/> */}
             {show ? (
               <div>
                 <div>

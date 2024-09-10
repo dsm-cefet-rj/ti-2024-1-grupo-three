@@ -8,16 +8,32 @@ import "../Cadastro/cadastro.css";
 import "../Login/login.css";
 import { setToken } from "../../redux/authSlice.js";
 
+/**
+ * Componente de Login.
+ *
+ * Este componente permite que um usuário faça login na aplicação.
+ * Realiza uma chamada de API para autenticação e armazena o token no estado do Redux.
+ *
+ * @component
+ */
 const Login = () => {
-  const [email, setUser] = useState("");
-  const [senha, setSenha] = useState("");
-  const [error, setError] = useState(null);
-  const [inputErrorUser, setInputErrorUser] = useState(false);
-  const [inputErrorSenha, setInputErrorSenha] = useState(false);
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const [email, setUser] = useState(""); // Estado para o campo de email
+  const [senha, setSenha] = useState(""); // Estado para o campo de senha
+  const [error, setError] = useState(null); // Estado para mensagens de erro
+  const [inputErrorUser, setInputErrorUser] = useState(false); // Estado para o erro de input de usuário
+  const [inputErrorSenha, setInputErrorSenha] = useState(false); // Estado para o erro de input de senha
+  const [passwordVisible, setPasswordVisible] = useState(false); // Estado para visibilidade da senha
+  const navigate = useNavigate(); // Hook para navegação de rotas
+  const dispatch = useDispatch(); // Hook para despachar ações do Redux
 
+  /**
+   * Manipula o evento de login.
+   * Envia os dados do usuário para o endpoint de login da API.
+   *
+   * @async
+   * @function handleLogin
+   * @param {Object} e - O evento de submissão do formulário.
+   */
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(null);
@@ -28,7 +44,7 @@ const Login = () => {
         senha,
       });
 
-      // Armazena o token no Redux ou localStorage
+      // Armazena o token no Redux
       dispatch(setToken(response.data.token));
       dispatch(addLoggedUser(response.data.user));
 
@@ -46,36 +62,34 @@ const Login = () => {
       }
     }
   };
-  // async function Autentica(submitUser, submitSenha) {
-  //   try {
-  //     const response = await fetch("http://localhost:3004/auth/login", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ submitUser, submitSenha }),
-  //     });
 
-  //     const data = response.data;
-
-  //     if (response.status === 200) {
-  //       alert("Autenticado com sucesso!");
-  //       navigate("/Time");
-  //     }
-  //   } catch (error) {
-  //     console.error("Erro durante a autenticação", error);
-  //     alert("Usuário ou senha inválidos!");
-  //   }
-  // }
-
+  /**
+   * Manipula a mudança de input do usuário.
+   *
+   * @function handleChangeUser
+   * @param {Object} e - O evento de mudança de input.
+   */
   function handleChangeUser(e) {
     setUser(e.target.value);
   }
 
+  /**
+   * Manipula a mudança de input da senha.
+   *
+   * @function handleChangeSenha
+   * @param {Object} e - O evento de mudança de input.
+   */
   function handleChangeSenha(e) {
     setSenha(e.target.value);
   }
 
+  /**
+   * Manipula o evento de submissão do formulário.
+   * Valida os inputs de email e senha.
+   *
+   * @function handleSubmit
+   * @param {Object} e - O evento de submissão do formulário.
+   */
   function handleSubmit(e) {
     e.preventDefault();
     if (!email.trim() || !senha.trim()) {
@@ -94,14 +108,26 @@ const Login = () => {
     email, senha;
   }
 
+  /**
+   * Alterna a visibilidade da senha.
+   *
+   * @function handleTogglePasswordVisibility
+   */
   const handleTogglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
 
+  /**
+   * Manipula o evento de clique para a página de cadastro.
+   *
+   * @function handleClickCadastro
+   * @param {Object} e - O evento de clique.
+   */
   function handleClickCadastro(e) {
     e.preventDefault();
     navigate("/");
   }
+
   return (
     <div className="login-container">
       <div>
