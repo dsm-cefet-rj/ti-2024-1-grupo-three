@@ -162,6 +162,7 @@ const EnvioConvite = () => {
             },
             body: JSON.stringify({ tipoConviteEnvio, usuarioRemetenteId, usuarioDestinatarioId, timeId, torneio}),
           });
+          console.log(response)
           alert('Convite Enviado!')
           setMensagemAviso(`Convite enviado com sucesso!`)
         }else{
