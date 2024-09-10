@@ -45,6 +45,22 @@ const TorneioController = {
       res.status(500).json({ message: "Erro ao criar o torneio", error: error.message || error });
     }
   },
+  getTimesByTorneio: async (req, res) => {
+    try {
+      const id = req.params.id; // Obtém o ID do torneio dos parâmetros da URL
+
+      // Busca os torneios onde o time é participante
+      const torneio = await Torneio.findById(id)
+      if (!torneio) {
+        return res.status(404).json({ msg: "Nenhum time encontrado neste torneio" });
+      }
+      const times = torneio.Participantes
+      return res.status(200).json(times);
+    } catch (error) {
+      console.error("Erro ao buscar times do torneio", error);
+      res.status(500).json({ message: "Erro ao buscar times", error });
+    }
+  },
   getTorneiosByTime: async (req, res) => {
     try {
       const timeId = req.params.timeId; // Obtém o ID do time dos parâmetros da URL

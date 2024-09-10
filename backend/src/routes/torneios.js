@@ -23,5 +23,9 @@ torneioRoutes
   .route("/torneio/time/:timeId")
   .get(torneioController.getTorneiosByTime);  
 
+torneioRoutes
+  .route("/torneio/meutime/:id")
+  .get(torneioController.getTimesByTorneio); 
+
 export default torneioRoutes;
 

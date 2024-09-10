@@ -10,6 +10,7 @@ import ChatBox from "./pages/Chat/chat-box";
 import Login from "./pages/Login/login";
 import Cadastro from "./pages/Cadastro/cadastro";
 import Convite from "./components/convite/convite";
+import MostrarTorneio from "./pages/MostrarTorneio/MostrarTorneio"
 
 const routes = [
   {
@@ -51,6 +52,10 @@ const routes = [
   {
     path: "/",
     element: <Cadastro />,
+  },
+  {
+    path: "/mostrartorneio/:id",
+    element: <MostrarTorneio />,
   },
 ];
 

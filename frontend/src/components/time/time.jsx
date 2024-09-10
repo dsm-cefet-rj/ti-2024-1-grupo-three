@@ -1,13 +1,10 @@
 import "./stylenotas.css";
 import React from "react";
 
-function Jogador({ id, nome }) {
+function Time({ id, nome }) {
   return (
     <div className="tudo">
       <div className="jogadores-time1">
-        <div className="info-j">
-          <h2>foto</h2>
-        </div>
         <div className="info-j">
           <h2>{nome}</h2>
         </div>
@@ -15,4 +12,4 @@ function Jogador({ id, nome }) {
     </div>
   );
 }
-export default Jogador;
+export default Time;

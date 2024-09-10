@@ -105,9 +105,9 @@ const MeusTorneios = () => {
         <div>
           <h1 className="tituloPag">meus torneios</h1>
           <div>
-            
               <Torneiomjr
                 key={torneiosDono._id}
+                id={torneiosDono._id}
                 nome={torneiosDono.nomeTorneio}
                 tipoTorneio={torneiosDono.tipoTorneio}
                 qtdtimes={`${torneiosDono.qtdTimes} times`}
@@ -146,6 +146,7 @@ const MeusTorneios = () => {
               {torneiosParticipante.map((torneioParticipante) => (
                 <Torneiomjr
                   key={torneioParticipante._id}
+                  id={torneioParticipante._id}
                   nome={torneioParticipante.nomeTorneio}
                   tipoTorneio={torneioParticipante.tipoTorneio}
                   qtdtimes={`${torneioParticipante.qtdTimes} times`}
@@ -159,6 +160,7 @@ const MeusTorneios = () => {
               {torneiosParticipante.slice(0, 2).map((torneioParticipante) => (
                 <Torneiomjr
                   key={torneioParticipante._id}
+                  id={torneioParticipante._id}
                   nome={torneioParticipante.nomeTorneio}
                   tipoTorneio={torneioParticipante.tipoTorneio}
                   qtdtimes={`${torneioParticipante.qtdTimes} times`}

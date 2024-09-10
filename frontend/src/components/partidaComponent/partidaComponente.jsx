@@ -20,11 +20,6 @@ function PartidaComponente({ id, nome, resultado, data, local }) {
                     </div>
                 </div>
             </div>
-            <div>
-                <button className="setaButton">
-                    <img src={Seta}/>
-                </button>
-            </div>
         </div>
     </div>
   );

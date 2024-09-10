@@ -1,0 +1,93 @@
+body {
+  background-color: #161621 !important;
+  margin: 0px;
+  height: 100%;
+  width: 100%;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0px;
+  font-weight: normal;
+}
+
+ul {
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+img {
+  max-width: 100%;
+  display: block;
+}
+
+h1 {
+  font-family: "Roboto Flex", sans-serif;
+  font-size: 1.25rem !important;
+  color: white !important;
+  font-weight: 600 !important;
+  margin-top: 0 !important;
+  margin-left: 0 !important;
+}
+.tituloPag {
+  margin-top: 3vh !important;
+  margin-left: 6vw !important;
+  margin-bottom: 3vh;
+}
+.nomeTime {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem !important;
+  font-size: 2rem !important;
+  margin-left: 0rem !important;
+}
+.texto-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.messageBox {
+  padding: 0.375rem 1.25rem;
+  height: 5rem;
+  margin-top: 0.4rem;
+  border-radius: 5px;
+  align-items: flex-start;
+  width: 80vw;
+  background-color: #09090e;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 4vh;
+}
+.espaço {
+  margin-top: 2vh !important;
+}
+.botaoCrieTime {
+  position: absolute;
+  bottom: 5rem;
+  font-size: 1.25rem;
+  font-family: Jockey One;
+  width: 18.75rem;
+  height: 3rem;
+  border-radius: 0.313rem;
+  color: white;
+  background-color: #19ae47;
+  border: none;
+}
+
+@media (min-width: 600px) {
+  .tituloPag {
+    display: flex;
+    justify-content: center;
+    margin-left: 0vw !important;
+    margin-right: 40vw;
+  }
+}
+@media (min-width: 1100px) {
+  .tituloPag {
+    margin-right: 20vw;
+  }
+}
