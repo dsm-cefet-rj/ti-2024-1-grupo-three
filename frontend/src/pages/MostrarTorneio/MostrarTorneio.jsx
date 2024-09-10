@@ -8,7 +8,6 @@ import { useNavigate, Navigate } from "react-router-dom";
 import "./MostrarTorneio.css";
 import axios from "axios";
 import Time from "../../components/time/time";
-import { jwtDecode } from "jwt-decode";
 import { useParams } from 'react-router-dom';
 
 const MostrarTorneio = () => {
@@ -19,8 +18,7 @@ const MostrarTorneio = () => {
   console.log(id);
 
   const token = useSelector((state) => state.auth.token);
-  const decodedToken = jwtDecode(token);
-  console.log(decodedToken);
+
   if (!token) {
     return <Navigate to="/login" />;
   }
@@ -31,41 +29,24 @@ const MostrarTorneio = () => {
         const response = await axios.get(
           `http://localhost:3004/api/torneio/meutime/${id}`
         );
-  
+        setTimes(response.data);
 
-        if (time) {
-          setNomeTime(time.nomeTime);
-          const partidaResponse = await axios.get(
-            `http://localhost:3004/api/partidas/time/${time._id}`
-          );
-          const partidas = partidaResponse.data;
-          console.log(partidas);
-          if(partidas){
-            setPartidas(partidas);
-          }
-          const userDetailsPromises = time.userId.map(async (userId) => {
-            const userResponse = await axios.get(
-              `http://localhost:3004/api/user/${userId}`,
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`, // Enviando o token no cabeçalho
-                },
-              }
+        if (times) {
+          const partidaDetailsPromises = times.map(async (times) => {
+            const partidaResponse = await axios.get(
+              `http://localhost:3004/partidas/time/${times}`,
             );
-            return userResponse.data;
+            return partidaResponse.data;
           });
-          const userDetails = await Promise.all(userDetailsPromises);
-          console.log(userDetails);
-          setJogadores(userDetails);
+          const partidaDetails = await Promise.all(partidaDetailsPromises);
+          setPartidas(partidaDetails);
         }
       } catch (error) {
         console.error("Erro ao buscar o nome do time:", error);
       }
     };
     fetchTime();
-  }, [decodedToken.id]);
-
-  
+  }, [times]);
 
 
 
@@ -81,8 +62,10 @@ const MostrarTorneio = () => {
               <div>
                 <div>
                   {times.map((time) => (
-                    <div key={time._id}>
-                      <Time nome={time.nome} />
+                    <div key={time}>
+                      <Time 
+                      id={time}
+                      />
                     </div>
                   ))}
                 </div>
