@@ -12,6 +12,7 @@ import { addLoggedUser, logoutUser } from "../../redux/user/slice";
 import { useNavigate, Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import EnvioConvite from "../../components/EnvioConvite/EnvioConvite";
+import GerarPartida from "../gerarPartida/GerarPartida";
 
 function NavBar() {
   const [aberto, setAberto] = useState(false);
@@ -59,6 +60,9 @@ function NavBar() {
               </button>
               <button className="botao4">
                 <EnvioConvite />
+              </button>
+              <button className="botao5">
+                <GerarPartida />
               </button>
             </div>
             <button className="logout" onClick={handleLogOut}>

@@ -163,6 +163,7 @@
 .botao4 {
   border: none;
   height: 5vh;
+  margin-bottom: 5vh;
   position: relative;
   background-color: #222232;
   color: #acacac;
@@ -178,6 +179,33 @@
   top: -0.3vh;
 }
 .botao4::after {
+  content: "";
+  display: flex;
+  position: absolute;
+  background-color: #4d4d4d;
+  left: 0vw;
+  width: 30vw;
+  height: 0.2vh;
+  top: 4.5vh;
+}
+.botao5 {
+  border: none;
+  height: 5vh;
+  position: relative;
+  background-color: #222232;
+  color: #acacac;
+}
+.botao5::before {
+  content: "";
+  display: flex;
+  position: absolute;
+  background-color: #4d4d4d;
+  left: 0vw;
+  width: 30vw;
+  height: 0.2vh;
+  top: -0.3vh;
+}
+.botao5::after {
   content: "";
   display: flex;
   position: absolute;
@@ -254,6 +282,15 @@ a:visited {
     width: 14.5rem;
   }
   .botao4::after {
+    width: 14.5rem;
+  }
+  .botao5 {
+    width: 14.5rem;
+  }
+  .botao5::before {
+    width: 14.5rem;
+  }
+  .botao5::after {
     width: 14.5rem;
   }
   .logout {

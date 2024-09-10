@@ -14,7 +14,6 @@ const Time = () => {
   const navigate = useNavigate();
   const [jogadores, setJogadores] = useState([]);
   const [partidas, setPartidas] = useState([]);
-  
 
   const token = useSelector((state) => state.auth.token);
   const decodedToken = jwtDecode(token);
@@ -40,7 +39,7 @@ const Time = () => {
           );
           const partidas = partidaResponse.data;
           console.log(partidas);
-          if(partidas){
+          if (partidas) {
             setPartidas(partidas);
           }
           const userDetailsPromises = time.userId.map(async (userId) => {
@@ -64,9 +63,6 @@ const Time = () => {
     };
     fetchTime();
   }, [decodedToken.id]);
-
-  
-
 
   console.log(jogadores);
 
@@ -121,7 +117,11 @@ const Time = () => {
                   {partidas.map((partida) => (
                     <PartidaComponente
                       key={partida._id}
-                      nome={partida.isMandante ? `vs. ${partida.adversario}` : `@${partida.adversario}`}
+                      nome={
+                        partida.isMandante
+                          ? ` vs. ${partida.adversario}`
+                          : ` vs. ${partida.adversario}`
+                      }
                       resultado={partida.placar}
                       data={partida.data}
                       local={partida.local}
@@ -135,15 +135,13 @@ const Time = () => {
             ) : (
               <div>
                 <div>
-                 
-                    <PartidaComponente
-                      key="nenhuma-partida"
-                      nome="Nenhuma partida encontrada"
-                      resultado=""
-                      data=""
-                      local=""
-                    />
-                  
+                  <PartidaComponente
+                    key="nenhuma-partida"
+                    nome="Nenhuma partida encontrada"
+                    resultado=""
+                    data=""
+                    local=""
+                  />
                 </div>
                 <div>
                   <Button show={show2} setShow={setShow2} />
