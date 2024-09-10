@@ -12,6 +12,14 @@ import Cadastro from "./pages/Cadastro/cadastro";
 import Convite from "./components/convite/convite";
 import MostrarTorneio from "./pages/MostrarTorneio/MostrarTorneio"
 
+/**
+ * Definição das rotas da aplicação.
+ *
+ * Cada objeto dentro do array `routes` define uma rota com o caminho (`path`) e o componente correspondente (`element`).
+ *
+ * @constant
+ * @type {Array.<{path: string, element: JSX.Element}>}
+ */
 const routes = [
   {
     path: "/partida",
@@ -59,6 +67,16 @@ const routes = [
   },
 ];
 
+/**
+ * Componente Router.
+ *
+ * Este componente utiliza o `BrowserRouter` e o `Routes` do `react-router-dom` para definir e gerenciar as rotas da aplicação.
+ * As rotas são mapeadas a partir de um array de objetos `routes`, onde cada rota é definida por um caminho (`path`) e um elemento de componente (`element`).
+ *
+ * @component
+ * @param {Object} props - Propriedades do componente.
+ * @returns {JSX.Element} O componente Router que renderiza as rotas configuradas.
+ */
 function Router(props) {
   return (
     <BrowserRouter>

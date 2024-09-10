@@ -8,6 +8,14 @@ import { useNavigate, Navigate } from "react-router-dom";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
+/**
+ * Componente MeusTorneios.
+ *
+ * Este componente exibe os torneios que o usuário criou (como dono) e os torneios nos quais o time do usuário está participando.
+ * Faz chamadas à API para buscar os torneios baseados no usuário autenticado.
+ *
+ * @component
+ */
 const MeusTorneios = () => {
   const navigate = useNavigate();
   const currentUser = useSelector((rootReducer) => rootReducer.user);
@@ -22,6 +30,13 @@ const MeusTorneios = () => {
   }
 
   useEffect(() => {
+      /**
+     * Busca os torneios criados pelo usuário e os torneios onde o time do usuário está participando.
+     * Realiza chamadas à API para buscar dados dos torneios.
+     *
+     * @async
+     * @function fetchTorneio
+     */
     const fetchTorneio = async () => {
       try {
         let torneiosTime = [];

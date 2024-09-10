@@ -10,19 +10,34 @@ import axios from "axios";
 import Time from "../../components/time/time";
 import { useParams } from 'react-router-dom';
 
+/**
+ * Componente MostrarTorneio.
+ *
+ * Este componente exibe os detalhes de um torneio, incluindo os times participantes e suas partidas.
+ * Faz chamadas à API para buscar os times e partidas do torneio com base no ID do torneio.
+ *
+ * @component
+ */
 const MostrarTorneio = () => {
-  const navigate = useNavigate();
-  const [times, setTimes] = useState([]);
-  const [partidas, setPartidas] = useState([]);
+  const navigate = useNavigate(); // Hook para navegação de rotas
+  const [times, setTimes] = useState([]); // Estado para armazenar os times participantes
+  const [partidas, setPartidas] = useState([]); // Estado para armazenar as partidas do torneio
   const { id } = useParams(); // Extrai o parâmetro 'id' da URL
 
-  const token = useSelector((state) => state.auth.token);
+  const token = useSelector((state) => state.auth.token); //Seleciona o token de autenticação do estado Redux
 
   if (!token) {
     return <Navigate to="/login" />;
   }
 
   useEffect(() => {
+     /**
+     * Busca os times participantes e as partidas relacionadas ao torneio.
+     * Realiza chamadas à API para buscar dados dos times e suas respectivas partidas.
+     *
+     * @async
+     * @function fetchTime
+     */
     const fetchTime = async () => {
       try {
         const response = await axios.get(
