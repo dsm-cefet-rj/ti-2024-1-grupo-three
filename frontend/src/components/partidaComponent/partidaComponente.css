@@ -1,45 +1,51 @@
-.partidaContainer{
-    display: flex;
-    justify-content: center;
+.partidaContainer {
+  display: flex;
+  justify-content: center;
 }
 .divisao2 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 5rem;
-    margin-top: 0.4rem;
-    border-radius: 5px;
-    width: 18.75rem;
-    background-color: #09090e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 5rem;
+  margin-top: 0.4rem;
+  border-radius: 5px;
+  width: 18.75rem;
+  background-color: #09090e;
+  padding: 1rem;
 }
-.partidaNome{
-    display: flex;
-    align-items: center;
+.partidaNome {
+  display: flex;
+  align-items: center;
+  text-align: center;
 }
-.divisao{
-    display: flex;
+
+.divisao {
+  display: flex;
+  gap: 4rem;
 }
-.infos{
-    display: flex;
-    flex-direction: column;
-    justify-items: center
+.infos {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
 }
-.divisao h2{
-    color: white;
+.divisao h2 {
+  color: white;
 }
-.setaButton{
-    display: flex;
-    height: 5rem;
-    width: 3rem;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    border: none;
-    background-color: #09090e;
+.setaButton {
+  display: flex;
+  height: 5rem;
+  width: 3rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  border: none;
+  background-color: #09090e;
 }
-.partidas{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 16rem;
+.partidas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 16rem;
+  gap: 1rem;
+  text-align: center;
 }

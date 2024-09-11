@@ -24,13 +24,13 @@ const MeusTorneios = () => {
   const [torneiosDono, setTorneiosDono] = useState([]);
   const [torneiosParticipante, setTorneiosParticipante] = useState([]);
   const [show, setShow] = useState(false);
-  
+
   if (!token) {
     return <Navigate to="/login" />;
   }
 
   useEffect(() => {
-      /**
+    /**
      * Busca os torneios criados pelo usuário e os torneios onde o time do usuário está participando.
      * Realiza chamadas à API para buscar dados dos torneios.
      *
@@ -41,7 +41,7 @@ const MeusTorneios = () => {
       try {
         let torneiosTime = [];
         let torneiosDono = [];
-        try{
+        try {
           const responseTorneioDono = await axios.get(
             `http://localhost:3004/api/torneio/dono/${decodedToken.id}`
           );
@@ -49,47 +49,32 @@ const MeusTorneios = () => {
             torneiosDono = responseTorneioDono.data;
             setTorneiosDono(torneiosDono);
           }
-        }catch(error){
+        } catch (error) {
           if (error.response && error.response.status === 404) {
           } else {
             console.error("Erro ao buscar torneios do dono:", error);
           }
         }
         // Busca os torneios onde o usuário é o dono
-        
 
-        
-        try{
+        try {
           const responseTime = await axios.get(
             `http://localhost:3004/api/time/user/${decodedToken.id}`
           );
           const time = responseTime.data;
-        if (time) {
-          // Busca os torneios que o time está participando
-          const responseTorneio = await axios.get(
-            `http://localhost:3004/api/torneio/time/${time._id}`
-          );
-        
-          torneiosTime = responseTorneio.data;
-          setTorneiosParticipante(torneiosTime);
-        }
+          if (time) {
+            // Busca os torneios que o time está participando
+            const responseTorneio = await axios.get(
+              `http://localhost:3004/api/torneio/time/${time._id}`
+            );
 
-          
-        }catch (error){
+            torneiosTime = responseTorneio.data;
+            setTorneiosParticipante(torneiosTime);
+          }
+        } catch (error) {}
 
-        }
-        
-
-        
-          
-       
-
-            
-          
-        
-
-         // Mesmo que vazio, não causará erro
-         // Mesmo que vazio, não causará erro
+        // Mesmo que vazio, não causará erro
+        // Mesmo que vazio, não causará erro
       } catch (error) {
         console.error("Erro ao buscar os torneios:", error);
       }
@@ -113,39 +98,38 @@ const MeusTorneios = () => {
         <div>
           <h1 className="tituloPag">meus torneios</h1>
           <div>
-              <Torneiomjr
-                key={torneiosDono._id}
-                id={torneiosDono._id}
-                nome={torneiosDono.nomeTorneio}
-                tipoTorneio={torneiosDono.tipoTorneio}
-                qtdtimes={`${torneiosDono.qtdTimes} times`}
-                local={torneiosDono.localTorneio}
-              />
-            
+            <Torneiomjr
+              key={torneiosDono._id}
+              id={torneiosDono._id}
+              nome={torneiosDono.nomeTorneio}
+              tipoTorneio={torneiosDono.tipoTorneio}
+              qtdtimes={`${torneiosDono.qtdTimes} times`}
+              local={torneiosDono.localTorneio}
+            />
           </div>
         </div>
       ) : (
-        
         <div>
-          
           <h1 className="tituloPag">meus torneios</h1>
 
           <div className="textocontent">
             <div className="Mensagens">
               <h1>você não é dono de nenhum torneio no momento.</h1>
-              <h1 className="espaço2">vamos resolver isso?</h1>
-            </div>
-            <div className="Mensagens">
-              <h1>você pode criar o seu um convite.</h1>
+              <h1>vamos resolver isso?</h1>
+              <h1>você pode criar o seu próprio torneio.</h1>
             </div>
             <div className="textocontent">
-            <button className="botaoCrieCampeonato" onClick={handleClickCriarTorneio}>criar torneio</button>
+              <button
+                className="botaoCrieCampeonato"
+                onClick={handleClickCriarTorneio}
+              >
+                criar torneio
+              </button>
             </div>
           </div>
-          
         </div>
       )}
-      
+
       <h1 className="tituloPag">torneio participante</h1>
       {torneiosParticipante.length > 0 ? (
         <div>
@@ -184,12 +168,13 @@ const MeusTorneios = () => {
           <div className="textocontent">
             <div className="Mensagens">
               <h1>você não está participando de nenhum torneio no momento.</h1>
-            </div>
-            <div className="Mensagens">
-              <h1>seu time pode receber um convite de torneio e aceitar para participar de um.</h1>
+
+              <h1>
+                seu time pode receber um convite de torneio e aceitar para
+                participar de um.
+              </h1>
             </div>
           </div>
-          
         </div>
       )}
     </div>

@@ -5,10 +5,7 @@ function Jogador({ id, nome }) {
   return (
     <div className="tudo">
       <div className="jogadores-time1">
-
-     
-          <h2>{nome}</h2>
-     
+        <h1>{nome}</h1>
       </div>
     </div>
   );

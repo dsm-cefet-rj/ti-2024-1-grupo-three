@@ -1,5 +1,5 @@
 body {
-  background-color: #161621 !important;
+  background-color: #161621;
   margin: 0px;
   height: 100%;
   width: 100%;
@@ -25,9 +25,9 @@ img {
 
 h1 {
   font-family: "Roboto Flex", sans-serif;
-  font-size: 1.25rem !important;
-  color: white !important;
-  font-weight: 600 !important;
-  margin-top: 0 !important;
-  margin-left: 0.938rem !important;
+  font-size: 1.25rem;
+  color: white;
+  font-weight: 600;
+  margin-top: 0;
+  margin-left: 0.938rem;
 }

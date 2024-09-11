@@ -1,106 +1,105 @@
-  
-  .nomeTorneio {
-    padding: 20px;
-    border-radius: 5px;
-    color: #ffffff ;
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 10vw !important;
-  }
-  .input2702{
-    background-color: #09090E !important;
-    border: none;
-    border-radius: 15px;
-    color:#ffffff;
-    padding: 5px;
-    margin-top: 5px;
-  }
-  .input2702:focus{
-    outline: 0;
-  }
-  .input2802{
-    background-color: #09090E !important;
-    border: none;
-    border-radius: 15px;
-    color: #fff;
-    padding-left: 5vw;
-    width: 5rem;
-    padding: 5px;
-    text-align: center;
-    margin-top: 5px;
-  }
-  .input2802:focus{
-    outline: 0;
-  }
-  .tipoTorneio{
-    padding: 20px;
-    border-radius: 5px;
-    color: #ffffff ;
-    margin-top: 10px;
-    margin-bottom: 10px !important;
-    display: flex;
-    flex-direction: column;
-  }
-  .form-select{
-    background-color: #09090E !important;
-    color: white !important;
-    height: 30px;
-    text-align: center;
-    border-radius: 5px;
-    border: none;
-    margin-top: 5px;
-  }
-  .form-select:focus{
-    outline: 0;
-  }
-  .qtdTimes{
-    padding: 20px;
-    border-radius: 5px;
-    color: #ffffff ;
-    margin-top: 10px;
-    margin-bottom: 10px !important;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .buttonCriartorneio{
-    position: absolute !important;
-    bottom: 5rem;
-    font-size: 1.25rem;
-    font-family: Jockey One;
-    width: 18.75rem;
-    height: 3rem;
-    border-radius: 0.313rem;
-    color: white;
-    background-color: #19ae47;
-    border: none;
-    align-items: center !important;
-   }
-   .torneiocriar{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-   }
-   .baixo2{
-    display: flex;
-   }
-   .input2902{ 
-    background-color: #09090E !important;
-    border: none;
-    border-radius: 15px;
-    color:#ffffff;
-    padding: 5px;
-    margin-top: 5px;
-   }
-   .input2902:focus{
-    outline: 0;
-   }
-   .LocalTorneio{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-   }
+.nomeTorneio {
+  padding: 20px;
+  border-radius: 5px;
+  color: #ffffff;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10vw;
+}
+.input2702 {
+  background-color: #09090e;
+  border: none;
+  border-radius: 15px;
+  color: #ffffff;
+  padding: 5px;
+  margin-top: 5px;
+}
+.input2702:focus {
+  outline: 0;
+}
+.input2802 {
+  background-color: #09090e;
+  border: none;
+  border-radius: 15px;
+  color: #fff;
+  padding-left: 5vw;
+  width: 5rem;
+  padding: 5px;
+  text-align: center;
+  margin-top: 5px;
+}
+.input2802:focus {
+  outline: 0;
+}
+.tipoTorneio {
+  padding: 20px;
+  border-radius: 5px;
+  color: #ffffff;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.form-select {
+  background-color: #09090e;
+  color: white;
+  height: 30px;
+  text-align: center;
+  border-radius: 5px;
+  border: none;
+  margin-top: 5px;
+}
+.form-select:focus {
+  outline: 0;
+}
+.qtdTimes {
+  padding: 20px;
+  border-radius: 5px;
+  color: #ffffff;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.buttonCriartorneio {
+  position: absolute;
+  bottom: 5rem;
+  font-size: 1.25rem;
+  font-family: Jockey One;
+  width: 18.75rem;
+  height: 3rem;
+  border-radius: 0.313rem;
+  color: white;
+  background-color: #19ae47;
+  border: none;
+  align-items: center;
+}
+.torneiocriar {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.baixo2 {
+  display: flex;
+}
+.input2902 {
+  background-color: #09090e;
+  border: none;
+  border-radius: 15px;
+  color: #ffffff;
+  padding: 5px;
+  margin-top: 5px;
+}
+.input2902:focus {
+  outline: 0;
+}
+.LocalTorneio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

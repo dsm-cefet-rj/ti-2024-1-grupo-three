@@ -2,10 +2,10 @@ import { React, useState, useEffect } from "react";
 import Button from "../../components/button/button";
 import NavBar from "../../components/navBar/navBar";
 import PartidaComponente from "../../components/partidaComponent/partidaComponente";
-import EnviarConvite from "../../components/EnvioConvite/EnvioConvite";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Navigate } from "react-router-dom";
-import "./time.css";
+import "../time/time.css";
 import axios from "axios";
 import Jogador from "../../components/jogador/jogador";
 import { jwtDecode } from "jwt-decode";
@@ -95,8 +95,8 @@ const Time = () => {
       <NavBar />
 
       {nomeTime ? (
-        <div>
-          <h1 className="nomeTime">{nomeTime}</h1>
+        <div className="envoltoJogPar">
+          <h1 className="nomedoTime">{nomeTime}</h1>
           <div>
             <h1 className="tituloPag">Jogadores</h1>
             {show ? (
@@ -131,7 +131,7 @@ const Time = () => {
             <h1 className="tituloPag">Partidas</h1>
             {partidas.length > 0 ? (
               <div>
-                <div>
+                <div className="envoltoPartidas">
                   {partidas.map((partida) => (
                     <PartidaComponente
                       key={partida._id}
@@ -169,20 +169,20 @@ const Time = () => {
           </div>
         </div>
       ) : (
-        <div className="">
+        <div>
           <div className="texto-container">
             <div className="messageBox">
               <h1>você não está participando de nenhum time no momento.</h1>
-              <h1 className="espaço">vamos resolver isso?</h1>
+              <h1>vamos resolver isso?</h1>
             </div>
             <div className="messageBox">
               <h1>
-                você pode buscar um time aberto, criar o seu, ou aceitar um
-                convite.
+                você pode criar o seu próprio time, ou aceitar um convite para
+                participar de um.
               </h1>
             </div>
           </div>
-          <div className="texto-container">
+          <div className="formcrietime">
             <button className="botaoCrieTime" onClick={handleClickCriarTime}>
               crie um time
             </button>

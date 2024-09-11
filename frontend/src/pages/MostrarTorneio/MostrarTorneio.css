@@ -1,5 +1,5 @@
-body {
-  background-color: #161621 !important;
+/* body {
+  background-color: #161621;
   margin: 0px;
   height: 100%;
   width: 100%;
@@ -25,23 +25,23 @@ img {
 
 h1 {
   font-family: "Roboto Flex", sans-serif;
-  font-size: 1.25rem !important;
-  color: white !important;
-  font-weight: 600 !important;
-  margin-top: 0 !important;
-  margin-left: 0 !important;
+  font-size: 1.25rem;
+  color: white;
+  font-weight: 600;
+  margin-top: 0;
+  margin-left: 0;
 }
 .tituloPag {
-  margin-top: 3vh !important;
-  margin-left: 6vw !important;
+  margin-top: 3vh;
+  margin-left: 6vw;
   margin-bottom: 3vh;
 }
 .nomeTime {
   display: flex;
   justify-content: center;
-  margin-top: 1rem !important;
-  font-size: 2rem !important;
-  margin-left: 0rem !important;
+  margin-top: 1rem;
+  font-size: 2rem;
+  margin-left: 0rem;
 }
 .texto-container {
   display: flex;
@@ -63,7 +63,7 @@ h1 {
   margin-top: 4vh;
 }
 .espaço {
-  margin-top: 2vh !important;
+  margin-top: 2vh;
 }
 .botaoCrieTime {
   position: absolute;
@@ -82,7 +82,7 @@ h1 {
   .tituloPag {
     display: flex;
     justify-content: center;
-    margin-left: 0vw !important;
+    margin-left: 0vw;
     margin-right: 40vw;
   }
 }
@@ -90,4 +90,4 @@ h1 {
   .tituloPag {
     margin-right: 20vw;
   }
-}
+} */
