@@ -91,23 +91,23 @@ const GerarPartida = () => {
         {isOpen ? (
           <Modal isOpen={isOpen} onClose={handleCloseModal}>
             <div className="envio-convite-container1">
-              <h2>Digite o nome do Torneio:</h2>
+              <h2 className="nometor">digite o nome do torneio:</h2>
               <form className="envio-convite-form" onSubmit={handleSubmit}>
                 <label>
-                  Nome do torneio:
+                  nome do torneio:
                   <input
                     className="input"
                     type="text"
                     value={inputValue}
                     onChange={handleSearchChange}
-                    placeholder="Digite o nome do torneio"
+                    placeholder="digite o nome do torneio"
                     required
                   />
                 </label>
 
                 {/* Exibir sugestões de torneios */}
                 {searchResults.length > 0 && (
-                  <ul className="search-results">
+                  <ul className="search-results1">
                     {searchResults.map((torneio) => (
                       <li
                         key={torneio._id}
@@ -123,17 +123,19 @@ const GerarPartida = () => {
                 {/* Exibir torneio selecionado */}
                 {selectedTorneio && (
                   <div>
-                    <p>Torneio selecionado: {selectedTorneio.nomeTorneio}</p>
+                    <p>torneio selecionado: {selectedTorneio.nomeTorneio}</p>
                   </div>
                 )}
 
-                <button type="submit">Gerar Partidas</button>
+                <button className="buttongerar" type="submit">
+                  gerar partidas
+                </button>
               </form>
             </div>
           </Modal>
         ) : (
           <button onClick={handleOpenModal} className="buttonconvite">
-            Gerar Partidas
+            gerar partidas
           </button>
         )}
       </div>

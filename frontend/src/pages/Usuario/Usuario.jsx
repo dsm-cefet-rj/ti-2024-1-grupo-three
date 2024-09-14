@@ -5,7 +5,7 @@ import PartidaComponente from "../../components/partidaComponent/partidaComponen
 
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Navigate } from "react-router-dom";
-import "../time/time.css";
+import "../Usuario/Usuario.css";
 import axios from "axios";
 import Jogador from "../../components/jogador/jogador";
 import { jwtDecode } from "jwt-decode";
@@ -115,21 +115,22 @@ const Usuario = () => {
   }, [decodedToken.id]);
 
   return (
-    <div>
+    <div className="pagina">
       <NavBar />
-      <div>
-        <h1>{usuario.nome}</h1>
-        <h1>{usuario.email}</h1>
+      <div className="titulos">
+        <h1 className="titulo">{usuario.nome}</h1>
+        <h1 className="titulo">{usuario.email}</h1>
       </div>
       <div>
-        <h1>mudar senha</h1>
+        <h1 className="senhatit">mudar senha</h1>
       </div>
       <div className="box-senha">
-        <form onSubmit={handleSubmit} className="form-cadastro">
+        <form onSubmit={handleSubmit} className="form-senhas">
           <div>
-            <label>Senha Atual:</label>
+            <label className="labelsenha">senha atual:</label>
             <input
               type="password"
+              className="inputsenha"
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
               required
@@ -137,9 +138,10 @@ const Usuario = () => {
           </div>
 
           <div>
-            <label>Nova Senha:</label>
+            <label className="labelsenha">nova senha:</label>
             <input
               type="password"
+              className="inputsenha"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               required
@@ -150,15 +152,17 @@ const Usuario = () => {
           </button>
         </form>
       </div>
-      <div>
-        <h1>apagar conta</h1>
-      </div>
-      <div>
-        <form onSubmit={handleDelete}>
-          <button type="submit" className="btn-deletar">
-            apagar conta
-          </button>
-        </form>
+      <div className="delete">
+        <div>
+          <h1>deletar usuário</h1>
+        </div>
+        <div>
+          <form onSubmit={handleDelete}>
+            <button type="submit" className="btn-deletar">
+              apagar conta
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

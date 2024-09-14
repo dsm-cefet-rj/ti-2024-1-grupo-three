@@ -51,10 +51,10 @@ function NavBar() {
           <div className="menu menuAberto">
             <div className="botoesDiv">
               <button className="botao1">
-                <Link to="/meustorneios">Torneios</Link>
+                <Link to="/meustorneios">torneios</Link>
               </button>
               <button className="botao2">
-                <Link to="/Time">Time</Link>
+                <Link to="/Time">time</Link>
               </button>
               <button className="botao3">
                 <Convite />
@@ -67,7 +67,7 @@ function NavBar() {
               </button>
             </div>
             <button className="logout" onClick={handleLogOut}>
-              <a href="/login">Logout</a>
+              <a href="/login">logout</a>
             </button>
           </div>
         ) : (

@@ -1,0 +1,74 @@
+.titulos {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.pagina {
+  text-align: center;
+}
+
+.titulo {
+  font-size: 2rem;
+}
+
+.senhatit {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.form-senhas {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.labelsenha {
+  font-weight: 400;
+  font-family: "Roboto Flex", sans-serif;
+  margin-right: 2rem;
+}
+
+.inputsenha {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+.btn-novasenha {
+  padding: 10px 20px;
+  background-color: #118f2c;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  text-align: center;
+  align-self: center;
+  font-family: "Roboto Flex", sans-serif;
+  font-weight: 700;
+}
+
+.delete {
+  position: relative;
+  bottom: -13rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.btn-deletar {
+  padding: 10px 20px;
+  background-color: #c70909;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  text-align: center;
+  align-self: center;
+  font-family: "Roboto Flex", sans-serif;
+  font-weight: 700;
+}
