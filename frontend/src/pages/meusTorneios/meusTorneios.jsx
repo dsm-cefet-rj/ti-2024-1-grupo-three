@@ -96,8 +96,8 @@ const MeusTorneios = () => {
       <NavBar />
       {!Array.isArray(torneiosDono) ? (
         <div>
-          <h1 className="tituloPag">meus torneios</h1>
-          <div>
+          <h1 className="tituloPag1">meus torneios</h1>
+          <div className="meustorneios">
             <Torneiomjr
               key={torneiosDono._id}
               id={torneiosDono._id}
@@ -110,7 +110,7 @@ const MeusTorneios = () => {
         </div>
       ) : (
         <div>
-          <h1 className="tituloPag">meus torneios</h1>
+          <h1 className="tituloPag1">meus torneios</h1>
 
           <div className="textocontent">
             <div className="Mensagens">
@@ -130,7 +130,7 @@ const MeusTorneios = () => {
         </div>
       )}
 
-      <h1 className="tituloPag">torneio participante</h1>
+      <h1 className="tituloPag1">torneio participante</h1>
       {torneiosParticipante.length > 0 ? (
         <div>
           {show ? (

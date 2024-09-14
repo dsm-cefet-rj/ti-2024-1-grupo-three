@@ -25,6 +25,10 @@ function NavBar() {
   function handleLogOut() {
     dispatch(logoutUser());
   }
+  const navigate = useNavigate();
+  function handleFotoClick() {
+    navigate(`/usuario`);
+  }
 
   return (
     <div className="navBar">
@@ -34,20 +38,17 @@ function NavBar() {
             <img src={Menu} alt="menu" className="imagemenu" />
           </button>
           <img src={Logo} alt="logo" className="imagelogo" />
-          <img src={User} alt="user" className="imageuser" />
-        </div>
-        <div className="navBarSearch">
-          <form action="">
-            <input type="text" />
-          </form>
-          <button>
-            <img src={Lupa} className="imagelupa" />
-          </button>
+          <img
+            src={User}
+            alt="user"
+            className="imageuser"
+            onClick={handleFotoClick}
+          />
         </div>
       </div>
       <div className="">
         {aberto ? (
-          <div className="menu">
+          <div className="menu menuAberto">
             <div className="botoesDiv">
               <button className="botao1">
                 <Link to="/meustorneios">Torneios</Link>

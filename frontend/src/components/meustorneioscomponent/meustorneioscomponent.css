@@ -1,40 +1,39 @@
-.TorneioContainer{
-    display: flex;
-    justify-content: center;
+.TorneioContainer {
+  display: flex;
+  justify-content: center;
 }
 .dividir2 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 5rem;
-    margin-top: 0.4rem;
-    border-radius: 5px;
-    width: 18.75rem;
-    background-color: #09090e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.375rem 1.25rem;
+  height: 5rem;
+  margin-top: 0.4rem;
+  border-radius: 5px;
+  width: 18.75rem;
+  background-color: #09090e;
 }
-.torneioNome{
-    display: flex;
-    align-items: center;
+.torneioNome {
+  display: flex;
+  align-items: center;
 }
-.dividir1{
-    display: flex;
+.dividir1 {
+  display: flex;
 }
-.infos1{
-    display: flex;
-    flex-direction: column;
-    
-
+.infos1 {
+  display: flex;
+  flex-direction: column;
 }
-.dividir1 h2{
-    color: white;
+.dividir1 h2 {
+  color: white;
 }
-.TORNEIOSS{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 16rem;
+.TORNEIOSS {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 16rem;
 }
-.infos2{
-    align-items: center;
-    margin-left: 1.5rem;
+.infos2 {
+  align-items: center;
+  margin-left: 1.5rem;
 }

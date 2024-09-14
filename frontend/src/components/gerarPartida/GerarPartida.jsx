@@ -30,7 +30,8 @@ const GerarPartida = () => {
 
   // Função com debounce para limitar as chamadas da API
   const debouncedSearch = debounce(async (searchValue) => {
-    if (searchValue.length > 1) { // Busca apenas se houver mais de 1 caractere
+    if (searchValue.length > 1) {
+      // Busca apenas se houver mais de 1 caractere
       try {
         const response = await axios.get(
           `http://localhost:3004/api/torneio?nome_like=${searchValue}`
@@ -89,7 +90,7 @@ const GerarPartida = () => {
       <div>
         {isOpen ? (
           <Modal isOpen={isOpen} onClose={handleCloseModal}>
-            <div className="envio-convite-container">
+            <div className="envio-convite-container1">
               <h2>Digite o nome do Torneio:</h2>
               <form className="envio-convite-form" onSubmit={handleSubmit}>
                 <label>

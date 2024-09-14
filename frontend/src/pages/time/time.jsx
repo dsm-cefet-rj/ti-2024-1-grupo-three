@@ -98,7 +98,7 @@ const Time = () => {
         <div className="envoltoJogPar">
           <h1 className="nomedoTime">{nomeTime}</h1>
           <div>
-            <h1 className="tituloPag">Jogadores</h1>
+            <h1 className="tituloPag">jogadores</h1>
             {show ? (
               <div>
                 <div>
@@ -128,27 +128,53 @@ const Time = () => {
             )}
           </div>
           <div>
-            <h1 className="tituloPag">Partidas</h1>
+            <h1 className="tituloPag">partidas</h1>
+
             {partidas.length > 0 ? (
               <div>
-                <div className="envoltoPartidas">
-                  {partidas.map((partida) => (
-                    <PartidaComponente
-                      key={partida._id}
-                      nome={
-                        partida.isMandante
-                          ? ` vs. ${partida.adversario}`
-                          : ` vs. ${partida.adversario}`
-                      }
-                      resultado={partida.placar}
-                      data={partida.data}
-                      local={partida.local}
-                    />
-                  ))}
-                </div>
-                <div>
-                  <Button show={show2} setShow={setShow2} />
-                </div>
+                {show2 ? (
+                  <div>
+                    <div className="envoltoPartidas">
+                      {partidas.map((partida) => (
+                        <PartidaComponente
+                          key={partida._id}
+                          nome={
+                            partida.isMandante
+                              ? ` vs. ${partida.adversario}`
+                              : ` vs. ${partida.adversario}`
+                          }
+                          resultado={partida.placar}
+                          data={partida.data}
+                          local={partida.local}
+                        />
+                      ))}
+                    </div>
+                    <div>
+                      <Button show={show2} setShow={setShow2} />
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <div className="envoltoPartidas">
+                      {partidas.slice(0, 2).map((partida) => (
+                        <PartidaComponente
+                          key={partida._id}
+                          nome={
+                            partida.isMandante
+                              ? ` vs. ${partida.adversario}`
+                              : ` vs. ${partida.adversario}`
+                          }
+                          resultado={partida.placar}
+                          data={partida.data}
+                          local={partida.local}
+                        />
+                      ))}
+                    </div>
+                    <div>
+                      <Button show={show2} setShow={setShow2} />
+                    </div>
+                  </div>
+                )}
               </div>
             ) : (
               <div>

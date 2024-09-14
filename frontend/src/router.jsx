@@ -10,7 +10,8 @@ import ChatBox from "./pages/Chat/chat-box";
 import Login from "./pages/Login/login";
 import Cadastro from "./pages/Cadastro/cadastro";
 import Convite from "./components/convite/convite";
-import MostrarTorneio from "./pages/MostrarTorneio/MostrarTorneio"
+import MostrarTorneio from "./pages/MostrarTorneio/MostrarTorneio";
+import Usuario from "./pages/Usuario/Usuario";
 
 /**
  * Definição das rotas da aplicação.
@@ -64,6 +65,10 @@ const routes = [
   {
     path: "/mostrartorneio/:id",
     element: <MostrarTorneio />,
+  },
+  {
+    path: "/usuario",
+    element: <Usuario />,
   },
 ];
 
