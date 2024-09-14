@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { userSchema } from "./User.js";
+import { userSchema } from "./userModel.js";
 const {Schema} = mongoose;
 const mensagemSchema = new Schema ({
     usuario:{
@@ -13,5 +13,6 @@ const mensagemSchema = new Schema ({
 },
 {timestamps: true}
 )
-const Mensagem = mongoose.model("Mensagem", mensagemSchema);
-export {Mensagem, mensagemSchema};
+const mensagemModel = mongoose.model("Mensagem", mensagemSchema);
+
+export {mensagemModel, mensagemSchema};

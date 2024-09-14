@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { Time } from "../models/Time.js";
-import { User } from "../models/User.js";
+import { Time } from "../models/timeModel.js";
+import { User } from "../models/userModel.js";
 const timeController = {
   create: async (req, res) => {
     try {

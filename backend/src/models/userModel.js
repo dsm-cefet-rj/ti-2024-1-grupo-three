@@ -7,6 +7,6 @@ const userSchema = new Schema(
     senha: { type: String, required: true },
 }, {timestamps: true});
 
-const User = mongoose.model("User", userSchema);
+const userModel = mongoose.model("User", userSchema);
 
-export { User, userSchema };
+export { userModel, userSchema };

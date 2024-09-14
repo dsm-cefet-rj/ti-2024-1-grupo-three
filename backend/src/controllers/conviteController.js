@@ -1,7 +1,7 @@
-import { Convite } from "../models/Convite.js";
-import { User } from "../models/User.js";
-import { Time } from "../models/Time.js";
-import { Torneio } from "../models/Torneio.js";
+import { Convite } from "../models/conviteModel.js";
+import { User } from "../models/userModel.js";
+import { Time } from "../models/timeModel.js";
+import { Torneio } from "../models/torneioModel.js";
 const conviteController = {
   create: async (req, res) => {
     try {

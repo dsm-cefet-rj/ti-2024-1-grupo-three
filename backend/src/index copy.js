@@ -1,8 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import conn from "./db/conn.js";
-import routes from "./routes/app.js";
+import conn from "./database/dbConnect.js";
+import routes from "./routes/index.js";
 import * as dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -54,8 +54,7 @@ app.post("/auth/login", async (req, res) => {
     const token = jwt.sign(
       {
         id: user._id,
-      },
-      secret
+      }
     );
 
     res.status(200).json({ msg: "Autenticação realizada com sucesso!", token });
@@ -66,35 +65,3 @@ app.post("/auth/login", async (req, res) => {
     });
   }
 });
-
-// //rotapricvada
-// app.get("/user/:id", chcecktoken, async (req, res) => {
-//   const id = req.params.id;
-
-//   //chack if user exist
-//   const user = await User.findById(id, "-password");
-
-//   if (!user) {
-//     return res.status(404).json({ msg: "Usuario nao encontrado" });
-//   }
-
-//   res.status(200).json({ user });
-// });
-
-// function chcecktoken(req, res, next) {
-//   const authHeader = req.headers["authorization"];
-//   const token = authHeader && authHeader.split("")[1];
-
-//   if (!token) {
-//     return res.status(401).json({ msg: "Acesso negado!" });
-//   }
-
-//   try {
-//     const secret = process.env.SECRET;
-
-//     jwt.verify(token, secret);
-//     next();
-//   } catch (error) {
-//     res.status(400).json({ msg: "token invalido!" });
-//   }
-// }

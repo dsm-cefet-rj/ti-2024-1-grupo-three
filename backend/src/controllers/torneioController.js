@@ -1,8 +1,8 @@
-import { Torneio } from "../models/Torneio.js";
-import { Chat } from "../models/Chat.js";
-import {User} from "../models/User.js";
+import { Torneio } from "../models/torneioModel.js";
+import { Chat } from "../models/chatModel.js";
+import {User} from "../models/userModel.js";
 import mongoose from 'mongoose';
-import {Time} from "../models/Time.js";
+import {Time} from "../models/timeModel.js";
 const TorneioController = {
   create: async (req, res) => {
     try {

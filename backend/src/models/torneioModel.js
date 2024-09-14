@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
-import { timeSchema } from "./Time.js";
-import { chatSchema } from "./Chat.js";
-import { userSchema } from "./User.js";
+
 const { Schema } = mongoose;
 const torneioSchema = new Schema(
   {
@@ -36,5 +34,6 @@ const torneioSchema = new Schema(
   { timestamps: true }
 );
 
-const Torneio = mongoose.model("Torneio", torneioSchema);
-export { Torneio, torneioSchema };
+const torneioModel = mongoose.model("Torneio", torneioSchema);
+
+export { torneioModel, torneioSchema };

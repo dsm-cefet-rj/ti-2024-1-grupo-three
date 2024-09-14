@@ -1,6 +1,6 @@
-import { Chat } from "../models/Chat.js";
-import { Mensagem } from "../models/Mensagem.js";
-import { User } from "../models/User.js";
+import { Chat } from "../models/chatModel.js";
+import { Mensagem } from "../models/mensagemModel.js";
+import { User } from "../models/userModel.js";
 
 const chatController = {
   // Criar um novo chat

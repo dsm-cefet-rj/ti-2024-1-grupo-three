@@ -1,6 +1,6 @@
-import { Partida } from "../models/Partida.js";
-import { Time } from "../models/Time.js";
-import { Torneio } from "../models/Torneio.js";
+import { Partida } from "../models/partidaModel.js";
+import { Time } from "../models/timeModel.js";
+import { Torneio } from "../models/torneioModel.js";
 
 const partidaController = {
   create: async (req, res) => {

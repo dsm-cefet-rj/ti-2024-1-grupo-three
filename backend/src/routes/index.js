@@ -5,8 +5,8 @@ import torneioRoutes from "./torneios.js";
 import conviteRoutes from "./convites.js";
 import userRoutes from "./users.js";
 import chatRoutes from "./chat.js";
-const routes = express.Router();
 
+const routes = express.Router();
 routes.use(partidaRoutes);
 routes.use(timeRoutes);
 routes.use(torneioRoutes);

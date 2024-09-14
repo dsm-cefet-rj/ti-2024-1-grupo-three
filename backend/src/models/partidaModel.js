@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { timeSchema } from "./Time.js";
+import { timeSchema } from "./timeModel.js";
 const { Schema } = mongoose;
 const partidaSchema = new Schema(
   {
@@ -29,5 +29,6 @@ const partidaSchema = new Schema(
   { timestamps: true }
 );
 
-const Partida = mongoose.model("Partida", partidaSchema);
-export { Partida, partidaSchema };
+const partidaModel = mongoose.model("Partida", partidaSchema);
+
+export { partidaModel, partidaSchema };
