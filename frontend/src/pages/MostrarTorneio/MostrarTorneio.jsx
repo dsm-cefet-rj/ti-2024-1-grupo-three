@@ -113,7 +113,7 @@ const MostrarTorneio = () => {
               </div>
             </div>
           )}
-          ;
+
           <div>
             <h1 className="tituloPag">Partidas</h1>
             {partidas.length > 0 ? (
