@@ -1,4 +1,4 @@
-.envio-convite-container {
+.envio-convite-container1 {
   width: 300px;
   margin: 20px auto;
   padding: 20px;
@@ -39,6 +39,7 @@
   border-radius: 3px;
   cursor: pointer;
   font-size: 14px;
+  font-weight: 700;
 }
 
 .envio-convite-form button:hover {
@@ -50,9 +51,9 @@
   transform: translateY(1px);
 }
 
-.modal-container {
+.modal-container2 {
   height: 100vh;
-  width: 100%;
+  width: 100vw;
   background: rgba(0, 0, 0, 0.5);
   position: fixed;
   top: 0;
@@ -62,13 +63,14 @@
   justify-content: center;
   align-items: center;
 }
-.modal {
+.modal2 {
   position: relative;
 }
 
-.fechar {
+.fechar2 {
   z-index: 222222;
   position: absolute;
+  top: -1rem;
   right: -1rem;
   width: 35px;
   height: 35px;
@@ -113,4 +115,35 @@
   color: #ffffff;
   padding: 5px;
   margin-top: 1.5rem;
+}
+
+.search-results {
+  list-style-type: none; /* Remove as bolinhas padrão */
+  padding: 0; /* Remove o padding padrão */
+  margin-top: 1rem; /* Remove o margin padrão */
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-direction: column;
+}
+
+.search-results li {
+  padding: 10px; /* Espaçamento interno dos itens */
+  background-color: #1b1b29; /* Cor de fundo dos itens */
+  border: 1px solid #ccc; /* Linha separadora entre os itens */
+  width: 50%;
+}
+
+.search-results li:hover {
+  background-color: #2e2e33; /* Cor de fundo ao passar o mouse */
+}
+
+.search-results li a {
+  text-decoration: none; /* Remove o sublinhado dos links */
+  color: #333; /* Cor do texto */
+  display: block; /* Faz o link ocupar toda a área do item */
+}
+
+.search-results li a:hover {
+  color: #000; /* Muda a cor do texto ao passar o mouse */
 }
