@@ -12,6 +12,7 @@
   width: 18.75rem;
   background-color: #09090e;
   padding: 1rem;
+  position: relative;
 }
 .partidaNome {
   display: flex;
@@ -48,4 +49,9 @@
   width: 16rem;
   gap: 1rem;
   text-align: center;
+}
+
+.imageedit {
+  position: absolute;
+  right: 1rem;
 }

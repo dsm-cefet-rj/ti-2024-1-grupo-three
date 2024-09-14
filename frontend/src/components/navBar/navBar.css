@@ -118,6 +118,10 @@ a {
   color: #acacac;
   text-decoration: none;
 }
+.botao1 a {
+  width: 100%;
+  display: inline-block;
+}
 .botao1::before {
   content: "";
   display: flex;
@@ -147,6 +151,10 @@ a {
   color: #acacac;
   text-decoration: none;
 }
+.botao2 a {
+  width: 100%;
+  display: inline-block;
+}
 .botao2::before {
   content: "";
   display: flex;
@@ -175,7 +183,9 @@ a {
   margin-bottom: 5vh;
   background-color: #222232;
   color: #acacac;
+  width: 100%;
 }
+
 .botao3::before {
   content: "";
   display: flex;
@@ -203,6 +213,7 @@ a {
   position: relative;
   background-color: #222232;
   color: #acacac;
+  width: 100%;
 }
 .botao4::before {
   content: "";
@@ -230,6 +241,7 @@ a {
   position: relative;
   background-color: #222232;
   color: #acacac;
+  width: 100%;
 }
 .botao5::before {
   content: "";

@@ -1,6 +1,7 @@
 import React from "react";
 import Seta from "../../assets/Arrow 1.svg";
 import "./partidaComponente.css";
+import Edit from "../../assets/edit.svg";
 
 /**
  * Componente PartidaComponente.
@@ -31,6 +32,9 @@ function PartidaComponente({ id, nome, resultado, data, local }) {
             </div>
             <div className="">
               <h2>{data}</h2>
+            </div>
+            <div>
+              <img src={Edit} alt="menu" className="imageedit" />
             </div>
           </div>
         </div>
