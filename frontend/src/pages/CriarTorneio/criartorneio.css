@@ -81,6 +81,7 @@
   background-color: #19ae47;
   border: none;
   align-items: center;
+  cursor: pointer;
 }
 .torneiocriar {
   display: flex;

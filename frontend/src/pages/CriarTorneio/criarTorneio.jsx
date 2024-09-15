@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addTorneio, addTorneioAsync } from '../../redux/torneios/slice';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addTorneio, addTorneioAsync } from "../../redux/torneios/slice";
 import { v4 as idGen } from "uuid";
 import { useNavigate, Navigate } from "react-router-dom";
 import "./criartorneio.css";
@@ -20,10 +20,10 @@ import { jwtDecode } from "jwt-decode";
 const TorneioForm = () => {
   const dispatch = useDispatch(); // Hook para despachar ações do Redux
   const navigate = useNavigate(); // Hook para navegação de rotas
-  const currentUser = useSelector(rootReducer => rootReducer.user); // Seleciona o usuário atual do estado Redux
-  const [nomeTorneio, setNomeTorneio] = useState(''); // Estado para armazenar o nome do torneio
-  const [quantidadeTimes, setQuantidadeTimes] = useState('2'); // Estado para armazenar a quantidade de times
-  const [localTorneio, setlocalTorneio] = useState(''); // Estado para armazenar o local do torneio
+  const currentUser = useSelector((rootReducer) => rootReducer.user); // Seleciona o usuário atual do estado Redux
+  const [nomeTorneio, setNomeTorneio] = useState(""); // Estado para armazenar o nome do torneio
+  const [quantidadeTimes, setQuantidadeTimes] = useState("2"); // Estado para armazenar a quantidade de times
+  const [localTorneio, setlocalTorneio] = useState(""); // Estado para armazenar o local do torneio
   const token = useSelector((state) => state.auth.token); // Seleciona o token de autenticação do estado Redux
   const decodedToken = jwtDecode(token); // Decodifica o token JWT
 
@@ -44,38 +44,45 @@ const TorneioForm = () => {
    */
   const handleSubmitForm = async (event) => {
     event.preventDefault();
-    
+
     if (!nomeTorneio || !quantidadeTimes || !localTorneio) {
-      alert('Por favor, preencha todos os campos.');
+      alert("Por favor, preencha todos os campos.");
       return;
     }
-  
+
     const qtdTimes = quantidadeTimes;
 
     try {
       // Faz a requisição POST para o back-end
-      const response = await fetch('http://localhost:3004/api/torneio', {
+      const response = await fetch("http://localhost:3004/api/torneio", {
         method: "POST",
         headers: {
-          'Authorization': `Bearer ${token}`, // Passa o token de autenticação
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`, // Passa o token de autenticação
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ nomeTorneio, userIdDonoTorneio, qtdTimes, localTorneio })
+        body: JSON.stringify({
+          nomeTorneio,
+          userIdDonoTorneio,
+          qtdTimes,
+          localTorneio,
+        }),
       });
 
-
-      if (response.ok) { // Utiliza response.ok para checar se o status é 2xx
-        alert('Torneio criado com sucesso!');
+      if (response.ok) {
+        // Utiliza response.ok para checar se o status é 2xx
+        alert("Torneio criado com sucesso!");
         navigate("/meustorneios"); // Redireciona para a página de sucesso
       } else {
         // Lê a resposta do servidor para mostrar detalhes sobre o erro
         const errorData = await response.json();
-        console.error('Erro ao criar torneio:', errorData);
-        alert(`Erro ao criar torneio: ${errorData.message || 'Erro desconhecido'}`);
+        console.error("Erro ao criar torneio:", errorData);
+        alert(
+          `Erro ao criar torneio: ${errorData.message || "Erro desconhecido"}`
+        );
       }
     } catch (error) {
-      console.error('Erro ao criar torneio:', error);
-      alert('Erro ao criar torneio.');
+      console.error("Erro ao criar torneio:", error);
+      alert("Erro ao criar torneio.");
     }
   };
 
@@ -84,35 +91,35 @@ const TorneioForm = () => {
       <div>
         <NavBar />
       </div>
-      <form className='torneiocriar' onSubmit={handleSubmitForm}>
+      <form className="torneiocriar" onSubmit={handleSubmitForm}>
         <div className="nomeTorneio">
-          <label htmlFor="nomeTorneio">Nome do Torneio:</label>
-          <input 
-            className='input2702'
+          <label htmlFor="nomeTorneio">nome do torneio:</label>
+          <input
+            className="input2702"
             type="text"
             id="nomeTorneio"
             value={nomeTorneio}
             onChange={(event) => setNomeTorneio(event.target.value)}
-            required 
+            required
           />
         </div>
         <div className="LocalTorneio">
-          <label htmlFor="localTorneio">Local do Torneio:</label>
-          <input 
-            className='input2902'
+          <label htmlFor="localTorneio">local do torneio:</label>
+          <input
+            className="input2902"
             type="text"
             id="localTorneio"
             value={localTorneio}
             onChange={(event) => setlocalTorneio(event.target.value)}
-            required 
+            required
           />
         </div>
-              
-        <div className='baixo2'>
+
+        <div className="baixo2">
           <div className="qtdTimes">
-            <label htmlFor="quantidadeTimes">Quantidade de Times:</label>
-            <input 
-              className='input2802'
+            <label htmlFor="quantidadeTimes">quantidade de times:</label>
+            <input
+              className="input2802"
               type="number"
               id="quantidadeTimes"
               value={quantidadeTimes}
@@ -131,19 +138,21 @@ const TorneioForm = () => {
                     setQuantidadeTimes(value - 1);
                   }
                 } else {
-                  setQuantidadeTimes(''); // Reseta se o valor for inválido
+                  setQuantidadeTimes(""); // Reseta se o valor for inválido
                 }
               }}
-            />   
+            />
           </div>
         </div>
-            
+
         <div className="torneiocriar">
-          <button className='buttonCriartorneio' type="submit">Criar Torneio</button>  
+          <button className="buttonCriartorneio" type="submit">
+            criar torneio
+          </button>
         </div>
       </form>
     </>
   );
-}
+};
 
 export default TorneioForm;
