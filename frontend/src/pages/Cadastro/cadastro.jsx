@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../redux/user/slice";
-import { v4 as idGen } from "uuid";
 import "../Cadastro/cadastro.css";
 
 /**
@@ -95,26 +94,23 @@ const Cadastro = () => {
     setInputErrorSenha(false);
     setInputErrorEmail(false);
     setInputErrorUser(false);
+    const body = {
+      nome: nome,
+      email: email,
+      senha: senha }
     try {
-      const response = await fetch("http://localhost:3004/api/user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ nome, email, senha }),
-      });
+      const response = await dispatch(addUser(body));
 
-      const data = await response.json();
-
-      if (response.ok) {
-        alert("Usuário cadastrado com sucesso!");
+      if (addUser.fulfilled.match(response)) {
+        setTimeout(() => {
+          navigate("/login");
+      }, 2000);
       } else {
-        alert(`Erro: ${data.error}`);
+        alert(`Erro: ${response.payload}`);
       }
     } catch (error) {
-      alert("Erro ao conectar ao servidor");
+      console.error(error);
     }
-    navigate("/login");
   };
 
   /**
@@ -168,10 +164,6 @@ const Cadastro = () => {
                   className={inputErrorSenha ? "input-error" : "input-certo"}
                 ></input>
                 <br />
-                <p className="condicao-senha">
-                  sua senha deve conter pelo menos 8 caracteres, uma
-                  <br /> letra maiúscula e um número
-                </p>
               </div>
               <div>
                 <input

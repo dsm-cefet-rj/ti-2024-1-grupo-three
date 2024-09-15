@@ -63,7 +63,6 @@ async function create(req, res) {
 async function update (req, res) {
   const id = req.params.id;
   const userReq = {
-    id: req.body.id,
     nome: req.body.nomeUser,
     email: req.body.emailUser,
     senha: req.body.userPass,
@@ -140,4 +139,18 @@ async function login(req, res){
   }
 }
 
-export {getAll, get, create, update, deleteUser, login};
+async function logout(req, res){
+  try{
+      const token = req.headers.authorization;
+
+      return res.status(200).send({
+          message: "Logout efetuado com sucesso"
+      });
+  }catch(error){
+      return res.status(400).send({
+          message: "Ocorreu um erro ao efetuar o logout"
+      })
+  }
+}
+
+export {getAll, get, create, update, deleteUser, login, logout};
