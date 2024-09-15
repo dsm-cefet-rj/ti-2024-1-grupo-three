@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { userSchema } from "./userModel.js";
+
 const {Schema} = mongoose;
 const mensagemSchema = new Schema ({
     usuario:{
@@ -13,6 +14,6 @@ const mensagemSchema = new Schema ({
 },
 {timestamps: true}
 )
-const mensagemModel = mongoose.model("Mensagem", mensagemSchema);
+const Mensagem = mongoose.model("Mensagem", mensagemSchema);
 
-export {mensagemModel, mensagemSchema};
+export {Mensagem, mensagemSchema};

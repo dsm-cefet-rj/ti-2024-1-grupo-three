@@ -34,6 +34,6 @@ const torneioSchema = new Schema(
   { timestamps: true }
 );
 
-const torneioModel = mongoose.model("Torneio", torneioSchema);
+const Torneio = mongoose.model("Torneio", torneioSchema);
 
-export { torneioModel, torneioSchema };
+export { Torneio, torneioSchema };

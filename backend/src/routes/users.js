@@ -1,12 +1,13 @@
 import express from "express";
-import userController from "../controllers/userController.js";
+import { get, getAll, create, update, deleteUser, login} from "../controllers/userController.js";
 import { checkToken } from "../middleware/Auth.js";
 
 const userRoutes = express.Router();
-  userRoutes.route("/user").post((req, res) => userController.create(req, res));
-  userRoutes.route("/user").get((req, res) => userController.getAll(req, res));
-  userRoutes.route("/user/:id").get(checkToken, (req, res) => userController.get(req, res));
-  userRoutes.route("/user/:id").delete((req, res) => userController.delete(req, res));
-  userRoutes.route("/user/:id").put((req, res) => userController.update(req, res));
+  userRoutes.get('/user/:id',  get);
+  userRoutes.get('/user', getAll);
+  userRoutes.post('/user', create);
+  userRoutes.patch('/user/:id', checkToken, update);
+  userRoutes.delete('/user/:id', checkToken, deleteUser);
+  userRoutes.post('/login', login);
 
 export default userRoutes;

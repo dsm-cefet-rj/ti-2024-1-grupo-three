@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { timeSchema } from "./timeModel.js";
+
 const { Schema } = mongoose;
 const partidaSchema = new Schema(
   {
@@ -29,6 +30,6 @@ const partidaSchema = new Schema(
   { timestamps: true }
 );
 
-const partidaModel = mongoose.model("Partida", partidaSchema);
+const Partida = mongoose.model("Partida", partidaSchema);
 
-export { partidaModel, partidaSchema };
+export { Partida, partidaSchema };

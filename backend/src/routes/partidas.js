@@ -1,33 +1,18 @@
 import express from "express";
-import partidaController from "../controllers/partidaController.js";
+import {create, getAll, get, deletePartida, update, getPartidasByTime, updatePlacar, criarPartidaMOR} from "../controllers/partidaController.js";
+import { checkToken } from "../middleware/Auth.js";
 
 const partidaRoutes = express.Router();
-partidaRoutes
-  .route("/partidas")
-  .post((req, res) => partidaController.create(req, res));
+partidaRoutes.post("/partidas", create);
 
-partidaRoutes
-  .route("/partidas")
-  .get((req, res) => partidaController.getAll(req, res));
+partidaRoutes.get("/partidas", getAll);
 
-partidaRoutes
-  .route("/partidas/:id")
-  .get((req, res) => partidaController.get(req, res));
-partidaRoutes
-  .route("/partidas/:id")
-  .delete((req, res) => partidaController.delete(req, res));
-partidaRoutes
-  .route("/partidas/time/:timeId")
-  .get((req, res) => partidaController.getPartidasByTime(req, res));
-partidaRoutes
-  .route("/partidas/:id")
-  .put((req, res) => partidaController.update(req, res));
+partidaRoutes.get("/partidas/:id", get);
+partidaRoutes.delete("/partidas/:id", deletePartida);
+partidaRoutes.get("/partidas/time/:timeId", getPartidasByTime);
+partidaRoutes.put("/partidas/:id", update);
 
-partidaRoutes
-  .route("/partidas/:id/placar")
-  .put((req, res) => partidaController.updatePlacar(req, res));
+partidaRoutes.put("/partidas/:id/placar", updatePlacar);
 
-partidaRoutes
-  .route("/partidas/:torneioId")
-  .post((req, res) => partidaController.criarPartidaMOR(req, res));
+partidaRoutes.post("/partidas/:torneioId", criarPartidaMOR);
 export default partidaRoutes;

@@ -1,6 +1,5 @@
 import { User } from "../models/userModel.js";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 
 async function getAll(req, res) {
   try {
@@ -119,9 +118,8 @@ async function login(req, res){
           const token = jsonwebtoken.sign(
               {
                   id: existingUser._id,
-                  type: "user"
               }, 
-              process.env.SECRET_JWT, 
+              process.env.SECRET, 
               {expiresIn: '15m'}
           );
           const { exp } = jsonwebtoken.decode(token);
@@ -141,23 +139,5 @@ async function login(req, res){
       });
   }
 }
-async function logout(req, res){
-  try{
-      const token = req.headers.authorization;
 
-      if(token){
-          await blackListModel.create({token});
-      }
-      
-
-      return res.status(200).send({
-          message: "Logout efetuado com sucesso"
-      });
-  }catch(error){
-      return res.status(400).send({
-          message: "Ocorreu um erro ao efetuar o logout"
-      })
-  }
-}
-
-export {getAll, get, create, update, deleteUser, login, logout};
+export {getAll, get, create, update, deleteUser, login};

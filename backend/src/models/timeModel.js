@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { userSchema } from "./userModel.js";
+
 const { Schema } = mongoose;
 const timeSchema = new Schema(
   {
@@ -24,6 +24,6 @@ const timeSchema = new Schema(
   { timestamps: true }
 );
 
-const timeModel = mongoose.model("Time", timeSchema);
+const Time = mongoose.model("Time", timeSchema);
 
-export { timeModel, timeSchema };
+export { Time, timeSchema };

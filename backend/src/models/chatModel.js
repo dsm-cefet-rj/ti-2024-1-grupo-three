@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { mensagemSchema } from "./mensagemModel.js";
+
 const {Schema} = mongoose;
 const chatSchema = new Schema ({
     mensagens:[{
@@ -9,6 +10,6 @@ const chatSchema = new Schema ({
 },
 {timestamps: true}
 )
-const chatModel = mongoose.model("Chat", chatSchema);
+const Chat = mongoose.model("Chat", chatSchema);
 
-export {chatModel, chatSchema};
+export {Chat, chatSchema};
