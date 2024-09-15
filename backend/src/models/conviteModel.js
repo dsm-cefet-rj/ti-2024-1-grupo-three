@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
-import { timeSchema } from "./Time.js";
-import { userSchema } from "./User.js";
-import {torneioSchema} from "./Torneio.js"
+
 const {Schema} = mongoose;
 const conviteSchema = new Schema ({
     usuarioRemetente: {
@@ -34,4 +32,5 @@ const conviteSchema = new Schema ({
 {timestamps: true}
 )
 const Convite = mongoose.model("Convite", conviteSchema);
+
 export {Convite, conviteSchema};

@@ -1,31 +1,21 @@
 import express from "express";
-import torneioController from "../controllers/torneioController.js";
+import {create, getTimesByTorneio, getTorneiosByTime, getByOwner, getAll, get, deleteTorneio, update} from "../controllers/torneioController.js";
+import { checkToken } from "../middleware/Auth.js";
 
 const torneioRoutes = express.Router();
 
 // Rotas para todos os torneios (criação e obtenção de todos)
-torneioRoutes
-  .route("/torneio")
-  .post(torneioController.create)  // Criação de torneio
-  .get(torneioController.getAll);  // Obtenção de todos os torneios
+torneioRoutes.post("/torneio", create); // Criação de torneio
+torneioRoutes.get("/torneio", getAll); // Obtenção de todos os torneios
 
 // Rotas para operações em torneios específicos (obtenção, atualização e exclusão)
-torneioRoutes
-  .route("/torneio/:id")
-  .get(torneioController.get)      // Obtenção de um torneio específico
-  .put(torneioController.update)   // Atualização de um torneio específico
-  .delete(torneioController.delete); // Exclusão de um torneio específico
-torneioRoutes
-  .route("/torneio/dono/:userIdDonoTorneio")
-  .get(torneioController.getByOwner)
+torneioRoutes.get("/torneio/:id", get)      // Obtenção de um torneio específico
+torneioRoutes.put("/torneio/:id", update)   // Atualização de um torneio específico
+torneioRoutes.delete("/torneio/:id", deleteTorneio) // Exclusão de um torneio específico
+torneioRoutes.get("/torneio/dono/:userIdDonoTorneio", getByOwner);
 
-torneioRoutes
-  .route("/torneio/time/:timeId")
-  .get(torneioController.getTorneiosByTime);  
+torneioRoutes.get("/torneio/time/:timeId", getTorneiosByTime);  
 
-torneioRoutes
-  .route("/torneio/meutime/:id")
-  .get(torneioController.getTimesByTorneio); 
+torneioRoutes.get("/torneio/meutime/:id", getTimesByTorneio); 
 
 export default torneioRoutes;
-

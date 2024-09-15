@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { userSchema } from "./User.js";
+
 const { Schema } = mongoose;
 const timeSchema = new Schema(
   {

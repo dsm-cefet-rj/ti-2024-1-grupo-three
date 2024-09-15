@@ -1,8 +1,6 @@
-import mongoose from "mongoose";
-import { Time } from "../models/Time.js";
-import { User } from "../models/User.js";
-const timeController = {
-  create: async (req, res) => {
+import { Time } from "../models/timeModel.js";
+
+  async function create(req, res) {
     try {
       const { nomeTime, userIdDono, userId } = req.body;
       // Criar o time com o ID do usuário dono
@@ -18,8 +16,8 @@ const timeController = {
       console.error("Erro ao criar time:", error);
       res.status(500).json({ error: `Erro ao criar time: ${error.message}` });
     }
-  },
-  getByOwner: async (req, res) => {
+  }
+  async function getByOwner(req, res) {
     try {
       const userIdDono = req.params.userIdDono; // Corrigido para req.params
       const time = await Time.findOne({ userIdDono: userIdDono }); // Confere se userIdDono é o campo correto
@@ -32,9 +30,9 @@ const timeController = {
     } catch (error) {
       return res.status(500).json({ message: "Erro ao buscar o time", error });
     }
-  },
+  }
 
-  getByUser: async (req, res) => {
+  async function getByUser(req, res) {
     try {
       const userId = req.params.userId; // Corrigido para req.params
       const time = await Time.findOne({  userId: { 
@@ -49,8 +47,8 @@ const timeController = {
     } catch (error) {
       return res.status(500).json({ message: "Erro ao buscar o time", error });
     }
-  },
-  getAll: async (req, res) => {
+  }
+  async function getAll(req, res) {
     try {
       const { nome_like } = req.query;
       let timeRes;
@@ -66,8 +64,8 @@ const timeController = {
     } catch (error) {
       console.log(error);
     }
-  },
-  get: async (req, res) => {
+  }
+  async function get(req, res) {
     try {
       const id = req.params.id;
       const time = await Time.findById(id);
@@ -79,8 +77,8 @@ const timeController = {
     } catch (error) {
       console.log(error);
     }
-  },
-  delete: async (req, res) => {
+  }
+  async function deleteTime(req, res) {
     try {
       const id = req.params.id;
       const time = await Time.findById(id);
@@ -95,8 +93,8 @@ const timeController = {
     } catch (error) {
       console.log(error);
     }
-  },
-  update: async (req, res) => {
+  }
+  async function update(req, res) {
     const id = req.params.id;
     const time = {
       id: req.body.id,
@@ -111,6 +109,6 @@ const timeController = {
       return;
     }
     res.status(200).json({ time, msg: "serviço atualizado com sucesso" });
-  },
-};
-export default timeController;
+  }
+
+export {create, getByOwner, getByUser, getAll, get, deleteTime, update};
