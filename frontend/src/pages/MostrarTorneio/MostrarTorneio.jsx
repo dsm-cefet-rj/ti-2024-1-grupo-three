@@ -69,7 +69,7 @@ const MostrarTorneio = () => {
       <NavBar />
       <div>
         <div>
-          <h1 className="tituloPag">Times</h1>
+          <h1 className="tituloPag">times</h1>
           {times.length > 0 ? (
             <div>
               {show ? (
@@ -115,7 +115,7 @@ const MostrarTorneio = () => {
           )}
 
           <div>
-            <h1 className="tituloPag">Partidas</h1>
+            <h1 className="tituloPag">partidas</h1>
             {partidas.length > 0 ? (
               <div>
                 {show2 ? (

@@ -96,7 +96,10 @@ const Time = () => {
 
       {nomeTime ? (
         <div className="envoltoJogPar">
-          <h1 className="nomedoTime">{nomeTime}</h1>
+          <div className="nometimeflex">
+            <h1 className="nomedoTime">{nomeTime}</h1>
+            <img src={Edit} alt="menu" className="imageedit1" />
+          </div>
 
           <div>
             <h1 className="tituloPag">jogadores</h1>
@@ -127,6 +130,19 @@ const Time = () => {
                 </div>
               </div>
             )}
+            {/* botao sair do time */}
+            <form
+              className="formSairTime"
+              // onSubmit={(values) => {
+              //   handleSubmitForm(values);
+              // }}
+            >
+              <div className="sairTime">
+                <button className="botaosairTime" type="submit">
+                  sair do time
+                </button>
+              </div>
+            </form>
           </div>
           <div>
             <h1 className="tituloPag">partidas</h1>

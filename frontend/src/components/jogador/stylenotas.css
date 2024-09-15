@@ -27,6 +27,10 @@
   position: absolute;
   right: 2rem;
 }
+.imagepromote {
+  position: absolute;
+  right: -3rem;
+}
 .info-j {
   display: flex;
   align-items: center;

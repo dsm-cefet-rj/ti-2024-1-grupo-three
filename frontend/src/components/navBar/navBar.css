@@ -60,6 +60,7 @@
 .imageuser {
   height: 6vh;
   width: 6vh;
+  cursor: pointer;
 }
 .imagelupa {
   height: 3vh;
@@ -107,6 +108,7 @@ a {
 }
 .botoesDiv button:hover {
   background-color: #575757; /* Efeito ao passar o mouse */
+  transition: background-color 0.6s ease;
 }
 .botao1 {
   height: 5vh;
@@ -205,6 +207,9 @@ a {
   width: 30vw;
   height: 0.2vh;
   top: 4.5vh;
+}
+.botao3:hover {
+  background-color: #575757; /* Efeito ao passar o mouse */
 }
 .botao4 {
   border: none;
