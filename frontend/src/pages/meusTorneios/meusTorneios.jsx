@@ -113,9 +113,9 @@ const MeusTorneios = () => {
           <h1 className="tituloPag1">meus torneios</h1>
 
           <div className="textocontent">
-            <div className="Mensagens">
+            <div className="Mensagens1">
               <h1>você não é dono de nenhum torneio no momento.</h1>
-              <h1>vamos resolver isso?</h1>
+
               <h1>você pode criar o seu próprio torneio.</h1>
             </div>
             <div className="textocontent">
@@ -166,7 +166,7 @@ const MeusTorneios = () => {
       ) : (
         <div>
           <div className="textocontent">
-            <div className="Mensagens">
+            <div className="Mensagens1">
               <h1>você não está participando de nenhum torneio no momento.</h1>
 
               <h1>

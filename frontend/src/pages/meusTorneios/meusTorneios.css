@@ -11,14 +11,14 @@
 .meustorneios {
   margin-top: 3vh;
 }
-.Mensagens {
+.Mensagens1 {
   padding: 3rem 1.25rem;
   gap: 1.5rem;
   height: 5rem;
   margin-top: 0.4rem;
   border-radius: 5px;
   align-items: flex-start;
-  width: 80vw;
+  width: 18.75rem;
   background-color: #09090e;
   display: flex;
   flex-direction: column;
@@ -38,4 +38,5 @@
   background-color: #19ae47;
   border: none;
   align-items: center;
+  cursor: pointer;
 }

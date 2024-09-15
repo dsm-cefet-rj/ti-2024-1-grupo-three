@@ -23,7 +23,6 @@ const CriarTime = () => {
   const decodedToken = jwtDecode(token); // Decodifica o token JWT
   const userId = decodedToken.id; // ID do usuário decodificado do token
   const userIdDono = decodedToken.id; // ID do dono do time (o usuário que está criando o time)
-  
 
   /**
    * Manipula a submissão do formulário para criar um novo time.
@@ -36,7 +35,6 @@ const CriarTime = () => {
   const handleSubmitForm = async (e) => {
     e.preventDefault();
     try {
-
       const response = await fetch("http://localhost:3004/api/time", {
         method: "POST",
         headers: {
@@ -84,7 +82,7 @@ const CriarTime = () => {
         }}
       >
         <div className="nomeCriarTime">
-          <h1 className="nomedoTime">Nome do time:</h1>
+          <h1 className="nomedoTime">nome do time:</h1>
           <input
             type="text"
             className="inputCriarTime"

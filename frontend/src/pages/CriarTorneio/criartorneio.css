@@ -33,6 +33,10 @@
 .input2802:focus {
   outline: 0;
 }
+.torneiocriar label {
+  font-size: 1.25rem;
+  font-family: Jockey One;
+}
 .tipoTorneio {
   padding: 20px;
   border-radius: 5px;
@@ -77,12 +81,14 @@
   background-color: #19ae47;
   border: none;
   align-items: center;
+  cursor: pointer;
 }
 .torneiocriar {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  gap: 5vh;
 }
 .baixo2 {
   display: flex;
@@ -102,4 +108,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+@media (min-width: 600px) {
+  .nomeTorneio {
+    margin-top: 5vw;
+  }
 }

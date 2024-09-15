@@ -8,6 +8,9 @@
 
 .buttonconvite:hover {
   cursor: pointer;
+
+  background-color: #575757; /* Efeito ao passar o mouse */
+  transition: background-color 0.6s ease;
 }
 
 .modal-container1 {

@@ -60,6 +60,7 @@
 .imageuser {
   height: 6vh;
   width: 6vh;
+  cursor: pointer;
 }
 .imagelupa {
   height: 3vh;
@@ -107,6 +108,7 @@ a {
 }
 .botoesDiv button:hover {
   background-color: #575757; /* Efeito ao passar o mouse */
+  transition: background-color 0.6s ease;
 }
 .botao1 {
   height: 5vh;
@@ -117,6 +119,10 @@ a {
   background-color: #222232;
   color: #acacac;
   text-decoration: none;
+}
+.botao1 a {
+  width: 100%;
+  display: inline-block;
 }
 .botao1::before {
   content: "";
@@ -147,6 +153,10 @@ a {
   color: #acacac;
   text-decoration: none;
 }
+.botao2 a {
+  width: 100%;
+  display: inline-block;
+}
 .botao2::before {
   content: "";
   display: flex;
@@ -175,7 +185,9 @@ a {
   margin-bottom: 5vh;
   background-color: #222232;
   color: #acacac;
+  width: 100%;
 }
+
 .botao3::before {
   content: "";
   display: flex;
@@ -196,6 +208,9 @@ a {
   height: 0.2vh;
   top: 4.5vh;
 }
+.botao3:hover {
+  background-color: #575757; /* Efeito ao passar o mouse */
+}
 .botao4 {
   border: none;
   height: 5vh;
@@ -203,6 +218,7 @@ a {
   position: relative;
   background-color: #222232;
   color: #acacac;
+  width: 100%;
 }
 .botao4::before {
   content: "";
@@ -230,6 +246,7 @@ a {
   position: relative;
   background-color: #222232;
   color: #acacac;
+  width: 100%;
 }
 .botao5::before {
   content: "";

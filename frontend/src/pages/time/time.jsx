@@ -2,10 +2,10 @@ import { React, useState, useEffect } from "react";
 import Button from "../../components/button/button";
 import NavBar from "../../components/navBar/navBar";
 import PartidaComponente from "../../components/partidaComponent/partidaComponente";
-
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Navigate } from "react-router-dom";
 import "../time/time.css";
+import Edit from "../../assets/edit.svg";
 import axios from "axios";
 import Jogador from "../../components/jogador/jogador";
 import { jwtDecode } from "jwt-decode";
@@ -96,7 +96,11 @@ const Time = () => {
 
       {nomeTime ? (
         <div className="envoltoJogPar">
-          <h1 className="nomedoTime">{nomeTime}</h1>
+          <div className="nometimeflex">
+            <h1 className="nomedoTime">{nomeTime}</h1>
+            <img src={Edit} alt="menu" className="imageedit1" />
+          </div>
+
           <div>
             <h1 className="tituloPag">jogadores</h1>
             {show ? (
@@ -126,6 +130,19 @@ const Time = () => {
                 </div>
               </div>
             )}
+            {/* botao sair do time */}
+            <form
+              className="formSairTime"
+              // onSubmit={(values) => {
+              //   handleSubmitForm(values);
+              // }}
+            >
+              <div className="sairTime">
+                <button className="botaosairTime" type="submit">
+                  sair do time
+                </button>
+              </div>
+            </form>
           </div>
           <div>
             <h1 className="tituloPag">partidas</h1>

@@ -12,6 +12,7 @@
   border-radius: 5px;
   width: 18.75rem;
   background-color: #09090e;
+  position: relative;
 }
 .torneioNome {
   display: flex;
@@ -26,6 +27,11 @@
 }
 .dividir1 h2 {
   color: white;
+}
+.imagedelete2 {
+  position: absolute;
+  right: -2rem;
+  bottom: 2rem;
 }
 .TORNEIOSS {
   display: flex;

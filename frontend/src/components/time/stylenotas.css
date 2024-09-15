@@ -13,11 +13,17 @@
   height: 5rem;
   margin-top: 0.4rem;
   border-radius: 5px;
-  align-items: center;
+
+  text-align: center;
   width: 18.75rem;
   background-color: #09090e;
-  display: flex;
+
   justify-content: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: white;
+  font-family: "Jockey One", sans-serif;
 }
 .jogadores-time1 h2 {
   font-size: 1rem;
@@ -28,6 +34,10 @@
   align-items: center;
   color: white;
   font-family: "Jockey One", sans-serif;
+}
+.imagedelete1 {
+  position: absolute;
+  right: 2rem;
 }
 .info-j h2 {
   display: flex;
