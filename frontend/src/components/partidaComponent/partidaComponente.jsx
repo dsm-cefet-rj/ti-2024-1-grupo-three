@@ -17,6 +17,7 @@ import Edit from "../../assets/edit.svg";
  * @param {string} props.local - O local onde a partida aconteceu ou vai acontecer.
  * @returns {JSX.Element} Retorna o JSX que renderiza o componente de partida.
  */
+
 function PartidaComponente({ id, nome, resultado, data, local }) {
   return (
     <div className="partidaContainer">
@@ -34,7 +35,9 @@ function PartidaComponente({ id, nome, resultado, data, local }) {
               <h2>{data}</h2>
             </div>
             <div>
-              <img src={Edit} alt="menu" className="imageedit" />
+              {resultado !== "" && (
+                <img src={Edit} alt="menu" className="imageedit" />
+              )}
             </div>
           </div>
         </div>

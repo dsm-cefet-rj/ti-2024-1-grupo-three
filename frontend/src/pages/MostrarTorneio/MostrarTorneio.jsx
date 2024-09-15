@@ -105,7 +105,7 @@ const MostrarTorneio = () => {
               <div>
                 <PartidaComponente
                   key="nenhuma-partida"
-                  nome="Nenhum time encontrado"
+                  nome="nenhum time encontrado"
                   resultado=""
                   data=""
                   local=""
@@ -172,7 +172,7 @@ const MostrarTorneio = () => {
                 <div>
                   <PartidaComponente
                     key="nenhuma-partida"
-                    nome="Nenhuma partida encontrada"
+                    nome="nenhuma partida encontrada"
                     resultado=""
                     data=""
                     local=""

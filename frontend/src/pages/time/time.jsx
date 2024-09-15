@@ -198,7 +198,7 @@ const Time = () => {
                 <div>
                   <PartidaComponente
                     key="nenhuma-partida"
-                    nome="Nenhuma partida encontrada"
+                    nome="nenhuma partida encontrada"
                     resultado=""
                     data=""
                     local=""
