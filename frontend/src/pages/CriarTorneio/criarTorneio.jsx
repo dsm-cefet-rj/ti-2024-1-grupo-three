@@ -54,7 +54,7 @@ const TorneioForm = () => {
 
     try {
       // Faz a requisição POST para o back-end
-      const response = await fetch("http://localhost:3004/api/torneio", {
+      const response = await fetch("http://localhost:3004/torneio", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`, // Passa o token de autenticação

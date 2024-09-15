@@ -39,7 +39,7 @@ const Convite = () => {
       try {
         // Buscar convites para times
         const responseTime = await axios.get(
-          `http://localhost:3004/api/convite?idDestinatario=${userId}`
+          `http://localhost:3004/convite?idDestinatario=${userId}`
         );
         if (responseTime) {
           setConvitesTime(responseTime.data);
@@ -48,12 +48,12 @@ const Convite = () => {
         // Buscar convites para torneios
 
         const responseDono = await axios.get(
-          `http://localhost:3004/api/time/dono/${userId}`
+          `http://localhost:3004/time/dono/${userId}`
         );
         if (responseDono.data) {
           const timeUser = responseDono.data;
           const responseTorneio = await axios.get(
-            `http://localhost:3004/api/convite/time/${timeUser._id}`
+            `http://localhost:3004/convite/time/${timeUser._id}`
           );
           setConvitesTorneio(responseTorneio.data);
         }
@@ -68,7 +68,7 @@ const Convite = () => {
         if (!teamNames[convite.timeRemetente]) {
           try {
             const response = await axios.get(
-              `http://localhost:3004/api/time/${convite.timeRemetente}`
+              `http://localhost:3004/time/${convite.timeRemetente}`
             );
             names[convite.timeRemetente] = response.data.nomeTime; // Assumindo que o nome está no campo 'name'
           } catch (error) {
@@ -85,7 +85,7 @@ const Convite = () => {
         if (!torneioNames[convite.torneio]) {
           try {
             const response = await axios.get(
-              `http://localhost:3004/api/torneio/${convite.torneio}`
+              `http://localhost:3004/torneio/${convite.torneio}`
             );
             namesTorneio[convite.torneio] = response.data.nomeTorneio;
           } catch (error) {
@@ -107,9 +107,13 @@ const Convite = () => {
     // Atualizar nomes dos times quando os convites são carregados
     if (convitesTime.length > 0) {
       fetchTeamNames();
+    }else{
+      setTeamNames([])
     }
     if (convitesTorneio.length > 0) {
       fetchTorneioNames();
+    }else{
+      setTorneioNames([])
     }
   }, [userId, isOpen, convitesTime, convitesTorneio]); //talvez tirar is open
 
@@ -122,7 +126,7 @@ const Convite = () => {
   };
 
   const handleRejeitar = async (idConvite) => {
-    await axios.delete(`http://localhost:3004/api/convite/${idConvite}`);
+    await axios.delete(`http://localhost:3004/convite/${idConvite}`);
     alert("Convite Recusado!");
     // Atualizar convites após rejeitar
     setConvitesTime((prev) =>
@@ -133,7 +137,7 @@ const Convite = () => {
   const handleAceitar = async (idConvite) => {
     // Lógica para aceitar o convite com o idConvite
     const response = await axios.put(
-      `http://localhost:3004/api/convite/aceitar/${idConvite}`
+      `http://localhost:3004/convite/aceitar/${idConvite}`
     );
     if (response.status === 200) {
       alert("Convite Aceito!");

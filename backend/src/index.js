@@ -15,7 +15,7 @@ connection.once("open", () => {
 app.use(cors());
 app.use(express.json());
 app.use(routes);
-const PORT = 5000;
+const PORT = 3004;
 app.listen(PORT,() => {
     console.log(`escutando na porta ${PORT}`);
 })

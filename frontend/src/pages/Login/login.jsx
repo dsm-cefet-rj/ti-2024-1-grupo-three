@@ -39,11 +39,13 @@ const Login = () => {
     setError(null);
 
     try {
-      const response = await axios.post("http://localhost:3004/auth/login", {
+      console.log(email)
+      console.log(senha)
+      const response = await axios.post("http://localhost:3004/login", {
         email,
         senha,
       });
-
+      console.log(response.data)
       // Armazena o token no Redux
       dispatch(setToken(response.data.token));
       dispatch(addLoggedUser(response.data.user));

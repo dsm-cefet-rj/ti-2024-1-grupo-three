@@ -96,7 +96,7 @@ const Cadastro = () => {
     setInputErrorEmail(false);
     setInputErrorUser(false);
     try {
-      const response = await fetch("http://localhost:3004/api/user", {
+      const response = await fetch("http://localhost:3004/user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

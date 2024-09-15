@@ -46,14 +46,14 @@ const Time = () => {
     const fetchTime = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3004/api/time/user/${decodedToken.id}`
+          `http://localhost:3004/time/user/${decodedToken.id}`
         );
         const time = response.data;
 
         if (time) {
           setNomeTime(time.nomeTime);
           const partidaResponse = await axios.get(
-            `http://localhost:3004/api/partidas/time/${time._id}`
+            `http://localhost:3004/partidas/time/${time._id}`
           );
           const partidas = partidaResponse.data;
           if (partidas) {
@@ -61,7 +61,7 @@ const Time = () => {
           }
           const userDetailsPromises = time.userId.map(async (userId) => {
             const userResponse = await axios.get(
-              `http://localhost:3004/api/user/${userId}`,
+              `http://localhost:3004/user/${userId}`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`, // Enviando o token no cabeçalho

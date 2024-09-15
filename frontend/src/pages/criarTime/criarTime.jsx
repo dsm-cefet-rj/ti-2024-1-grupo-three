@@ -35,7 +35,7 @@ const CriarTime = () => {
   const handleSubmitForm = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3004/api/time", {
+      const response = await fetch("http://localhost:3004/time", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
