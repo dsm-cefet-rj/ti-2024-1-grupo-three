@@ -41,14 +41,14 @@ const MostrarTorneio = () => {
     const fetchTime = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3004/api/torneio/meutime/${id}`
+          `http://localhost:3004/torneio/meutime/${id}`
         );
         setTimes(response.data.Participantes);
 
         if (times) {
           const partidaDetailsPromises = times.map(async (times) => {
             const partidaResponse = await axios.get(
-              `http://localhost:3004/api/partidas/time/${times}`
+              `http://localhost:3004/partidas/time/${times}`
             );
             return partidaResponse.data;
           });

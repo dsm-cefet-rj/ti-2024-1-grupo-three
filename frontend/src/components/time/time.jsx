@@ -9,7 +9,7 @@ const Time = ({ id }) => {
     const fetchTime = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3004/api/time/${id}`
+          `http://localhost:3004/time/${id}`
         );
         const time = response.data;
         if (time) {
