@@ -95,11 +95,7 @@ async function getByTimeDest(req, res) {
     const resConvite = await Convite.find({ timeDestinatario: destinatario });
 
     // Verifique se encontrou algum convite
-    if (resConvite.length > 0) {
       return res.json(resConvite);
-    } else {
-      return res.status(404).json({ message: "Nenhum convite encontrado para o time destinatário." });
-    }
 
   } catch (error) {
     console.error("Erro ao buscar convite:", error);

@@ -62,7 +62,7 @@ const Time = () => {
         if (time) {
           setNomeTime(time.nomeTime);
           const partidaResponse = await axios.get(
-            `http://localhost:3004/api/partidas/time/${time._id}`
+            `http://localhost:3004/partidas/time/${time._id}`
           );
           const partidas = partidaResponse.data;
           if (partidas) {
@@ -71,7 +71,7 @@ const Time = () => {
           //////// partida ainda nao foi alterado
           const userDetailsPromises = Jogadores.map(async (userId) => {
             const userResponse = await axios.get(
-              `http://localhost:3004/api/user/${userId}`, //botar rota do redux
+              `http://localhost:3004/user/${userId}`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`, // Enviando o token no cabeçalho

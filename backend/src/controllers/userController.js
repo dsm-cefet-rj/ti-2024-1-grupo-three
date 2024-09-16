@@ -1,6 +1,8 @@
 import { User } from "../models/userModel.js";
 import jsonwebtoken from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import jsonwebtoken from 'jsonwebtoken';
+
 
 async function getAll(req, res) {
   try {

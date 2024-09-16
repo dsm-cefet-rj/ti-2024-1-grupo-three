@@ -97,14 +97,15 @@ const Cadastro = () => {
     const body = {
       nome: nome,
       email: email,
-      senha: senha }
+      senha: senha,
+    };
     try {
       const response = await dispatch(addUser(body));
 
       if (addUser.fulfilled.match(response)) {
         setTimeout(() => {
           navigate("/login");
-      }, 2000);
+        }, 2000);
       } else {
         alert(`Erro: ${response.payload}`);
       }
