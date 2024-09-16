@@ -28,70 +28,69 @@ const Time = () => {
   const [show, setShow] = useState(false); // Estado para controlar a exibição de jogadores
   const [show2, setShow2] = useState(false); // Estado para controlar a exibição de partidas
   const currentUser = useSelector((rootReducer) => rootReducer.user);
+  const timeDados = useSelector((rootReducer) => rootReducer.time);
   const Jogadores = useSelector((rootReducer) => rootReducer.timeUser);
-  const Time = useSelector((rootReducer) => rootReducer.timeUser);
   const dispatch = useDispatch();
-
+  
   console.log(currentUser);
   // Redireciona para a página de login se o token não estiver presente
   if (!currentUser.logged) {
     return <Navigate to="/login" />;
   }
-
+  
   useEffect(() => {
     /**
      * Busca as informações do time do usuário autenticado.
      * Realiza chamadas à API para buscar dados do time, jogadores e partidas.
-     *
-     * @async
-     * @function fetchTime
-     */
-    const fetchTime = async () => {
-      try {
-        const response = await dispatch(
-          getTimeByUserId({
-            userId: currentUser.user._id,
-            token: currentUser.logged,
+    *
+    * @async
+    * @function fetchTime
+    */
+   const fetchTime = async () => {
+     try {
+       const response = await dispatch(
+         getTimeByUserId({
+           userId: currentUser.user._id,
+           token: currentUser.logged,
           })
         );
         if (response) {
           dispatch(addTime(response));
-          dispatch(addJogadores(response.userId));
         }
-        console.log(response);
+        const Time = timeDados.timeUser.payload;
 
-        if (Time) {
-          setNomeTime(Time.nomeTime);
-          const partidaResponse = await dispatch(
-            getPartidasIdTime({
-              idPartida: Time._id,
-              token: currentUser.logged,
-            })
-          );
-          const partidas = partidaResponse.data;
-          if (partidas) {
-            setPartidas(partidas);
-          }
-
-          const userDetailsPromises = Jogadores.map(async (userId) => {
-            const userResponse = await dispatch(
-              getJogadores({
-                id: userId,
-                token: currentUser.logged,
-              })
-            );
-            return userResponse.data;
-          });
-          const userDetails = await Promise.all(userDetailsPromises);
-          setJogadores(userDetails);
-        }
+         if (Time) {
+             setNomeTime(Time.nomeTime);
+             const partidaResponse = await dispatch(
+                 getPartidasIdTime({
+                     idPartida: Time._id,
+                     token: currentUser.logged,
+             })
+           );
+           const partidas = partidaResponse.data;
+           if (partidas) {
+               setPartidas(partidas);
+             }
+          
+             const userDetailsPromises = Jogadores.map(async (userId) => {
+                 const userResponse = await dispatch(
+                     getJogadores({
+                         id: userId,
+                         token: currentUser.logged,
+                       })
+                     );
+                     return userResponse.data;
+                   });
+                   const userDetails = await Promise.all(userDetailsPromises);
+                   setJogadores(userDetails);
+         }
       } catch (error) {
         console.error("Erro ao buscar o nome do time:", error);
       }
     };
     fetchTime();
-  }); //mudar aqui
-
+  }, []); //mudar aqui
+  
   /**
    * Manipula o clique do botão para criar um time.
    * Redireciona para a página de criação de time.
