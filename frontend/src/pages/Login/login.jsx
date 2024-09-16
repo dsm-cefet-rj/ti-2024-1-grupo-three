@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addLoggedUser } from "../../redux/user/slice";
 import CreateAxiosInstance from "../../utils/api";
+import { getTimeByUserId, addTime } from "../../redux/time/slice";
+import { useSelector } from "react-redux";
 import "../Cadastro/cadastro.css";
 import "../Login/login.css";
 
@@ -20,9 +22,11 @@ const Login = () => {
   const [inputErrorUser, setInputErrorUser] = useState(false); // Estado para o erro de input de usuário
   const [inputErrorSenha, setInputErrorSenha] = useState(false); // Estado para o erro de input de senha
   const [passwordVisible, setPasswordVisible] = useState(false); // Estado para visibilidade da senha
+  const timeDados = useSelector((rootReducer) => rootReducer.time);
   const navigate = useNavigate(); // Hook para navegação de rotas
   const dispatch = useDispatch(); // Hook para despachar ações do Redux
   const api = CreateAxiosInstance();
+  let suco;
 
   /**
    * Manipula o evento de login.
@@ -45,15 +49,35 @@ const Login = () => {
 
       if (response.data.status == true) {
         console.log(response.data);
+        suco = response.data;
         dispatch(addLoggedUser(response.data));
         alert("Autenticado com sucesso!");
-        navigate("/Time");
+        fetchTime();
+        setTimeout(() => {
+          navigate("/Time"); //tive que botar pq tava acessando time antes de conseguir salvar o time ao redux
+        }, 1000);
       }
     } catch (error) {
       alert(error);
     }
   };
-
+  const fetchTime = async () => {
+    try {
+      const response = await dispatch(
+        getTimeByUserId({
+          userId: suco.user._id,
+          token: suco.token,
+        })
+      );
+      if (response) {
+        dispatch(addTime(response));
+        //addJogadores
+      }
+      const Time = timeDados.timeUser.payload;
+    } catch (error) {
+      console.error("Erro ao buscar o nome do time:", error);
+    }
+  };
   /**
    * Manipula a mudança de input do usuário.
    *

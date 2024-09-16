@@ -43,7 +43,7 @@ const getPartidasIdTime = createAsyncThunk(
         Authorization: `${data.token}`,
       },
     };
-    const response = await api.get(`/partidas/${data.idPartida}`, config);
+    const response = await api.get(`/partidas/time/${data.idTime}`, config);
     return response.data;
   }
 );
