@@ -21,8 +21,6 @@ const CriarTime = () => {
   const [nomeTime, setNomeTime] = useState(""); // Estado para armazenar o nome do time
   const navigate = useNavigate(); // Hook para navegação de rotas
   const decodedToken = jwtDecode(token); // Decodifica o token JWT
-  const userId = decodedToken.id; // ID do usuário decodificado do token
-  const userIdDono = decodedToken.id; // ID do dono do time (o usuário que está criando o time)
 
   /**
    * Manipula a submissão do formulário para criar um novo time.
@@ -32,18 +30,24 @@ const CriarTime = () => {
    * @function handleSubmitForm
    * @param {Object} e - O evento de submissão do formulário.
    */
+
+  const body = {
+    nomeTime: nomeTime,
+    userIdDono: userIdDono,
+    userId: userId,
+  };
+
   const handleSubmitForm = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3004/api/time", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ nomeTime, userIdDono, userId }),
-      });
-
-      navigate("/time"); // Redireciona para a página do time após a criação
+      const response = await dispatch(addTimeAsync(body));
+      if (addTimeAsync.fulfilled.match(response)) {
+        setTimeout(() => {
+          navigate("/time");
+        }, 2000);
+      } else {
+        alert(`Erro: ${response.payload}`);
+      }
     } catch (error) {
       console.error("Erro ao criar o time:", error);
       alert("Erro ao criar o time. Por favor, tente novamente.");
@@ -64,12 +68,6 @@ const CriarTime = () => {
   if (!token) {
     return <Navigate to="/login" />;
   }
-
-  const initialValues = {
-    nomeTime: nomeTime,
-    userIdDono: decodedToken.id,
-    idUser: [decodedToken.id],
-  };
 
   return (
     <div>

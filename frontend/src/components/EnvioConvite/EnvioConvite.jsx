@@ -61,7 +61,7 @@ const EnvioConvite = () => {
         }
       } else {
         const response = await axios.get(
-          `http://localhost:3004/api/time?nome_like=${searchValue}`
+          `http://localhost:3004/api/time?nome_like=${searchValue}` //ALTERAR ESSA BOSTA! ASSINADO: NE-YO PARA BRUNO (CHAVES)
         );
         setSearchResults(response.data);
       }
@@ -96,8 +96,11 @@ const EnvioConvite = () => {
     let remetenteUnico = true;
     if (tipoConvite == `Jogador`) {
       if (selectedUser) {
-        const responseVerificacao = await axios.get(
-          `http://localhost:3004/api/time/user/${selectedUser._id}`
+        const responseVerificacao = await dispatch(
+          getTimeByUserId({
+            userId: selectedUser._id,
+            token: currentUser.logged,
+          })
         );
         if ((responseVerificacao.status = 200)) {
           timeDoUsuario = responseVerificacao.data;

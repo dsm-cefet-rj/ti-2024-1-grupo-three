@@ -4,14 +4,12 @@ import axios from "axios";
 import Delete from "../../assets/delete.svg";
 
 const Time = ({ id }) => {
+  const timeUser = useSelector((rootReducer) => rootReducer.timeUser);
   const [nomeTime, setNomeTime] = useState("");
   useEffect(() => {
     const fetchTime = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3004/api/time/${id}`
-        );
-        const time = response.data;
+        const time = timeUser;
         if (time) {
           setNomeTime(time.nomeTime);
         }

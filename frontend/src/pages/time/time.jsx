@@ -26,7 +26,8 @@ const Time = () => {
   const [nomeTime, setNomeTime] = useState(""); // Estado para armazenar o nome do time
   const [show, setShow] = useState(false); // Estado para controlar a exibição de jogadores
   const [show2, setShow2] = useState(false); // Estado para controlar a exibição de partidas
-
+  const currentUser = useSelector((rootReducer) => rootReducer.user);
+  const Jogadores = useSelector((rootReducer) => rootReducer.timeUser);
   const token = useSelector((state) => state.auth.token); // Seleciona o token de autenticação do estado Redux
   const decodedToken = jwtDecode(token); // Decodifica o token JWT
 
@@ -45,11 +46,19 @@ const Time = () => {
      */
     const fetchTime = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3004/api/time/user/${decodedToken.id}`
+        const response = await dispatch(
+          getTimeByUserId({
+            userId: currentUser.user.id,
+            token: currentUser.logged,
+          })
         );
+        if (response) {
+          dispatch(addTime(response));
+          dispatch(addJogadores(response.userId)); //criar add jogadreos
+        }
+        console.log(response);
         const time = response.data;
-
+        //get time ja esta com redux
         if (time) {
           setNomeTime(time.nomeTime);
           const partidaResponse = await axios.get(
@@ -59,9 +68,10 @@ const Time = () => {
           if (partidas) {
             setPartidas(partidas);
           }
-          const userDetailsPromises = time.userId.map(async (userId) => {
+          //////// partida ainda nao foi alterado
+          const userDetailsPromises = Jogadores.map(async (userId) => {
             const userResponse = await axios.get(
-              `http://localhost:3004/api/user/${userId}`,
+              `http://localhost:3004/api/user/${userId}`, //botar rota do redux
               {
                 headers: {
                   Authorization: `Bearer ${token}`, // Enviando o token no cabeçalho
