@@ -19,6 +19,7 @@ import { jwtDecode } from "jwt-decode";
 const MeusTorneios = () => {
   const navigate = useNavigate();
   const currentUser = useSelector((rootReducer) => rootReducer.user);
+  const timeUser = useSelector((rootReducer) => rootReducer.timeUser);
   const token = useSelector((state) => state.auth.token);
   const decodedToken = jwtDecode(token);
   const [torneiosDono, setTorneiosDono] = useState([]);
@@ -58,10 +59,7 @@ const MeusTorneios = () => {
         // Busca os torneios onde o usuário é o dono
 
         try {
-          const responseTime = await axios.get(
-            `http://localhost:3004/api/time/user/${decodedToken.id}`
-          );
-          const time = responseTime.data;
+          const time = timeUser;
           if (time) {
             // Busca os torneios que o time está participando
             const responseTorneio = await axios.get(

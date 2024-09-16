@@ -3,6 +3,7 @@ import axios from "axios";
 import "./convite.css";
 import { useDispatch, useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
+import { getTimeByTimeId, getTimeByUserIdDono } from "../../redux/time/slice";
 
 const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
@@ -34,6 +35,8 @@ const Convite = () => {
   const token = useSelector((state) => state.auth.token);
   const decodedToken = jwtDecode(token);
   const userId = decodedToken.id;
+  const currentUser = useSelector((rootReducer) => rootReducer.user);
+  const timeUser = useSelector((rootReducer) => rootReducer.timeUser);
   useEffect(() => {
     const fetchConvites = async () => {
       try {
@@ -47,8 +50,11 @@ const Convite = () => {
 
         // Buscar convites para torneios
 
-        const responseDono = await axios.get(
-          `http://localhost:3004/api/time/dono/${userId}`
+        const responseDono = await dispatch(
+          getTimeByUserIdDono({
+            userIdDono: currentUser.user.id,
+            token: currentUser.logged,
+          })
         );
         if (responseDono.data) {
           const timeUser = responseDono.data;
@@ -67,8 +73,11 @@ const Convite = () => {
       for (const convite of convitesTime) {
         if (!teamNames[convite.timeRemetente]) {
           try {
-            const response = await axios.get(
-              `http://localhost:3004/api/time/${convite.timeRemetente}`
+            const response = await dispatch(
+              getTimeByTimeId({
+                _id: convite.timeRemetente,
+                token: currentUser.logged,
+              })
             );
             names[convite.timeRemetente] = response.data.nomeTime; // Assumindo que o nome está no campo 'name'
           } catch (error) {
