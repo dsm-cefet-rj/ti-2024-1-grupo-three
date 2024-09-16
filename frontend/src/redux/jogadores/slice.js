@@ -41,6 +41,7 @@ const jogadoresSlice = createSlice({
   initialState,
   reducers: {
     addJogadores: (state, action) => {
+      console.log("ABORTO", action.payload);
       state.push(action.payload);
     },
     clearJogadores: (state, action) => {

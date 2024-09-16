@@ -33,7 +33,7 @@ const Time = () => {
   const Partidas = useSelector((rootReducer) => rootReducer.partidas);
   const dispatch = useDispatch();
 
-  console.log(currentUser);
+  // console.log(currentUser);
   // Redireciona para a página de login se o token não estiver presente
   if (!currentUser.logged) {
     return <Navigate to="/login" />;
@@ -48,7 +48,7 @@ const Time = () => {
      * @async
      * @function fetchTime
      */
-    const fetchTime = async () => {
+    const fetchTime1 = async () => {
       try {
         console.log("Chamando fetchTime");
         console.log("Times", Times);
@@ -75,9 +75,9 @@ const Time = () => {
         console.error("Erro ao buscar o nome do time:", error);
       }
     };
-    fetchTime();
+    fetchTime1();
     console.log("Finalizando useEffect");
-  }, [Times.userId]); //mudar aqui
+  }, []); //mudar aqui
 
   /**
    * Manipula o clique do botão para criar um time.
