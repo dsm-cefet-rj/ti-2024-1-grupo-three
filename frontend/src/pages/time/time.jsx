@@ -6,9 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Navigate } from "react-router-dom";
 import "../time/time.css";
 import Edit from "../../assets/edit.svg";
-import axios from "axios";
 import Jogador from "../../components/jogador/jogador";
-import { jwtDecode } from "jwt-decode";
+import { getPartidasIdTime } from "../../redux/partida/slice";
+import { addJogadores, getJogadores } from "../../redux/jogadores/slice";
+import { getTimeByUserId, addTime } from "../../redux/time/slice";
 
 /**
  * Componente Time.
@@ -28,11 +29,12 @@ const Time = () => {
   const [show2, setShow2] = useState(false); // Estado para controlar a exibição de partidas
   const currentUser = useSelector((rootReducer) => rootReducer.user);
   const Jogadores = useSelector((rootReducer) => rootReducer.timeUser);
-  const token = useSelector((state) => state.auth.token); // Seleciona o token de autenticação do estado Redux
-  const decodedToken = jwtDecode(token); // Decodifica o token JWT
+  const Time = useSelector((rootReducer) => rootReducer.timeUser);
+  const dispatch = useDispatch();
 
+  console.log(currentUser);
   // Redireciona para a página de login se o token não estiver presente
-  if (!token) {
+  if (!currentUser.logged) {
     return <Navigate to="/login" />;
   }
 
@@ -48,21 +50,23 @@ const Time = () => {
       try {
         const response = await dispatch(
           getTimeByUserId({
-            userId: currentUser.user.id,
+            userId: currentUser.user._id,
             token: currentUser.logged,
           })
         );
         if (response) {
           dispatch(addTime(response));
-          dispatch(addJogadores(response.userId)); //criar add jogadreos
+          dispatch(addJogadores(response.userId));
         }
         console.log(response);
-        const time = response.data;
-        //get time ja esta com redux
-        if (time) {
-          setNomeTime(time.nomeTime);
-          const partidaResponse = await axios.get(
-            `http://localhost:3004/partidas/time/${time._id}` //   //////// partida ainda nao foi alterado
+
+        if (Time) {
+          setNomeTime(Time.nomeTime);
+          const partidaResponse = await dispatch(
+            getPartidasIdTime({
+              idPartida: Time._id,
+              token: currentUser.logged,
+            })
           );
           const partidas = partidaResponse.data;
           if (partidas) {
@@ -70,13 +74,11 @@ const Time = () => {
           }
 
           const userDetailsPromises = Jogadores.map(async (userId) => {
-            const userResponse = await axios.get(
-              `http://localhost:3004/user/${userId}`, //////// ususario ainda nao foi alterado
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`, // Enviando o token no cabeçalho
-                },
-              }
+            const userResponse = await dispatch(
+              getJogadores({
+                id: userId,
+                token: currentUser.logged,
+              })
             );
             return userResponse.data;
           });
@@ -88,7 +90,7 @@ const Time = () => {
       }
     };
     fetchTime();
-  }, [decodedToken.id]); //mudar aqui
+  }); //mudar aqui
 
   /**
    * Manipula o clique do botão para criar um time.

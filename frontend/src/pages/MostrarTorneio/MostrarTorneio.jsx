@@ -41,7 +41,7 @@ const MostrarTorneio = () => {
     const fetchTime = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3004/torneio/meutime/${id}`
+          `http://localhost:3004/torneio/meutime/${id}` //buscar times rotas
         );
         setTimes(response.data.Participantes);
 

@@ -5,6 +5,7 @@ import { addLoggedUser } from "../../redux/user/slice";
 import CreateAxiosInstance from "../../utils/api";
 import "../Cadastro/cadastro.css";
 import "../Login/login.css";
+import { setToken } from "../../redux/authSlice";
 
 /**
  * Componente de Login.
@@ -46,6 +47,8 @@ const Login = () => {
       const response = await api.post("/login", body);
 
       if (response.data.status == true) {
+        console.log(response.data);
+        dispatch(setToken(response.data.token));
         dispatch(addLoggedUser(response.data));
         alert("Autenticado com sucesso!");
         navigate("/Time");
