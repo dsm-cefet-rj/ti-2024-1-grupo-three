@@ -1,4 +1,5 @@
 import { User } from "../models/userModel.js";
+import jsonwebtoken from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 async function getAll(req, res) {
@@ -97,10 +98,9 @@ async function login(req, res){
       const email = req.body.email;
       const senha = req.body.senha;
 
-      const existingUserArray = await userModel.find({email});
-      const existingUser = existingUserArray[0];
+      const existingUser = await User.findOne({email:email});
 
-      if(existingUser == undefined){
+      if(!existingUser){
           return res.status(400).send({
               message: "Login ou Senha errados.",
               status: false
@@ -133,8 +133,8 @@ async function login(req, res){
       
   }catch(error){
       return res.status(400).send({
-          message: error.message,
-          erro: error
+          message: "Erro",
+          erro: error.message
       });
   }
 }

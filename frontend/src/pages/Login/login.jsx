@@ -1,21 +1,19 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addUser, addLoggedUser, logoutUser } from "../../redux/user/slice";
-import { v4 as idGen } from "uuid";
-import axios from "axios";
+import { addLoggedUser } from "../../redux/user/slice";
+import CreateAxiosInstance from "../../utils/api";
 import "../Cadastro/cadastro.css";
 import "../Login/login.css";
-import { setToken } from "../../redux/authSlice.js";
 
 /**
  * Componente de Login.
- *
- * Este componente permite que um usuário faça login na aplicação.
- * Realiza uma chamada de API para autenticação e armazena o token no estado do Redux.
- *
- * @component
- */
+*
+* Este componente permite que um usuário faça login na aplicação.
+* Realiza uma chamada de API para autenticação e armazena o token no estado do Redux.
+*
+* @component
+*/
 const Login = () => {
   const [email, setUser] = useState(""); // Estado para o campo de email
   const [senha, setSenha] = useState(""); // Estado para o campo de senha
@@ -25,6 +23,7 @@ const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false); // Estado para visibilidade da senha
   const navigate = useNavigate(); // Hook para navegação de rotas
   const dispatch = useDispatch(); // Hook para despachar ações do Redux
+  const api  = CreateAxiosInstance();
 
   /**
    * Manipula o evento de login.
@@ -37,29 +36,21 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(null);
-
+    
     try {
-      const response = await axios.post("http://localhost:3004/auth/login", {
-        email,
-        senha,
-      });
-
-      // Armazena o token no Redux
-      dispatch(setToken(response.data.token));
-      dispatch(addLoggedUser(response.data.user));
-
-      const data = response.data;
-
-      if (response.status === 200) {
+      const body = {
+        email: email,
+        senha: senha
+      }
+      console.log(body);
+      const response = await api.post("/login", body);
+      
+      if (response.data.status == true) {
         alert("Autenticado com sucesso!");
         navigate("/Time");
       }
     } catch (error) {
-      if (error.response && error.response.data) {
-        setError(error.response.data.msg);
-      } else {
-        setError("Erro no servidor. Tente novamente mais tarde.");
-      }
+        alert(error);
     }
   };
 
