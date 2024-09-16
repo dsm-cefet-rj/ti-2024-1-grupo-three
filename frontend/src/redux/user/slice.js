@@ -16,7 +16,7 @@ const addUser = createAsyncThunk('user/addUserAsync', async (data) => {
       return response.data;
   }catch(error){
       
-      alert("ja existe esse email");
+      alert("Já existe esse email");
       return false;
   }
 });
@@ -44,8 +44,32 @@ const updateUser = createAsyncThunk("user/updateUserAsync", async (data) => {
   }
 });
 
-const deleteUser = createAsyncThunk("user/deleteUserAsync", async (id) => {
-  await axios.delete(`http://localhost:3004/users/${id}`);
+const deleteUser = createAsyncThunk("users/deleteUserAsync", async(infos)=> {
+  try{
+      await api.delete(`/user/${infos.id}`,{
+          headers: {
+              Authorization:`${infos.token}`
+          }   
+      });
+      alert("Usuario deletado com sucesso.");
+  }catch(error){
+      alert("Erro ao deletar usuário");
+  }
+  
+});
+
+const logoutUserFunc = createAsyncThunk("user/logoutUserAsync", async(infos) => {
+  try{
+      if(infos.token){
+          await api.post("/logout", {
+              headers: {
+                  Authorization:`${infos.token}`
+              }
+          })
+      }
+  }catch(error){
+      alert("Erro no logout")
+  }
 });
 
 const userSlice = createSlice({
@@ -53,18 +77,20 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     addLoggedUser: (state, action) => {
-      state.logged = true;
-      state.user = action.payload;
+      state.user = action.payload.user;
+      state.logged = action.payload.token;
+      state.tokenExpiration = action.payload.expiration;
     },
-    logoutUser: (state) => {
+    logoutUser: (state, action) => {
       state.logged = false;
       state.user = {};
+      state.tokenExpiration= null;
     },
   },
 });
 
 export const { logoutUser, addLoggedUser } = userSlice.actions;
 
-export { addUser, updateUser, deleteUser };
+export { addUser, updateUser, deleteUser, logoutUserFunc };
 
 export default userSlice.reducer;
