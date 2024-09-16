@@ -18,11 +18,13 @@ const addTimeAsync = createAsyncThunk("time/addTimeAsync", async (data) => {
     throw error; // Opcional: lançar o erro para tratamento no componente
   }
 });
-const getTimeByUserId = createAsyncThunk("time/getTimeByUserIdAsync", async (data) => {
-  const config = {
+const getTimeByUserId = createAsyncThunk(
+  "time/getTimeByUserIdAsync",
+  async (data) => {
+    const config = {
       headers: {
-        Authorization: `${data.token}`
-      }
+        Authorization: `${data.token}`,
+      },
     };
     console.log("token: ", data.token);
     const response = await api.get(`/time/user/${data.userId}`, config);
@@ -82,7 +84,7 @@ const timeSlice = createSlice({
       state.timeUser = action.payload;
     },
     clearTime: (state, action) => {
-      state.timeUser = "";
+      state.timeUser = {};
     },
   },
 });

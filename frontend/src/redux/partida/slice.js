@@ -53,12 +53,17 @@ const partidaSlice = createSlice({
   initialState,
   reducers: {
     addPartidas: (state, action) => {
-      state.partidas = action.payload.partidas;
+      state.partidas = action.payload;
+    },
+    clearPartidas: (state, action) => {
+      while (state.length > 0) {
+        state.pop();
+      }
     },
   },
 });
 
-export const { addPartidas } = partidaSlice.actions;
+export const { addPartidas, clearPartidas } = partidaSlice.actions;
 
 export { addPartida, getPartidas, getPartidasIdTime };
 

@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addLoggedUser } from "../../redux/user/slice";
+import { addLoggedUser, logoutUser } from "../../redux/user/slice";
 import CreateAxiosInstance from "../../utils/api";
-import { getTimeByUserId, addTime } from "../../redux/time/slice";
-import { getPartidasIdTime } from "../../redux/partida/slice";
+import { getTimeByUserId, addTime, clearTime } from "../../redux/time/slice";
+import {
+  getPartidasIdTime,
+  clearPartidas,
+  addPartidas,
+} from "../../redux/partida/slice";
 import { useSelector } from "react-redux";
-import { addPartidas } from "../../redux/partida/slice";
+import { clearJogadores } from "../../redux/jogadores/slice";
 import "../Cadastro/cadastro.css";
 import "../Login/login.css";
 
@@ -40,7 +44,10 @@ const Login = () => {
    */
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    dispatch(logoutUser());
+    dispatch(clearJogadores());
+    dispatch(clearPartidas());
+    dispatch(clearTime());
     try {
       const body = {
         email: email,

@@ -38,8 +38,9 @@ const Time = () => {
   if (!currentUser.logged) {
     return <Navigate to="/login" />;
   }
-
+  const Times = timeDados.timeUser.payload;
   useEffect(() => {
+    console.log("Iniciando useEffect");
     /**
      * Busca as informações do time do usuário autenticado.
      * Realiza chamadas à API para buscar dados do time, jogadores e partidas.
@@ -49,24 +50,14 @@ const Time = () => {
      */
     const fetchTime = async () => {
       try {
-        const Time = timeDados.timeUser.payload;
+        console.log("Chamando fetchTime");
+        console.log("Times", Times);
+        if (Times) {
+          setNomeTime(Times.nomeTime);
+          console.log("checandoooooooo", Partidas.partidas);
 
-        if (Time) {
-          setNomeTime(Time.nomeTime);
-          // const partidaResponse = await dispatch(
-          //   getPartidasIdTime({
-          //     idTime: Time._id,
-          //     token: currentUser.logged,
-          //   })
-          // );
-          // console.log("cu", partidaResponse);
-          // const partidas = partidaResponse.payload;
-          // if (partidas) {
-          //   dispatch(addPartidas(partidas));
-          // }
-          console.log("checando", Partidas);
-          //Time.userId, passear por essa array e fazer um get pra cada id
-          Time.userId.map(async (userId) => {
+          Times.userId.map(async (userId) => {
+            console.log("Buscando jogadores para userId:", userId);
             const userResponse = await dispatch(
               getJogadores({
                 id: userId,
@@ -74,6 +65,7 @@ const Time = () => {
               })
             );
             if (userResponse) {
+              console.log("Jogadores recebidos:", userResponse.payload);
               dispatch(addJogadores(userResponse.payload));
               //addJogadores
             }
@@ -84,7 +76,8 @@ const Time = () => {
       }
     };
     fetchTime();
-  }, []); //mudar aqui
+    console.log("Finalizando useEffect");
+  }, [Times.userId]); //mudar aqui
 
   /**
    * Manipula o clique do botão para criar um time.
@@ -153,12 +146,12 @@ const Time = () => {
           <div>
             <h1 className="tituloPag">partidas</h1>
 
-            {Partidas.length > 0 ? (
+            {Partidas.partidas.length > 0 ? (
               <div>
                 {show2 ? (
                   <div>
                     <div className="envoltoPartidas">
-                      {Partidas.map((partida) => (
+                      {Partidas.partidas.map((partida) => (
                         <PartidaComponente
                           key={partida._id}
                           nome={
@@ -179,7 +172,7 @@ const Time = () => {
                 ) : (
                   <div>
                     <div className="envoltoPartidas">
-                      {Partidas.slice(0, 2).map((partida) => (
+                      {Partidas.partidas.slice(0, 2).map((partida) => (
                         <PartidaComponente
                           key={partida._id}
                           nome={

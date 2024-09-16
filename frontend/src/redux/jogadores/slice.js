@@ -43,10 +43,15 @@ const jogadoresSlice = createSlice({
     addJogadores: (state, action) => {
       state.push(action.payload);
     },
+    clearJogadores: (state, action) => {
+      while (state.length > 0) {
+        state.pop();
+      }
+    },
   },
 });
 
-export const { addJogadores } = jogadoresSlice.actions;
+export const { addJogadores, clearJogadores } = jogadoresSlice.actions;
 
 export { getAllJogadores, getJogadores };
 
