@@ -4,7 +4,9 @@ import { useDispatch } from "react-redux";
 import { addLoggedUser } from "../../redux/user/slice";
 import CreateAxiosInstance from "../../utils/api";
 import { getTimeByUserId, addTime } from "../../redux/time/slice";
+import { getPartidasIdTime } from "../../redux/partida/slice";
 import { useSelector } from "react-redux";
+import { addPartidas } from "../../redux/partida/slice";
 import "../Cadastro/cadastro.css";
 import "../Login/login.css";
 
@@ -73,7 +75,17 @@ const Login = () => {
         dispatch(addTime(response));
         //addJogadores
       }
-      const Time = timeDados.timeUser.payload;
+      const partidaResponse = await dispatch(
+        getPartidasIdTime({
+          idTime: response.payload._id,
+          token: suco.token,
+        })
+      );
+
+      console.log("cu", partidaResponse);
+      if (partidaResponse) {
+        dispatch(addPartidas(partidaResponse.payload)); // esta vindo com formato certo
+      }
     } catch (error) {
       console.error("Erro ao buscar o nome do time:", error);
     }

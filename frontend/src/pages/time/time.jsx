@@ -9,7 +9,7 @@ import Edit from "../../assets/edit.svg";
 import Jogador from "../../components/jogador/jogador";
 import { getPartidasIdTime } from "../../redux/partida/slice";
 import { addJogadores, getJogadores } from "../../redux/jogadores/slice";
-import { getTimeByUserId, addTime } from "../../redux/time/slice";
+import { addPartidas } from "../../redux/partida/slice";
 
 /**
  * Componente Time.
@@ -30,6 +30,7 @@ const Time = () => {
   const currentUser = useSelector((rootReducer) => rootReducer.user);
   const timeDados = useSelector((rootReducer) => rootReducer.time);
   const Jogadores = useSelector((rootReducer) => rootReducer.jogadores);
+  const Partidas = useSelector((rootReducer) => rootReducer.partidas);
   const dispatch = useDispatch();
 
   console.log(currentUser);
@@ -52,29 +53,31 @@ const Time = () => {
 
         if (Time) {
           setNomeTime(Time.nomeTime);
-          const partidaResponse = await dispatch(
-            getPartidasIdTime({
-              idTime: Time._id,
-              token: currentUser.logged,
-            })
-          );
-          console.log("cu", partidaResponse);
-          const partidas = partidaResponse.payload;
-          if (partidas) {
-            setPartidas(partidas);
-          }
-
-          const userDetailsPromises = Jogadores.map(async (userId) => {
+          // const partidaResponse = await dispatch(
+          //   getPartidasIdTime({
+          //     idTime: Time._id,
+          //     token: currentUser.logged,
+          //   })
+          // );
+          // console.log("cu", partidaResponse);
+          // const partidas = partidaResponse.payload;
+          // if (partidas) {
+          //   dispatch(addPartidas(partidas));
+          // }
+          console.log("checando", Partidas);
+          //Time.userId, passear por essa array e fazer um get pra cada id
+          Time.userId.map(async (userId) => {
             const userResponse = await dispatch(
               getJogadores({
                 id: userId,
                 token: currentUser.logged,
               })
             );
-            return userResponse.data;
+            if (userResponse) {
+              dispatch(addJogadores(userResponse.payload));
+              //addJogadores
+            }
           });
-          const userDetails = await Promise.all(userDetailsPromises);
-          setJogadores(userDetails);
         }
       } catch (error) {
         console.error("Erro ao buscar o nome do time:", error);
@@ -109,7 +112,7 @@ const Time = () => {
             {show ? (
               <div>
                 <div>
-                  {jogadores.map((jogador) => (
+                  {Jogadores.map((jogador) => (
                     <div key={jogador._id}>
                       <Jogador nome={jogador.nome} />
                     </div>
@@ -122,7 +125,7 @@ const Time = () => {
             ) : (
               <div>
                 <div>
-                  {jogadores.slice(0, 2).map((jogador) => (
+                  {Jogadores.slice(0, 2).map((jogador) => (
                     <div key={jogador._id}>
                       <Jogador nome={jogador.nome} />
                     </div>
@@ -150,12 +153,12 @@ const Time = () => {
           <div>
             <h1 className="tituloPag">partidas</h1>
 
-            {partidas.length > 0 ? (
+            {Partidas.length > 0 ? (
               <div>
                 {show2 ? (
                   <div>
                     <div className="envoltoPartidas">
-                      {partidas.map((partida) => (
+                      {Partidas.map((partida) => (
                         <PartidaComponente
                           key={partida._id}
                           nome={
@@ -176,7 +179,7 @@ const Time = () => {
                 ) : (
                   <div>
                     <div className="envoltoPartidas">
-                      {partidas.slice(0, 2).map((partida) => (
+                      {Partidas.slice(0, 2).map((partida) => (
                         <PartidaComponente
                           key={partida._id}
                           nome={
