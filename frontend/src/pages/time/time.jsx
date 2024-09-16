@@ -7,9 +7,9 @@ import { useNavigate, Navigate } from "react-router-dom";
 import "../time/time.css";
 import Edit from "../../assets/edit.svg";
 import Jogador from "../../components/jogador/jogador";
-import { getPartidasIdTime } from "../../redux/partida/slice";
+import { getPartidasIdTime, addPartidas } from "../../redux/partida/slice";
 import { addJogadores, getJogadores } from "../../redux/jogadores/slice";
-import { addPartidas } from "../../redux/partida/slice";
+import { deleteTime, clearTime } from "../../redux/time/slice";
 
 /**
  * Componente Time.
@@ -32,6 +32,7 @@ const Time = () => {
   const Jogadores = useSelector((rootReducer) => rootReducer.jogadores);
   const Partidas = useSelector((rootReducer) => rootReducer.partidas);
   const dispatch = useDispatch();
+  console.log(currentUser);
 
   // console.log(currentUser);
   // Redireciona para a página de login se o token não estiver presente
@@ -78,6 +79,21 @@ const Time = () => {
     fetchTime1();
     console.log("Finalizando useEffect");
   }, []); //mudar aqui
+
+
+  const handleSairTime = async (e) =>{
+    e.preventDefault();
+    const deleteTime = await dispatch(
+      deleteTime({
+        userId: currentUser.user._id,
+        token: currentUser.logged,
+      })
+    );
+    if(deleteTime.status===200){
+      dispatch(clearTime());
+    }
+  }
+
 
   /**
    * Manipula o clique do botão para criar um time.
@@ -132,9 +148,9 @@ const Time = () => {
             {/* botao sair do time */}
             <form
               className="formSairTime"
-              // onSubmit={(values) => {
-              //   handleSubmitForm(values);
-              // }}
+               onSubmit={
+                 handleSairTime
+               }
             >
               <div className="sairTime">
                 <button className="botaosairTime" type="submit">

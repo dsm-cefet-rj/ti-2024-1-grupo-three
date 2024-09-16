@@ -80,16 +80,19 @@ import { Time } from "../models/timeModel.js";
   }
   async function deleteTime(req, res) {
     try {
-      const id = req.params.id;
-      const time = await Time.findById(id);
+       const userId = req.params.userId; // Corrigido para req.params
+      const time = await Time.findOne({  userId: { 
+        $elemMatch: { $eq: userId } 
+      }  }); // Confere se userId é o campo correto
       if (!time) {
         res.status(404).json({ msg: "erro, não encontrado" });
         return;
       }
 
-      const deletedTime = await Time.findByIdAndDelete(id);
+      team.userId.splice(userIndex, 1);
+      await team.save();
 
-      res.status(200).json({ deletedTime, msg: "time excluido" });
+      res.status(200).json({ deletedTime, msg: "Saiu do time" });
     } catch (error) {
       console.log(error);
     }

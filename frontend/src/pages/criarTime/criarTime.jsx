@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import NavBar from "../../components/navBar/navBar";
 import "./criarTime.css";
-import { v4 as idGen } from "uuid";
 import { useNavigate, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addTime, addTimeAsync } from "../../redux/time/slice";
-import { jwtDecode } from "jwt-decode";
 
 /**
  * Componente CriarTime.
@@ -16,11 +14,10 @@ import { jwtDecode } from "jwt-decode";
  * @component
  */
 const CriarTime = () => {
-  const token = useSelector((state) => state.auth.token); // Seleciona o token de autenticação do estado Redux
   const dispatch = useDispatch(); // Hook para despachar ações do Redux
   const [nomeTime, setNomeTime] = useState(""); // Estado para armazenar o nome do time
   const navigate = useNavigate(); // Hook para navegação de rotas
-  const decodedToken = jwtDecode(token); // Decodifica o token JWT
+  const currentUser = useSelector((rootReducer) => rootReducer.user);
 
   /**
    * Manipula a submissão do formulário para criar um novo time.
@@ -33,8 +30,8 @@ const CriarTime = () => {
 
   const body = {
     nomeTime: nomeTime,
-    userIdDono: userIdDono,
-    userId: userId,
+    userIdDono: currentUser.user._id,
+    userId: currentUser.user._id,
   };
 
   const handleSubmitForm = async (e) => {

@@ -65,15 +65,20 @@ const updateTime = createAsyncThunk("time/updateTimeAsync", async (data) => {
   await axios.put(`http://localhost:3004/time/${data.id}`, data);
 });
 
-const deleteTimeByUserId = createAsyncThunk(
-  "time/deleteTimeAsync",
+const deleteTimeByUserId = createAsyncThunk("time/deleteTimeAsync",
   async (userIdDono) => {
     await axios.delete(`http://localhost:3004/time?userId=${userId}`);
   }
 );
 
-const deleteTime = createAsyncThunk("time/deleteTimeAsync", async (id) => {
-  await axios.delete(`http://localhost:3004/time/${id}`);
+const deleteTime = createAsyncThunk("time/deleteTimeAsync", async (data) => {
+  const config = {
+    headers: {
+      Authorization: `${data.token}`,
+    },
+  };
+  const response = await api.delete(`/time/${data.userId}`, config);
+  return response.data;
 });
 
 const timeSlice = createSlice({
