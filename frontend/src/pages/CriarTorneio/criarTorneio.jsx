@@ -32,8 +32,12 @@ const TorneioForm = () => {
     return <Navigate to="/login" />;
   }
 
-  const userIdDonoTorneio = decodedToken.id; // ID do dono do torneio (o usuário que está criando o torneio)
-
+  const body = {
+    nomeTorneio: nomeTorneio,
+    userIdDonoTorneio: userIdDonoTorneio,
+    qtdTimes: qtdTimes,
+    localTorneio: localTorneio,
+  }
   /**
    * Manipula a submissão do formulário para criar um novo torneio.
    * Faz uma chamada à API para criar um torneio com os dados fornecidos.
@@ -54,31 +58,13 @@ const TorneioForm = () => {
 
     try {
       // Faz a requisição POST para o back-end
-      const response = await fetch("http://localhost:3004/torneio", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`, // Passa o token de autenticação
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          nomeTorneio,
-          userIdDonoTorneio,
-          qtdTimes,
-          localTorneio,
-        }),
-      });
-
-      if (response.ok) {
-        // Utiliza response.ok para checar se o status é 2xx
-        alert("Torneio criado com sucesso!");
-        navigate("/meustorneios"); // Redireciona para a página de sucesso
+      const response = await dispatch(addTorneioAsync(body));
+      if (addTorneioAsync.fulfilled.match(response)) {
+        setTimeout(() => {
+          navigate("/meustorneios");
+        }, 2000);
       } else {
-        // Lê a resposta do servidor para mostrar detalhes sobre o erro
-        const errorData = await response.json();
-        console.error("Erro ao criar torneio:", errorData);
-        alert(
-          `Erro ao criar torneio: ${errorData.message || "Erro desconhecido"}`
-        );
+        alert(`Erro: ${response.payload}`);
       }
     } catch (error) {
       console.error("Erro ao criar torneio:", error);

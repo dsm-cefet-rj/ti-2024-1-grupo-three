@@ -3,10 +3,10 @@ import NavBar from "../../components/navBar/navBar";
 import Torneiomjr from "../../components/meustorneioscomponent/meustorneioscomponent";
 import "./meusTorneios.css";
 import Button from "../../components/button/button";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, Navigate } from "react-router-dom";
-import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { getTorneiosByTime, getTorneioByUserIdDonoTorneio } from "../../redux/torneios/slice";
 
 /**
  * Componente MeusTorneios.
@@ -20,6 +20,8 @@ const MeusTorneios = () => {
   const navigate = useNavigate();
   const currentUser = useSelector((rootReducer) => rootReducer.user);
   const timeUser = useSelector((rootReducer) => rootReducer.timeUser);
+  const torneioUserDono = useSelector((rootReducer) => rootReducer.torneioUserDono);
+  const dispatch = useDispatch(); 
   const token = useSelector((state) => state.auth.token);
   const decodedToken = jwtDecode(token);
   const [torneiosDono, setTorneiosDono] = useState([]);
@@ -43,11 +45,14 @@ const MeusTorneios = () => {
         let torneiosTime = [];
         let torneiosDono = [];
         try {
-          const responseTorneioDono = await axios.get(
-            `http://localhost:3004/torneio/dono/${decodedToken.id}`
-          );
-          if (responseTorneioDono.status === 200 && responseTorneioDono.data) {
-            torneiosDono = responseTorneioDono.data;
+          const response = await dispatch(
+            getTorneioByUserIdDonoTorneio({
+              userIdDono: currentUser.user.id,
+              token: currentUser.logged,
+            })
+          )
+          if (response.status === 200 && response.data) {
+            torneiosDono = response.data;
             setTorneiosDono(torneiosDono);
           }
         } catch (error) {
@@ -62,12 +67,16 @@ const MeusTorneios = () => {
           const time = timeUser;
           if (time) {
             // Busca os torneios que o time está participando
-            const responseTorneio = await axios.get(
-              `http://localhost:3004/torneio/time/${time._id}`
-            );
-
-            torneiosTime = responseTorneio.data;
+            const responseTorneioTime = await dispatch( 
+              getTorneiosByTime({
+                idTime: time._id,
+                token: currentUser.logged,
+              })
+            )
+            if(responseTorneioTime && responseTorneioTime.data){  
+            torneiosTime = responseTorneioTime.data;
             setTorneiosParticipante(torneiosTime);
+            }
           }
         } catch (error) {}
 
