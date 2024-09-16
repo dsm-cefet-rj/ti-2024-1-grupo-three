@@ -44,7 +44,7 @@ const MeusTorneios = () => {
         let torneiosDono = [];
         try {
           const responseTorneioDono = await axios.get(
-            `http://localhost:3004/torneio/dono/${decodedToken.id}`
+            `http://localhost:3004/torneio/dono/${decodedToken.id}` //pegar torneios que o usuario é dono
           );
           if (responseTorneioDono.status === 200 && responseTorneioDono.data) {
             torneiosDono = responseTorneioDono.data;
@@ -63,7 +63,7 @@ const MeusTorneios = () => {
           if (time) {
             // Busca os torneios que o time está participando
             const responseTorneio = await axios.get(
-              `http://localhost:3004/torneio/time/${time._id}`
+              `http://localhost:3004/torneio/time/${time._id}` //buscar torneios por id do time
             );
 
             torneiosTime = responseTorneio.data;

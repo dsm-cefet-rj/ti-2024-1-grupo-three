@@ -52,7 +52,7 @@ const Convite = () => {
 
         const responseDono = await dispatch(
           getTimeByUserIdDono({
-            userIdDono: currentUser.user.id,
+            userIdDono: currentUser.user.id, // talvez esteja errado, tem que ser o id do dono, mas como passar aqui?
             token: currentUser.logged,
           })
         );

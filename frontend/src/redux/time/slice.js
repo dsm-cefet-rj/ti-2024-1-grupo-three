@@ -26,8 +26,9 @@ const getTimeByUserId = createAsyncThunk(
         Authorization: `${data.token}`,
       },
     };
+    console.log("token: ", data.token);
     const response = await api.get(`/time/user/${data.userId}`, config);
-
+    console.log("resposta:", response);
     return response.data;
   }
 );
