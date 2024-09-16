@@ -4,7 +4,6 @@ import jogadoresReducer from "./jogadores/slice";
 import torneioReducer from "./torneios/slice";
 import timeReducer from "./time/slice";
 import conviteReducer from "./convite/slice";
-import authSlice from "./authSlice";
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -12,7 +11,6 @@ const rootReducer = combineReducers({
   torneio: torneioReducer,
   time: timeReducer,
   convite: conviteReducer,
-  auth: authSlice,
 });
 
 export default rootReducer;

@@ -7,7 +7,6 @@ async function checkToken(req, res, next) {
     }
     const secret = process.env.SECRET;
     jwt.verify(token, secret);
-    req.user = user;
     next();
   } catch (error) {
     res.status(400).json({ msg: "token invalido!" });

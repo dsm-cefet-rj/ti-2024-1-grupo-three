@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addLoggedUser } from "../../redux/user/slice";
 import CreateAxiosInstance from "../../utils/api";
 import "../Cadastro/cadastro.css";
 import "../Login/login.css";
-import { setToken } from "../../redux/authSlice";
 
 /**
  * Componente de Login.
@@ -18,7 +17,6 @@ import { setToken } from "../../redux/authSlice";
 const Login = () => {
   const [email, setUser] = useState(""); // Estado para o campo de email
   const [senha, setSenha] = useState(""); // Estado para o campo de senha
-  const [error, setError] = useState(null); // Estado para mensagens de erro
   const [inputErrorUser, setInputErrorUser] = useState(false); // Estado para o erro de input de usuário
   const [inputErrorSenha, setInputErrorSenha] = useState(false); // Estado para o erro de input de senha
   const [passwordVisible, setPasswordVisible] = useState(false); // Estado para visibilidade da senha
@@ -36,7 +34,6 @@ const Login = () => {
    */
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(null);
 
     try {
       const body = {
@@ -48,7 +45,6 @@ const Login = () => {
 
       if (response.data.status == true) {
         console.log(response.data);
-        dispatch(setToken(response.data.token));
         dispatch(addLoggedUser(response.data));
         alert("Autenticado com sucesso!");
         navigate("/Time");
