@@ -46,7 +46,7 @@ const Login = () => {
       const response = await api.post("/login", body);
 
       if (response.data.status == true) {
-        dispatch(addLoggedUser(autenticado.data));
+        dispatch(addLoggedUser(response.data));
         alert("Autenticado com sucesso!");
         navigate("/Time");
       }
