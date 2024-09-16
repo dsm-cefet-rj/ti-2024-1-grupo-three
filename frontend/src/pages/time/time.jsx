@@ -62,16 +62,16 @@ const Time = () => {
         if (time) {
           setNomeTime(time.nomeTime);
           const partidaResponse = await axios.get(
-            `http://localhost:3004/partidas/time/${time._id}`
+            `http://localhost:3004/partidas/time/${time._id}` //   //////// partida ainda nao foi alterado
           );
           const partidas = partidaResponse.data;
           if (partidas) {
             setPartidas(partidas);
           }
-          //////// partida ainda nao foi alterado
+
           const userDetailsPromises = Jogadores.map(async (userId) => {
             const userResponse = await axios.get(
-              `http://localhost:3004/user/${userId}`,
+              `http://localhost:3004/user/${userId}`, //////// ususario ainda nao foi alterado
               {
                 headers: {
                   Authorization: `Bearer ${token}`, // Enviando o token no cabeçalho
@@ -88,7 +88,7 @@ const Time = () => {
       }
     };
     fetchTime();
-  }, [decodedToken.id]);
+  }, [decodedToken.id]); //mudar aqui
 
   /**
    * Manipula o clique do botão para criar um time.
