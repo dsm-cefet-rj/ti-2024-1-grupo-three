@@ -53,7 +53,7 @@ const EnvioConvite = () => {
       if (tipoConvite == "Jogador") {
         try {
           const response = await axios.get(
-            `http://localhost:3004/api/user?nome_like=${searchValue}`
+            `http://localhost:3004/user?nome_like=${searchValue}`
           );
           setSearchResults(response.data);
         } catch (error) {
@@ -106,7 +106,7 @@ const EnvioConvite = () => {
           timeDoUsuario = responseVerificacao.data;
         }
         const responseVerificacaoConvite = await axios.get(
-          `http://localhost:3004/api/convite/destinatario/${selectedUser._id}`
+          `http://localhost:3004/convite/destinatario/${selectedUser._id}`
         );
         if (
           responseVerificacaoConvite &&
@@ -128,7 +128,7 @@ const EnvioConvite = () => {
             setTipoConviteEnvio("usuario_para_usuario");
             setUsuarioRemetenteId(userId);
             setUsuarioDestinatarioId(selectedUser._id);
-            const response = await fetch("http://localhost:3004/api/convite", {
+            const response = await fetch("http://localhost:3004/convite", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -141,6 +141,7 @@ const EnvioConvite = () => {
                 torneio,
               }),
             });
+            console.log(response.data);
             alert("Convite Enviado!");
             setMensagemAviso(`Convite enviado com sucesso!`);
           }
@@ -151,7 +152,7 @@ const EnvioConvite = () => {
     } else {
       if (selectedUser) {
         const responseDono = await axios.get(
-          `http://localhost:3004/api/torneio/dono/${userId}`
+          `http://localhost:3004/torneio/dono/${userId}`
         );
         torneioUsuario = responseDono.data;
 
@@ -160,7 +161,7 @@ const EnvioConvite = () => {
           setUsuarioRemetenteId(userId);
           setTimeId(selectedUser._id);
           setTorneio(torneioUsuario._id);
-          const response = await fetch("http://localhost:3004/api/convite", {
+          const response = await fetch("http://localhost:3004/convite", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -174,8 +175,13 @@ const EnvioConvite = () => {
             }),
           });
           console.log(response);
-          alert("Convite Enviado!");
-          setMensagemAviso(`Convite enviado com sucesso!`);
+          if (response.status === 201) {
+            alert("Convite Enviado!");
+            setMensagemAviso(`Convite enviado com sucesso!`);
+          } else {
+            alert("Erro ao enviar convite!");
+            setMensagemAviso(`Convite não enviado!`);
+          }
         } else {
           setMensagemAviso(`Você não é dono de nenhum torneio!`);
         }

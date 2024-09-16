@@ -8,12 +8,12 @@ import "../Login/login.css";
 
 /**
  * Componente de Login.
-*
-* Este componente permite que um usuário faça login na aplicação.
-* Realiza uma chamada de API para autenticação e armazena o token no estado do Redux.
-*
-* @component
-*/
+ *
+ * Este componente permite que um usuário faça login na aplicação.
+ * Realiza uma chamada de API para autenticação e armazena o token no estado do Redux.
+ *
+ * @component
+ */
 const Login = () => {
   const [email, setUser] = useState(""); // Estado para o campo de email
   const [senha, setSenha] = useState(""); // Estado para o campo de senha
@@ -23,7 +23,7 @@ const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false); // Estado para visibilidade da senha
   const navigate = useNavigate(); // Hook para navegação de rotas
   const dispatch = useDispatch(); // Hook para despachar ações do Redux
-  const api  = CreateAxiosInstance();
+  const api = CreateAxiosInstance();
 
   /**
    * Manipula o evento de login.
@@ -36,22 +36,22 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(null);
-    
+
     try {
       const body = {
         email: email,
-        senha: senha
-      }
+        senha: senha,
+      };
       console.log(body);
       const response = await api.post("/login", body);
-      
+
       if (response.data.status == true) {
         dispatch(addLoggedUser(autenticado.data));
         alert("Autenticado com sucesso!");
         navigate("/Time");
       }
     } catch (error) {
-        alert(error);
+      alert(error);
     }
   };
 

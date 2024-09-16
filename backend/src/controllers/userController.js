@@ -6,11 +6,11 @@ async function getAll(req, res) {
   try {
     const { nome_like } = req.query;
     let userRes;
-    
+
     if (nome_like) {
       // Usando $regex para simular o LIKE no MongoDB
       userRes = await User.find({
-        nome: { $regex: nome_like, $options: "i" } // 'i' é para case-insensitive
+        nome: { $regex: nome_like, $options: "i" }, // 'i' é para case-insensitive
       });
     } else {
       userRes = await User.find(); // O MongoDB usa find() para buscar todos os registros
@@ -61,7 +61,7 @@ async function create(req, res) {
   }
 }
 
-async function update (req, res) {
+async function update(req, res) {
   const id = req.params.id;
   const userReq = {
     nome: req.body.nomeUser,
@@ -76,7 +76,7 @@ async function update (req, res) {
   res.status(200).json({ userReq, msg: "Usuário atualizado com sucesso" });
 }
 
-async function deleteUser (req, res) {
+async function deleteUser(req, res) {
   try {
     const id = req.params.id;
     const userReq = await User.findById(id);
@@ -84,73 +84,71 @@ async function deleteUser (req, res) {
       res.status(404).json({ msg: "erro, não encontrado" });
       return;
     }
-    
+
     const deletedUser = await User.findByIdAndDelete(id);
-    
+
     res.status(200).json({ deletedUser, msg: "Usuário excluido" });
   } catch (error) {
     console.log(error);
   }
 }
 
-async function login(req, res){
-  try{
-      const email = req.body.email;
-      const senha = req.body.senha;
+async function login(req, res) {
+  try {
+    const email = req.body.email;
+    const senha = req.body.senha;
 
-      const existingUser = await User.findOne({email:email});
+    const existingUser = await User.findOne({ email: email });
 
-      if(!existingUser){
-          return res.status(400).send({
-              message: "Login ou Senha errados.",
-              status: false
-          });
-      }
-      
-      //hash de senha
-      const passwordMatch = await bcrypt.compare(senha, existingUser.senha);
-      
-      if(!passwordMatch){
-          throw new Error("Login ou senha errados");
-      }else{
-          
-          const token = jsonwebtoken.sign(
-              {
-                  id: existingUser._id,
-              }, 
-              process.env.SECRET, 
-              {expiresIn: '15m'}
-          );
-          const { exp } = jsonwebtoken.decode(token);
-          return res.status(200).send({
-              message: "Login realizado com sucesso",
-              status: true,
-              token: token,
-              user: existingUser,
-              expiration: exp
-          });
-      }
-      
-  }catch(error){
+    if (!existingUser) {
       return res.status(400).send({
-          message: "Erro",
-          erro: error.message
+        message: "Login ou Senha errados.",
+        status: false,
       });
-  }
-}
+    }
 
-async function logout(req, res){
-  try{
-      const token = req.headers.authorization;
+    //hash de senha
+    const passwordMatch = await bcrypt.compare(senha, existingUser.senha);
 
+    if (!passwordMatch) {
+      throw new Error("Login ou senha errados");
+    } else {
+      const token = jsonwebtoken.sign(
+        {
+          id: existingUser._id,
+        },
+        process.env.SECRET,
+        { expiresIn: "15m" }
+      );
+      const { exp } = jsonwebtoken.decode(token);
       return res.status(200).send({
-          message: "Logout efetuado com sucesso"
+        message: "Login realizado com sucesso",
+        status: true,
+        token: token,
+        user: existingUser,
+        expiration: exp,
       });
-  }catch(error){
-      return res.status(400).send({
-          message: "Ocorreu um erro ao efetuar o logout"
-      })
+    }
+  } catch (error) {
+    return res.status(400).send({
+      message: "Erro",
+      erro: error.message,
+    });
   }
 }
 
-export {getAll, get, create, update, deleteUser, login, logout};
+async function logout(req, res) {
+  try {
+    const token = req.headers.authorization;
+
+    return res.status(200).send({
+      message: "Logout efetuado com sucesso",
+    });
+  } catch (error) {
+    return res.status(400).send({
+      message: "Ocorreu um erro ao efetuar o logout",
+    });
+  }
+}
+
+export { getAll, get, create, update, deleteUser, login, logout };
