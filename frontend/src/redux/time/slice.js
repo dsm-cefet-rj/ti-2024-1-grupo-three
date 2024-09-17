@@ -4,76 +4,78 @@ import CreateAxiosInstance from "../../utils/api";
 
 const api = CreateAxiosInstance();
 const initialState = {
-  timeUser: {},
-  times: [],
+  timeUser: {}, // Armazena o time do usuário
+  times: [], // Armazena os times participantes do torneio
+  eDono: false, // Verifica se o usuário é dono do time
 };
 
+// Ação para adicionar um novo time
 const addTimeAsync = createAsyncThunk("time/addTimeAsync", async (data) => {
   try {
     const response = await api.post("/time", data);
-    alert("time criado");
+    alert("Time criado");
     return response.data;
   } catch (error) {
     console.error("Erro ao criar o time:", error);
     throw error; // Opcional: lançar o erro para tratamento no componente
   }
 });
-const getTimeByUserId = createAsyncThunk(
-  "time/getTimeByUserIdAsync",
-  async (data) => {
-    const config = {
-      headers: {
-        Authorization: `${data.token}`,
-      },
-    };
-    console.log("token: ", data.token);
-    const response = await api.get(`/time/user/${data.userId}`, config);
-    console.log("resposta:", response);
-    return response.data;
+
+const searchTimeAsync = createAsyncThunk("time/searchTimeAsync", async (data) => {
+  try{
+    const response = await api.get(`/time?nome_like=${data.nome}`)
+    return response.data
+  } catch(error){
+    alert(error)
   }
-);
+})
 
-const getTimeByUserIdDono = createAsyncThunk(
-  "time/getTimeByUserIdDonoAsync",
-  async (data) => {
-    const config = {
-      headers: {
-        Authorization: `${data.token}`,
-      },
-    };
-    const response = await api.get(`/time/dono/${data.userIdDono}`, config);
-
-    return response.data;
-  }
-);
-
-const getTimeByTimeId = createAsyncThunk(
-  "time/getTimeByTimeId",
-  async (data) => {
-    const config = {
-      headers: {
-        Authorization: `${data.token}`,
-      },
-    };
-    const response = await api.get(`/time/${data._id}`, config);
-
-    return response.data;
-  }
-);
-
-const updateTime = createAsyncThunk("time/updateTimeAsync", async (data) => {
-  await axios.put(`http://localhost:3004/time/${data.id}`, data);
+// Buscar time pelo ID do usuário
+const getTimeByUserId = createAsyncThunk("time/getTimeByUserIdAsync", async (data) => {
+  const config = {
+    headers: {
+      Authorization: `${data.token}`,
+    },
+  };
+  const response = await api.get(`/time/user/${data.userId}`, config);
+  return response.data;
 });
 
-const deleteTimeByUserId = createAsyncThunk(
-  "time/deleteTimeAsync",
-  async (userIdDono) => {
-    await axios.delete(`http://localhost:3004/time?userId=${userId}`);
-  }
-);
+// Buscar time pelo ID do dono
+const getTimeByUserIdDono = createAsyncThunk("time/getTimeByUserIdDonoAsync", async (data) => {
+  const config = {
+    headers: {
+      Authorization: `${data.token}`,
+    },
+  };
+  const response = await api.get(`/time/dono/${data.userIdDono}`, config);
+  return response.data;
+});
 
+// Buscar time pelo ID do time
+const getTimeByTimeId = createAsyncThunk("time/getTimeByTimeId", async (data) => {
+  const config = {
+    headers: {
+      Authorization: `${data.token}`,
+    },
+  };
+  const response = await api.get(`/time/${data._id}`, config);
+  return response.data;
+});
+
+// Ação para atualizar o time
+const updateTime = createAsyncThunk("time/updateTimeAsync", async (data) => {
+  await api.put(`/time/${data.id}`, data);
+});
+
+// Ação para deletar o time pelo ID do dono do usuário
+const deleteTimeByUserId = createAsyncThunk("time/deleteTimeAsync", async (userIdDono) => {
+  await api.delete(`/time?userId=${userIdDono}`);
+});
+
+// Ação para deletar um time específico pelo ID
 const deleteTime = createAsyncThunk("time/deleteTimeAsync", async (id) => {
-  await axios.delete(`http://localhost:3004/time/${id}`);
+  await api.delete(`/time/${id}`);
 });
 
 const timeSlice = createSlice({
@@ -83,17 +85,36 @@ const timeSlice = createSlice({
     addTime: (state, action) => {
       state.timeUser = action.payload;
     },
-    clearTime: (state, action) => {
-      state.timeUser = "";
+    clearTime: (state) => {
+      state.timeUser = {};
+      state.eDono = false;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getTimeByUserId.fulfilled, (state, action) => {
+        state.timeUser = action.payload;
+        // Verifica se o usuário é o dono do time
+        state.eDono = action.payload.donoId === action.meta.arg.userId;
+      })
+      .addCase(getTimeByUserIdDono.fulfilled, (state, action) => {
+        state.timeUser = action.payload;
+        // Se foi buscado pelo ID do dono, então é o dono
+        state.eDono = true;
+      })
+      .addCase(getTimeByTimeId.fulfilled, (state, action) => {
+        state.times = action.payload.participantes;
+      });
   },
 });
 
+// Exportando ações e reducer
 export const { addTime, clearTime } = timeSlice.actions;
 
 export {
   addTimeAsync,
   getTimeByUserId,
+  searchTimeAsync,
   getTimeByUserIdDono,
   getTimeByTimeId,
   updateTime,

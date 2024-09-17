@@ -7,7 +7,7 @@ async function create(req, res) {
     const { tipoConviteEnvio, usuarioRemetenteId, usuarioDestinatarioId, timeId, torneio } = req.body;
 
     let novoConvite;
-
+    
     // Verificar se o tipo de convite foi enviado
     if (!tipoConviteEnvio) {
       return res.status(400).json({ message: "Tipo de convite não especificado" });
@@ -79,7 +79,10 @@ async function getAll(req, res) {
     
     res.json(resConvite);
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    
+    // Resposta de erro apropriada com status 500
+    return res.status(500).json({ message: "Erro ao buscar convites", error });
   }
 }
 async function getByTimeDest(req, res) {

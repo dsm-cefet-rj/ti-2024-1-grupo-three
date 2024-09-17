@@ -11,5 +11,11 @@ const CreateAxiosInstance = () => {
 
   
 };
-  
+
+
+export const getAuthConfig = (token) => ({
+  headers: {
+    Authorization:`${token}`,
+  }
+});
   export default CreateAxiosInstance;

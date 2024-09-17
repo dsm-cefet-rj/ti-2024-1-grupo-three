@@ -1,103 +1,146 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import CreateAxiosInstance from "../../utils/api";
+import { getAuthConfig } from '../../utils/api';
+
+const api = CreateAxiosInstance();
+
 const initialState = {
-  id: "", //qual o id do Convite
-  idTimeConvite: "", //o convidado está sendo convidado para qual time?
-  // idTorneioConvite: "",
-  idCriadorConvite: "", //quem está convidando
-  idDestinatario: "", //quem vai receber o convite
+  convitesTime: [],
+  convitesTorneio: [],
+  loading: false,
+  error: null,
 };
 
-const enviarConviteAsync = createAsyncThunk(
-  "convite/enviarConviteAsync",
+
+export const addCoviteAsync = createAsyncThunk(
+  'convites/addConviteAsync',
   async (data) => {
-    const response = await axios.post("http://localhost:3004/convites", data);
+    
+    const dataInfo = {
+      tipoConviteEnvio: data.tipoConviteEnvio,
+      usuarioRemetenteId: data.usuarioRemetenteId,
+      usuarioDestinatarioId: data.usuarioDestinatarioId,
+      timeId: data.timeId,
+      torneio: data.torneio
+    };
+    try {
+      const response = await api.post("/convite", dataInfo, config);
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao criar o convite:", error);
+      throw error;
+    }
+  }
+);
+
+export const verificarConviteExistente = createAsyncThunk(
+  "convites/verificarConviteExistente",
+  async ({ destinatarioId, remetenteId, token }, { rejectWithValue }) => {
+    try {
+      const config = getAuthConfig(token); // Adicionando o token
+      const response = await api.get(`/convite/destinatario/${destinatarioId}`, config);
+
+      if (response && response.data.length > 0) {
+        const conviteExistente = response.data.some(
+          (convite) => convite.usuarioRemetente === remetenteId
+        );
+        return conviteExistente; 
+      }
+      return false;
+    } catch (error) {
+      console.error("Erro ao verificar convite existente:", error);
+      return rejectWithValue("Erro ao verificar convite");
+    }
+  }
+);
+
+export const fetchConvitesUsuario = createAsyncThunk(
+  'convites/fetchConvitesUsuario',
+  async ({ userId, token }) => {
+    const config = getAuthConfig(token); // Adicionando o token
+    const response = await api.get(`/convite?idDestinatario=${userId}`, config);
     return response.data;
   }
 );
 
-const cancelarConviteAsync = createAsyncThunk(
-  "convite/cancelarConviteAsync",
-  async (idConvite) => {
-    await axios.delete(`http://localhost:3004/convites/${idConvite}`);
-    return idConvite;
-  }
-);
-
-const aceitarConviteAsync = createAsyncThunk(
-  "convite/aceitarConviteAsync",
-  async (idConvite) => {
-    const response = await axios.put(
-      `http://localhost:3004/convites/${idConvite}`,
-      { status: "aceito" }
-    );
+export const fetchConvitesTime = createAsyncThunk(
+  'convites/fetchConvitesTime',
+  async ({ timeId, token }) => {
+    const config = getAuthConfig(token); // Adicionando o token
+    const response = await api.get(`/convite/time/${timeId}`, config);
     return response.data;
   }
 );
 
-const recusarConviteAsync = createAsyncThunk(
-  "convite/recusarConviteAsync",
-  async (idConvite) => {
-    const response = await axios.put(
-      `http://localhost:3004/convites/${idConvite}`,
-      { status: "recusado" }
-    );
+export const aceitarConvite = createAsyncThunk(
+  'convites/aceitarConvite',
+  async ({ conviteId, token }) => {
+    const config = getAuthConfig(token); // Adicionando o token
+    const response = await api.put(`/convite/aceitar/${conviteId}`, null, config);
+    alert("Convite aceito com sucesso!");
     return response.data;
   }
 );
+
+export const recusarConvite = createAsyncThunk(
+  'convites/recusarConvite',
+  async ({ conviteId, token }) => {
+    const config = getAuthConfig(token); // Adicionando o token
+    const response = await api.delete(`/convite/${conviteId}`, config);
+    alert("Convite recusado com sucesso!");
+    return conviteId;
+  }
+);
+
 
 const conviteSlice = createSlice({
-  name: "convite",
+  name: 'convites',
   initialState,
   reducers: {
-    clearConvite: (state) => {
-      state.idConvite = "";
-      state.idTimeConvite = "";
-      state.idCriadorConvite = "";
-      state.idDestinatario = "";
+    clearConvites(state) {
+      state.convitesTime = [];
+      state.convitesTorneio = [];
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(enviarConviteAsync.fulfilled, (state, action) => {
-        const { id, idTimeConvite, idCriadorConvite, nomeDestinatario } =
-          action.payload;
-        state.idConvite = id;
-        state.idTimeConvite = idTimeConvite;
-        state.idCriadorConvite = idCriadorConvite;
-        state.idDestinatario = nomeDestinatario;
+      .addCase(fetchConvitesUsuario.pending, (state) => {
+        state.loading = true;
       })
-      .addCase(cancelarConviteAsync.fulfilled, (state, action) => {
-        const idConviteCancelado = action.payload;
-        if (state.idConvite === idConviteCancelado) {
-          state.idConvite = "";
-          state.idTimeConvite = "";
-          state.idCriadorConvite = "";
-          state.idDestinatario = "";
-        }
+      .addCase(fetchConvitesUsuario.fulfilled, (state, action) => {
+        state.convitesTime = action.payload.filter((convite) => convite.tipoConvite === 'usuario_para_usuario');
+        state.loading = false;
       })
-      .addCase(aceitarConviteAsync.fulfilled, (state) => {
-        state.idConvite = "";
-        state.idTimeConvite = "";
-        state.idCriadorConvite = "";
-        state.idDestinatario = "";
+      .addCase(fetchConvitesUsuario.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       })
-      .addCase(recusarConviteAsync.fulfilled, (state) => {
-        state.idConvite = "";
-        state.idTimeConvite = "";
-        state.idCriadorConvite = "";
-        state.idDestinatario = "";
+      .addCase(fetchConvitesTime.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchConvitesTime.fulfilled, (state, action) => {
+        state.convitesTorneio = action.payload.filter((convite) => convite.tipoConvite === 'torneio_para_time');
+        state.loading = false;
+      })
+      .addCase(fetchConvitesTime.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      // Aceitar Convite
+      .addCase(aceitarConvite.fulfilled, (state, action) => {
+        // Remover o convite aceito da lista
+        state.convitesTime = state.convitesTime.filter(convite => convite._id !== action.payload._id);
+        state.convitesTorneio = state.convitesTorneio.filter(convite => convite._id !== action.payload._id);
+      })
+      // Recusar Convite
+      .addCase(recusarConvite.fulfilled, (state, action) => {
+        // Remover o convite recusado da lista
+        state.convitesTime = state.convitesTime.filter(convite => convite._id !== action.payload);
+        state.convitesTorneio = state.convitesTorneio.filter(convite => convite._id !== action.payload);
       });
   },
 });
 
-export const { clearConvite } = conviteSlice.actions;
-
-export {
-  enviarConviteAsync,
-  cancelarConviteAsync,
-  aceitarConviteAsync,
-  recusarConviteAsync,
-};
-
+// Exportando ações e reducer
+export const { clearConvites } = conviteSlice.actions;
 export default conviteSlice.reducer;
