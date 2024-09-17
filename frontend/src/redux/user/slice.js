@@ -19,7 +19,14 @@ const addUser = createAsyncThunk("user/addUserAsync", async (data) => {
     return false;
   }
 });
-
+const searchUserAsync = createAsyncThunk('user/searchUserAsync', async (data) =>{
+  try{
+    const response = await api.get(`/user?nome_like=${data.nome}`)
+    return response.data
+  } catch(error){
+    alert(error)
+  }
+})
 const updateUser = createAsyncThunk("user/updateUserAsync", async (data) => {
   try {
     console.log("data recebida:", data);
@@ -92,6 +99,6 @@ const userSlice = createSlice({
 
 export const { logoutUser, addLoggedUser } = userSlice.actions;
 
-export { addUser, updateUser, deleteUser, logoutUserFunc };
+export { addUser, updateUser, deleteUser, logoutUserFunc, searchUserAsync };
 
 export default userSlice.reducer;

@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { enviarConviteAsync } from "../../redux/convite/slice";
 import axios from "axios";
 import "../EnvioConvite/EnvioConvite.css";
 import { debounce } from "lodash"; // Importa o debounce do lodash
+import { getTimeByUserId } from "../../redux/time/slice";
+import { searchUserAsync } from "../../redux/user/slice";
+import { searchTimeAsync } from "../../redux/time/slice";
+import { verificarConviteExistente } from "../../redux/convite/slice";
+import { addCoviteAsync } from "../../redux/convite/slice";
 import { jwtDecode } from "jwt-decode";
 //So pra mudar o outro commit
 
@@ -27,48 +31,53 @@ const Modal = ({ isOpen, onClose, children }) => {
 };
 
 const EnvioConvite = () => {
-  const token = useSelector((state) => state.auth.token);
-  const decodedToken = jwtDecode(token);
-  const userId = decodedToken.id;
-  const [isOpen, setIsOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([]); // Armazena os resultados da busca
-  const [selectedUser, setSelectedUser] = useState(null); // Armazena o usuário selecionado
-  const loggedUser = useSelector((state) => state.user.loggedUser); // Usuário logado
+  const currentUser = useSelector((rootReducer) => rootReducer.user); // Usuário logado
+  const userId = currentUser.user._id
+  const token = currentUser.logged
+  const timeDados = useSelector((rootReducer) => rootReducer.time);
+   // Armazena os resultados da busca
+  // Armazena o usuário selecionado
   const dispatch = useDispatch();
 
-  const [mensagemAviso, setMensagemAviso] = useState("");
-
   const [tipoConvite, setTipoConvite] = useState("Jogador");
+  const [mensagemAviso, setMensagemAviso] = useState("");
+  const [selectedUser, setSelectedUser] = useState(null); 
+  const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const [tipoConviteEnvio, setTipoConviteEnvio] = useState("");
   const [usuarioRemetenteId, setUsuarioRemetenteId] = useState("");
   const [usuarioDestinatarioId, setUsuarioDestinatarioId] = useState("");
   const [timeId, setTimeId] = useState("");
   const [torneio, setTorneio] = useState("");
+  
 
   // Função com debounce para limitar as chamadas da API
   const debouncedSearch = debounce(async (searchValue) => {
-    if (searchValue.length > 1) {
-      // Busca apenas se houver mais de 2 caracteres
-      if (tipoConvite == "Jogador") {
-        try {
-          const response = await axios.get(
-            `http://localhost:3004/user?nome_like=${searchValue}`
-          );
-          setSearchResults(response.data);
-        } catch (error) {
-          console.error("Erro ao buscar usuários:", error);
+    if (searchValue.length > 2) {
+      try {
+        let response;
+        
+        // Verifica se o tipo de convite é "Jogador"
+        if (tipoConvite === "Jogador") {
+          // Executa a ação de busca de usuário
+          response = await dispatch(searchUserAsync({ nome: searchValue }));
+        } else {
+          // Executa a ação de busca de time (presumindo que exista uma action searchTimeAsync)
+          response = await dispatch(searchTimeAsync({ nome: searchValue }));
         }
-      } else {
-        const response = await axios.get(
-          `http://localhost:3004/api/time?nome_like=${searchValue}` //ALTERAR ESSA BOSTA! ASSINADO: NE-YO PARA BRUNO (CHAVES)
-        );
-        setSearchResults(response.data);
+  
+        // Armazena o resultado da busca, acessando a propriedade 'payload'
+        setSearchResults(response.payload);
+        
+      } catch (error) {
+        console.error("Erro ao buscar usuários:", error);
+        setSearchResults([]); // Limpa os resultados em caso de erro
       }
     } else {
       setSearchResults([]); // Limpa os resultados se o termo de busca for muito curto
     }
-  }, 300); // Aguarda 300ms antes de fazer a requisição
+  }, 300);
 
   const handleSearchChange = (e) => {
     const searchValue = e.target.value;
@@ -96,54 +105,46 @@ const EnvioConvite = () => {
     let remetenteUnico = true;
     if (tipoConvite == `Jogador`) {
       if (selectedUser) {
-        const responseVerificacao = await dispatch(
-          getTimeByUserId({
-            userId: selectedUser._id,
-            token: currentUser.logged,
+        
+        if ((selectedUser._id)) {
+          timeDoUsuario = await dispatch(getTimeByUserId({userId:selectedUser._id}))
+        }
+        const responseConvite = await dispatch(
+          verificarConviteExistente({
+            destinatarioId: selectedUser._id,
+            remetenteId: userId,
+            token: token,
           })
         );
-        if ((responseVerificacao.status = 200)) {
-          timeDoUsuario = responseVerificacao.data;
-        }
-        const responseVerificacaoConvite = await axios.get(
-          `http://localhost:3004/convite/destinatario/${selectedUser._id}`
-        );
-        if (
-          responseVerificacaoConvite &&
-          responseVerificacaoConvite.data.length > 0
-        ) {
-          convites = responseVerificacaoConvite.data;
-          convites.forEach((convite) => {
-            if (convite.usuarioRemetente === userId) {
-              remetenteUnico = false;
-            }
-          });
-        }
-        if (!remetenteUnico) {
+        if (responseConvite.payload) {
           setMensagemAviso(`Usuário já possui convite!`);
+          return
         } else {
-          if (!Array.isArray(timeDoUsuario) && timeDoUsuario.data) {
+          if (!Array.isArray(timeDoUsuario.payload) && timeDoUsuario.payload) {
             setMensagemAviso(`Usuário já possui um time!`);
           } else {
             setTipoConviteEnvio("usuario_para_usuario");
             setUsuarioRemetenteId(userId);
             setUsuarioDestinatarioId(selectedUser._id);
-            const response = await fetch("http://localhost:3004/convite", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                tipoConviteEnvio,
-                usuarioRemetenteId,
-                usuarioDestinatarioId,
-                timeId,
-                torneio,
-              }),
-            });
-            console.log(response.data);
-            alert("Convite Enviado!");
-            setMensagemAviso(`Convite enviado com sucesso!`);
+            console.log(tipoConviteEnvio,
+              usuarioRemetenteId,
+              usuarioDestinatarioId,
+              timeId,
+              torneio,)
+            try{
+              const response = await dispatch(addCoviteAsync({
+                ...data, token:token
+              }))
+              if(response.payload){
+                alert("Convite Enviado!");
+              setMensagemAviso(`Convite enviado com sucesso!`);
+              }
+            }catch (error){
+              console.error("Erro ao enviar o convite:", error);
+              setMensagemAviso(`Erro ao enviar o convite!`);
+            }
+            
+            
           }
         }
       } else {
@@ -246,7 +247,7 @@ const EnvioConvite = () => {
                   <ul className="search-results">
                     {searchResults.map((user) => (
                       <li
-                        key={user.id}
+                        key={user._id}
                         onClick={() => handleUserSelect(user)}
                         className="search-result-item"
                       >
