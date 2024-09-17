@@ -102,6 +102,7 @@ const EnvioConvite = () => {
       setTipoConviteEnvio("torneio_para_time");
       setUsuarioRemetenteId(userId);
       setTimeId(user._id);
+      
     }
   };
 
@@ -173,13 +174,14 @@ const EnvioConvite = () => {
           setUsuarioRemetenteId(userId);
           setTimeId(selectedUser._id);
           setTorneio(torneioUsuario._id);
+<<<<<<< Updated upstream
 
           const data = {};
           data.tipoConviteEnvio = tipoConviteEnvio;
           data.usuarioRemetenteId = usuarioRemetenteId;
           data.usuarioDestinatarioId = usuarioDestinatarioId;
           data.timeId = timeId;
-          data.torneio = torneio;
+          data.torneio = torneioUsuario._id;
           try {
             const response = await dispatch(
               addCoviteAsync({ data: data, token: token })

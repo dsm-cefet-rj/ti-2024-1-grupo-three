@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getTimeByTimeId } from "../../redux/time/slice";
+import { addTime, getTimeByTimeId, getTimeByUserId } from "../../redux/time/slice";
 import {
   fetchConvitesUsuario,
   fetchConvitesTime,
@@ -103,9 +103,12 @@ const Convite = () => {
     try {
       await dispatch(aceitarConvite({ conviteId: idConvite, token: token }));
       
+      
       // Recarregar convites após aceitar
       if (user && user._id) {
         await dispatch(fetchConvitesUsuario({ userId: user._id, token: currentUser.logged }));
+        const response = await dispatch(getTimeByUserId({userId: user._id , token: currentUser.logged}))
+      dispatch(addTime(response))
       }
       if (isOwner && timeUser && timeUser.payload._id) {
         await dispatch(fetchConvitesTime({ timeId: timeUser.payload._id, token: currentUser.logged }));
