@@ -48,6 +48,29 @@ const getPartidasIdTime = createAsyncThunk(
   }
 );
 
+const updatePartida = createAsyncThunk("user/updatePartidaAsync", async (data) => {
+  try {
+    console.log("data recebida:", data);
+    let formData = new FormData();
+    formData = {
+      placar: data.placar,
+    };
+
+    const config = {
+      headers: {
+        Authorization: `${data.token}`,
+      },
+    };
+    const response = await api.put(`/partidas/${data.id}`, formData, config);
+
+    alert("Partida atualizada com sucesso");
+    return response.data.data;
+  } catch (error) {
+    alert(error);
+  }
+});
+
+
 const partidaSlice = createSlice({
   name: "partidas",
   initialState,
@@ -65,6 +88,6 @@ const partidaSlice = createSlice({
 
 export const { addPartidas, clearPartidas } = partidaSlice.actions;
 
-export { addPartida, getPartidas, getPartidasIdTime };
+export { addPartida, getPartidas, getPartidasIdTime, updatePartida };
 
 export default partidaSlice.reducer;

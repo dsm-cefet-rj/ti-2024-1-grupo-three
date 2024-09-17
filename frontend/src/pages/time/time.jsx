@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Navigate } from "react-router-dom";
 import "../time/time.css";
 import Edit from "../../assets/edit.svg";
+import Check from "../../assets/check.svg";
 import Jogador from "../../components/jogador/jogador";
 import { getPartidasIdTime, addPartidas } from "../../redux/partida/slice";
 import {
@@ -13,7 +14,7 @@ import {
   getJogadores,
   clearJogadores,
 } from "../../redux/jogadores/slice";
-import { deleteTime, clearTime } from "../../redux/time/slice";
+import { deleteTime, clearTime, updateTime } from "../../redux/time/slice";
 
 /**
  * Componente Time.
@@ -26,23 +27,56 @@ import { deleteTime, clearTime } from "../../redux/time/slice";
  */
 const Time = () => {
   const navigate = useNavigate(); // Hook para navegação
-  const [jogadores, setJogadores] = useState([]); // Estado para armazenar jogadores do time
-  const [partidas, setPartidas] = useState([]); // Estado para armazenar partidas do time
   const [nomeTime, setNomeTime] = useState(""); // Estado para armazenar o nome do time
+  const [newName, setNewName] = useState("");
   const [show, setShow] = useState(false); // Estado para controlar a exibição de jogadores
   const [show2, setShow2] = useState(false); // Estado para controlar a exibição de partidas
   const currentUser = useSelector((rootReducer) => rootReducer.user);
   const timeDados = useSelector((rootReducer) => rootReducer.time);
   const Jogadores = useSelector((rootReducer) => rootReducer.jogadores);
   const Partidas = useSelector((rootReducer) => rootReducer.partidas);
+  const [editarNome, setEditarNome] = useState(false);
   const dispatch = useDispatch();
 
-  console.log(currentUser);
+  const handleChange = (event, setText) => {
+    setText(event.target.value);
+  };
+
+  const handleEditartrue = () => {
+    setEditarNome(true);
+  };
+
+  const handleEditarFalse = () => {
+    setEditarNome(false);
+  };
+
+
   // Redireciona para a página de login se o token não estiver presente
   if (!currentUser.logged) {
     return <Navigate to="/login" />;
   }
   const Times = timeDados.timeUser.payload;
+  console.log(Times);
+
+  const handleUpdate = (e) => {
+    if(currentUser.user._id === Times.userIdDono){
+      if(newName != ""){
+        const response = dispatch(
+          updateTime({
+            nomeTime: newName,
+            token: currentUser.logged,
+            id: Times._id,
+          })
+        );
+      } else {
+        alert("Nome não pode ser vazio");
+        handleEditarFalse();
+      }
+    }
+    else{
+      handleEditarFalse();
+    }
+  };
   useEffect(() => {
     console.log("Iniciando useEffect");
     /**
@@ -122,8 +156,22 @@ const Time = () => {
       {nomeTime ? (
         <div className="envoltoJogPar">
           <div className="nometimeflex">
-            <h1 className="nomedoTime">{nomeTime}</h1>
-            <img src={Edit} alt="menu" className="imageedit1" />
+          {editarNome === true ? (
+                <div className="">
+                  <input
+                    id="nome"
+                    className="nomedoTime"
+                    placeholder={nomeTime}
+                    onChange={(event) => handleChange(event, setNewName)}
+                  />
+                  <img src={Check} alt="menu" className="imageedit1" onClick={handleUpdate} />
+                </div>
+                ) : (
+                  <div className="">
+                    <h1 className="nomedoTime">{nomeTime}</h1>
+                    <img src={Edit} alt="menu" className="imageedit1" onClick={handleEditartrue} />
+                  </div>
+                )}
           </div>
 
           <div>

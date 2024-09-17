@@ -116,8 +116,26 @@ const getTimeByTimeId = createAsyncThunk(
 );
 
 // Ação para atualizar o time
-const updateTime = createAsyncThunk("time/updateTimeAsync", async (data) => {
-  await api.put(`/time/${data.id}`, data);
+const updateTime = createAsyncThunk("user/updateTimeAsync", async (data) => {
+  try {
+    console.log("data recebida:", data);
+    let formData = new FormData();
+    formData = {
+      nometime: data.nomeTime,
+    };
+
+    const config = {
+      headers: {
+        Authorization: `${data.token}`,
+      },
+    };
+    const response = await api.put(`/time/${data.id}`, formData, config);
+
+    alert("Time atualizado com sucesso");
+    return response.data.data;
+  } catch (error) {
+    alert(error);
+  }
 });
 
 // Ação para deletar o time pelo ID do dono do usuário

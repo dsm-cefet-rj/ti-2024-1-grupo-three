@@ -161,11 +161,7 @@ async function deleteTime(req, res) {
 async function update(req, res) {
   const id = req.params.id;
   const time = {
-    id: req.body.id,
     nomeTime: req.body.nometime,
-    userIdDono: req.body.useriddono,
-    userId: req.body.userid,
-    //algo de convites
   };
   const updatedTime = await Time.findByIdAndUpdate(id, time);
   if (!updatedTime) {

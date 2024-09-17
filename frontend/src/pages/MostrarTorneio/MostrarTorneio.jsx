@@ -143,6 +143,7 @@ const MostrarTorneio = () => {
                       <div key={index}>
                           <PartidaComponente
                             key={partida._id}
+                            id={partida._id}
                             nome={`${partida.timeMandante.nomeTime} vs ${partida.timeVisitante.nomeTime}`}
                             resultado={partida.placar}
                             data={partida.data}
@@ -161,6 +162,7 @@ const MostrarTorneio = () => {
                       <div key={index}>
                           <PartidaComponente
                             key={partida._id}
+                            id={partida._id}
                             nome={`${partida.timeMandante.nomeTime} vs ${partida.timeVisitante.nomeTime}`}
                             resultado={partida.placar}
                             data={partida.data}

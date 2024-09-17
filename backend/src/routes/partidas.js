@@ -21,7 +21,7 @@ partidaRoutes.delete("/partidas/:id", checkToken, deletePartida);
 partidaRoutes.get("/partidas/time/:timeId", checkToken, getPartidasByTime);
 partidaRoutes.put("/partidas/:id", checkToken, update);
 
-partidaRoutes.put("/partidas/:id/placar", checkToken, updatePlacar);
+partidaRoutes.put("/partidas/:id", checkToken, updatePlacar);
 
 partidaRoutes.post("/partidas/:torneioId", checkToken, criarPartidaMOR);
 export default partidaRoutes;

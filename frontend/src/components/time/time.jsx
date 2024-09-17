@@ -30,6 +30,11 @@ const Time = ({ id }) => {
   return (
     <div className="tudo">
       <div className="jogadores-time1">
+      {id === true ? (
+                <img src={Check} alt="menu" className="imageedit" />
+              ): (
+                <img src={Edit} alt="menu" className="imageedit" onClick={handleEditartrue} />
+              )}
         <h2>{nomeTime}</h2>
         <img src={Delete} alt="menu" className="imagedelete1" />
       </div>

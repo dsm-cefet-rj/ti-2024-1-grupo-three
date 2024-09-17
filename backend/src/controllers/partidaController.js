@@ -67,8 +67,7 @@ async function deletePartida(req, res) {
 async function update(req, res) {
   const id = req.params.id;
   const partida = {
-    id: req.body.id,
-    idTimes: req.body.idtimes,
+    placar: req.body.placar,
   };
   const updatedPartida = await Partida.findByIdAndUpdate(id, partida);
   if (!updatedPartida) {
