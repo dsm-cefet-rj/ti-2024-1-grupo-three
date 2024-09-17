@@ -174,7 +174,6 @@ const EnvioConvite = () => {
           setUsuarioRemetenteId(userId);
           setTimeId(selectedUser._id);
           setTorneio(torneioUsuario._id);
-<<<<<<< Updated upstream
 
           const data = {};
           data.tipoConviteEnvio = tipoConviteEnvio;

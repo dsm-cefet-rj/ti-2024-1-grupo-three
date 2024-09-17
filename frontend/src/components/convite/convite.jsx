@@ -9,6 +9,7 @@ import {
 } from "../../redux/convite/slice"; // Import actions from slice
 import "./convite.css";
 import { useNavigate } from "react-router-dom";
+import { getTorneio } from "../../redux/torneios/slice";
 
 const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
@@ -98,6 +99,8 @@ const Convite = () => {
       console.error("Erro ao recusar convite:", error);
     }
   };
+
+
 
   const handleAceitar = async (idConvite) => {
     try {
