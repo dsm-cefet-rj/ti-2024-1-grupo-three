@@ -16,6 +16,7 @@ import GerarPartida from "../gerarPartida/GerarPartida";
 
 function NavBar() {
   const [aberto, setAberto] = useState(false);
+  const navigate = useNavigate();
 
   const abrirMenu = () => {
     setAberto(!aberto);
@@ -24,8 +25,8 @@ function NavBar() {
   const dispatch = useDispatch();
   function handleLogOut() {
     dispatch(logoutUser());
+    navigate(`/login`);
   }
-  const navigate = useNavigate();
   function handleFotoClick() {
     navigate(`/usuario`);
   }
