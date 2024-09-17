@@ -120,68 +120,7 @@ async function deleteUserFromTime(req, res) {
   }
 }
 
-async function deleteTime(req, res) {
-  //SAIR DO TIME!!!!!!!!!!! COM NOME DIFERENTE!
-  try {
-    const userId = req.params.id; // Obtain userId from request
-    if (!userId) {
-      res.status(400).json({ msg: "User ID is required" });
-      return;
-    }
 
-    console.log("userid backend", userId);
-
-    const time = await Time.findOne({
-      userId: userId,
-    });
-
-    console.log("time encontrado", time);
-
-    if (!time) {
-      res.status(404).json({ msg: "Erro, não encontrado" });
-      return;
-    }
-
-    // Assuming userId is an array and we want to remove the provided userId
-    const userIndex = time.userId.indexOf(userId);
-    if (userIndex === -1) {
-      res.status(404).json({ msg: "Usuário não encontrado no time" });
-      return;
-    }
-
-    time.userId.splice(userIndex, 1);
-    await time.save();
-
-    res.status(200).json({ time, msg: "Usuário removido do time" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ msg: "Erro interno do servidor" });
-  }
-}
-<<<<<<< Updated upstream
-
-async function excluirTime(req, res) {
-  //excluir time vazio
-  try {
-    const timeId = req.params.timeId; // Obtain userId from request
-    if (!timeId) {
-      res.status(400).json({ msg: "Time ID is required" });
-      return;
-    }
-
-    console.log("userid backend", timeId);
-
-    const time = await Time.findByIdAndDelete(timeId);
-
-    return res.status(200).send({
-      message: "time deletado com sucesso",
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(400).json({ msg: "Erro ao deletar time" });
-  }
-}
-=======
 async function deletaInteiro(req, res) {
   try {
     const id = req.params.id;
@@ -199,7 +138,6 @@ async function deletaInteiro(req, res) {
   }
 }
 
->>>>>>> Stashed changes
 async function update(req, res) {
   const id = req.params.id;
   const time = {
@@ -219,12 +157,7 @@ export {
   getByUser,
   getAll,
   get,
-  deleteTime,
   update,
   deleteUserFromTime,
-<<<<<<< Updated upstream
-  excluirTime,
-=======
   deletaInteiro
->>>>>>> Stashed changes
 };

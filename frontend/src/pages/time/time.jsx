@@ -14,16 +14,7 @@ import {
   getJogadores,
   clearJogadores,
 } from "../../redux/jogadores/slice";
-<<<<<<< Updated upstream
-import {
-  deleteTime,
-  clearTime,
-  updateTime,
-  excluirTime,
-} from "../../redux/time/slice";
-=======
-import { deleteTime, clearTime, updateTime, deletaInteiro } from "../../redux/time/slice";
->>>>>>> Stashed changes
+import {clearTime, updateTime, deletaInteiro, deleteUserFromTime } from "../../redux/time/slice";
 
 /**
  * Componente Time.
@@ -127,40 +118,6 @@ const Time = () => {
   const qtdUser = timeDados.timeUser.payload.userId;
   const handleSairTime = async (e) => {
     e.preventDefault();
-<<<<<<< Updated upstream
-    console.log("saindo do time", Times);
-    if (Times.userId.length === 1) {
-      const result2 = await dispatch(
-        excluirTime({
-          timeId: Times._id,
-          token: currentUser.logged,
-        })
-      );
-    }
-    try {
-      console.log("saindo do time", Times);
-
-      const result = await dispatch(
-        deleteTime({
-          timeId: Times._id,
-          id: currentUser.user._id,
-          token: currentUser.logged,
-        })
-      );
-      if (result) {
-        //se jogadores = 0 , deletar time
-
-        console.log("voce saiu do time", result);
-        navigate("/login");
-      }
-
-      // Aqui você pode adicionar lógica adicional para lidar com o resultado
-    } catch (error) {
-      console.error("Erro ao tentar sair:", error);
-      alert("Ocorreu um erro ao tentar sair.");
-    }
-  };
-=======
     if (!Array.isArray(qtdUser) && qtdUser.length === 1) {
       try {
         console.log(cu);
@@ -182,7 +139,7 @@ const Time = () => {
     } else{ 
       try {
         const result = await dispatch(
-          deleteTime({
+          deleteUserFromTime({
             timeId: Times._id,
             id: currentUser.user._id,
             token: currentUser.logged,
@@ -199,7 +156,6 @@ const Time = () => {
       }
     };
   }
->>>>>>> Stashed changes
 
   /**
    * Manipula o clique do botão para criar um time.

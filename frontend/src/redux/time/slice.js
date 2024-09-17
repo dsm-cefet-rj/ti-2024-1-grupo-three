@@ -69,49 +69,14 @@ const deleteUserFromTime = createAsyncThunk(
   }
 ); //deletar usuario do time
 
-const deleteTime = createAsyncThunk("time/deleteTimeAsync", async (data) => {
-  //sair do time
-  try {
-    const config = {
-      headers: {
-        Authorization: `${data.token}`,
-      },
-    };
-    console.log("voce chegou ate aqui", data);
-    const response = await api.delete(`/time/${data.id}`, config);
-    console.log("voce chegou ate aqui!");
-    alert("Você saiu do time com sucesso");
-    return response.data; // Certifique-se de retornar algo se necessário
-  } catch (error) {
-    console.error("Erro ao Sair do time:", error); // Logar o erro para depuração
-    alert("Ocorreu um erro ao tentar sair do time");
-  }
-});
-
-<<<<<<< Updated upstream
-const excluirTime = createAsyncThunk("time/excluirTimeAsync", async (data) => {
-  //excluir time
-=======
 const deletaInteiro = createAsyncThunk("time/deleteTimeInteiroAsync", async (data) => {
   //sair do time
->>>>>>> Stashed changes
   try {
     const config = {
       headers: {
         Authorization: `${data.token}`,
       },
     };
-<<<<<<< Updated upstream
-    console.log("voce chegou ate aqui", data);
-    const response = await api.delete(`/time/excluir/${data.timeId}`, config);
-    return response.data; // Certifique-se de retornar algo se necessário
-  } catch (error) {
-    console.error("Erro ao Excluir o time:", error); // Logar o erro para depuração
-    alert("Ocorreu um erro ao tentar sair e excluir o time");
-  }
-});
-
-=======
     const response = await api.delete(`/time/inteiro/${data.id}`, config);
     alert("Você excluiu o time com sucesso");
     return response.data; // Certifique-se de retornar algo se necessário
@@ -120,7 +85,6 @@ const deletaInteiro = createAsyncThunk("time/deleteTimeInteiroAsync", async (dat
     alert("Ocorreu um erro ao tentar sair do time");
   }
 });
->>>>>>> Stashed changes
 // Buscar time pelo ID do dono
 const getTimeByUserIdDono = createAsyncThunk(
   "time/getTimeByUserIdDonoAsync",
@@ -223,13 +187,8 @@ export {
   getTimeByTimeId,
   updateTime,
   deleteTimeByUserId,
-  deleteTime,
   deleteUserFromTime,
-<<<<<<< Updated upstream
-  excluirTime,
-=======
   deletaInteiro
->>>>>>> Stashed changes
 };
 
 export default timeSlice.reducer;
