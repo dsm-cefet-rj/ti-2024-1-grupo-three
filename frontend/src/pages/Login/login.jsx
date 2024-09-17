@@ -57,9 +57,8 @@ const Login = () => {
       const response = await api.post("/login", body);
 
       if (response.data.status == true) {
-        suco = response.data
-        console.log("RESPONSE DATA: %o" ,response.data);
-        dispatch(setToken(response.data.token));
+        console.log(response.data);
+        suco = response.data;
         dispatch(addLoggedUser(response.data));
         alert("Autenticado com sucesso!");
         fetchTime();
