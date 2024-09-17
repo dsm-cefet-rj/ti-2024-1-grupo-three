@@ -40,7 +40,7 @@ const Time = ({ id }) => {
             })
           );
           if (result) {
-            console.log("voce excluiu o time do torneio", result);
+
             navigate("/login");
           }
           // Aqui você pode adicionar lógica adicional para lidar com o resultado

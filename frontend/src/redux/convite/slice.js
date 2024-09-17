@@ -54,7 +54,6 @@ export const fetchConvitesTime = createAsyncThunk(
 export const addCoviteAsync = createAsyncThunk(
   'convites/addConviteAsync',
   async ({data, token}) => {
-    console.log("DATA: %o", data)
     const config = getAuthConfig(token); // Adicionando o token
     try {
       const response = await api.post("/convite", data, config);

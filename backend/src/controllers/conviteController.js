@@ -4,7 +4,6 @@ import { Torneio } from "../models/torneioModel.js";
 
 async function create(req, res) {
   try {
-    console.log ("Create - Inicio");
     const tipoConviteEnvio = req.body.tipoConviteEnvio;
     const usuarioRemetenteId = req.body.usuarioRemetenteId;
     const usuarioDestinatarioId = req.body.usuarioDestinatarioId;

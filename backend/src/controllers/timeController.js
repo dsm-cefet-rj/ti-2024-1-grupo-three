@@ -90,13 +90,12 @@ async function deleteUserFromTime(req, res) {
       return;
     }
 
-    console.log("userid backend", userId);
 
     const time = await Time.findOne({
       userId: userId,
     });
 
-    console.log("time encontrado", time);
+
 
     if (!time) {
       res.status(404).json({ msg: "Erro, não encontrado" });

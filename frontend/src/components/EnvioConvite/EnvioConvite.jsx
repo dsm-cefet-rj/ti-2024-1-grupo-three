@@ -135,7 +135,7 @@ const EnvioConvite = () => {
             setTipoConviteEnvio("usuario_para_usuario");
             setUsuarioRemetenteId(userId);
             setUsuarioDestinatarioId(selectedUser._id);
-            console.log("tipo convite: %s", tipoConviteEnvio);
+
             const data = {};
             data.tipoConviteEnvio = tipoConviteEnvio;
             data.usuarioRemetenteId = usuarioRemetenteId;
@@ -143,8 +143,6 @@ const EnvioConvite = () => {
             data.timeId = timeId;
             data.torneio = torneio;
 
-            console.log("TOKEN: %s", token);
-            console.log("DATA: %o", data);
             try {
               const response = await dispatch(
                 addCoviteAsync({ data: data, token: token })
@@ -168,14 +166,14 @@ const EnvioConvite = () => {
           getTorneioByUserIdDonoTorneio({ userIdDono: userId, token: token })
         );
         torneioUsuario = responseDono.payload;
-        console.log("torneio usuario", torneioUsuario);
+
 
         if (torneioUsuario) {
           setTipoConviteEnvio("torneio_para_time");
           setUsuarioRemetenteId(userId);
           setTimeId(selectedUser._id);
           setTorneio(torneioUsuario._id);
-          console.log("torneio", torneio);
+
           const data = {};
           data.tipoConviteEnvio = tipoConviteEnvio;
           data.usuarioRemetenteId = usuarioRemetenteId;
@@ -190,7 +188,7 @@ const EnvioConvite = () => {
               alert("Convite Enviado!");
               setMensagemAviso(`Convite enviado com sucesso!`);
             }
-            console.log(response.payload);
+
             if (response.status === 201) {
               alert("Convite Enviado!");
               setMensagemAviso(`Convite enviado com sucesso!`);

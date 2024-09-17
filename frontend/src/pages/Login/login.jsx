@@ -56,7 +56,7 @@ const Login = () => {
       const response = await api.post("/login", body);
 
       if (response.data.status == true) {
-        console.log("suco", response.data);
+
         suco = response.data;
         dispatch(addLoggedUser(response.data));
         alert("Autenticado com sucesso!");
@@ -88,7 +88,7 @@ const Login = () => {
         })
       );
 
-      console.log("cu", partidaResponse);
+
       if (partidaResponse) {
         dispatch(addPartidas(partidaResponse.payload)); // esta vindo com formato certo
       }

@@ -17,8 +17,7 @@ const Torneiomjr = ({ id, nome, qtdtimes, tipoTorneio, local }) => {
   const dispatch = useDispatch();
   const Times = timeDados.timeUser.payload;
 
-  console.log("id", id);
-  console.log("id2", currentUser.user._id);
+
   const handleDeleteTorneio = async (e) => {
     e.preventDefault();
     try {
@@ -29,7 +28,7 @@ const Torneiomjr = ({ id, nome, qtdtimes, tipoTorneio, local }) => {
         })
       );
       if (result) {
-        console.log("voce deletou o torneio", result);
+
         navigate("/Time"); //indo independente do resultado
       } else {
         alert("Você não é o dono desse torneio!");

@@ -73,7 +73,7 @@ const CriarTime = () => {
         })
       );
 
-      console.log("cu", partidaResponse);
+
       if (partidaResponse) {
         dispatch(addPartidas(partidaResponse.payload)); // esta vindo com formato certo
       }

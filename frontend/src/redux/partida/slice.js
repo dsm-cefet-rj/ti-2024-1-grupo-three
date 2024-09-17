@@ -62,7 +62,6 @@ const getPartidasIdTime = createAsyncThunk(
       },
     };
     const response = await api.get(`/partidas/time/${data.idTime}`, config);
-    console.log("response get partidas", response);
     return response.data;
   }
 );
@@ -71,7 +70,6 @@ const updatePartida = createAsyncThunk(
   "user/updatePartidaAsync",
   async (data) => {
     try {
-      console.log("data recebida:", data);
       let formData = new FormData();
       formData = {
         placar: data.placar,

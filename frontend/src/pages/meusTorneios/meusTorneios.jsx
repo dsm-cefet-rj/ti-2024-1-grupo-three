@@ -50,7 +50,7 @@ const MeusTorneios = () => {
               token: currentUser.logged,
             })
           );
-          console.log("torneios dono", response);
+
           if (response.payload) {
             torneiosDono = response.payload;
             setTorneiosDono(torneiosDono);

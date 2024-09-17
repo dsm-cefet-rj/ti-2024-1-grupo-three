@@ -84,7 +84,6 @@ const deleteTorneioByUserIdDonoTorneio = createAsyncThunk(
           Authorization: `${data.token}`,
         },
       };
-      console.log("voce chegou ate aqui", data);
       await api.delete(`/torneios/dono/${data.userIdDonoTorneio}`, config);
     } catch (error) {
       console.error("Erro ao Excluir o torneio:", error); // Logar o erro para depuração
@@ -102,7 +101,6 @@ const deleteTimeFromTorneio = createAsyncThunk(
           Authorization: `${data.token}`,
         },
       };
-      console.log("voce chegou ate aqui", data);
       await api.delete(`/torneio/time/${data.id}`, config);
     } catch (error) {
       console.error("Erro ao Excluir o time:", error); // Logar o erro para depuração

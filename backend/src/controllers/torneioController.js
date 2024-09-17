@@ -162,7 +162,7 @@ async function deleteTorneioByUserIdDonoTorneio(req, res) {
       return;
     }
 
-    console.log("userid backend", userIdDonoTorneio);
+
 
     const torneio = await Torneio.deleteOne({
       userIdDonoTorneio: userIdDonoTorneio,
@@ -184,13 +184,12 @@ async function deleteTimeFromTorneio(req, res) {
       return;
     }
 
-    console.log("userid backend", timeId);
+
 
     const torneio = await Torneio.findOne({
       Participantes: timeId,
     });
-    console.log("torneio encontrado", timeId);
-    console.log("torneio encontrado", torneio);
+
 
     if (!torneio) {
       res.status(404).json({ msg: "Erro, não encontrado" });

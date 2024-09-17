@@ -60,7 +60,7 @@ const Time = () => {
     return <Navigate to="/login" />;
   }
   const Times = timeDados.timeUser.payload;
-  console.log(Times);
+
 
   const handleUpdate = (e) => {
     if (currentUser.user._id === Times.userIdDono) {
@@ -82,7 +82,7 @@ const Time = () => {
     }
   };
   useEffect(() => {
-    console.log("Iniciando useEffect");
+
     /**
      * Busca as informações do time do usuário autenticado.
      * Realiza chamadas à API para buscar dados do time, jogadores e partidas.
@@ -93,14 +93,11 @@ const Time = () => {
     const fetchTime1 = async () => {
       try {
         dispatch(clearJogadores());
-        console.log("Chamando fetchTime");
-        console.log("Times", Times);
+
         if (Times) {
           setNomeTime(Times.nomeTime);
-          console.log("checandoooooooo", Partidas.partidas);
 
           Times.userId.map(async (userId) => {
-            console.log("Buscando jogadores para userId:", userId);
             const userResponse = await dispatch(
               getJogadores({
                 id: userId,
@@ -108,7 +105,6 @@ const Time = () => {
               })
             );
             if (userResponse) {
-              console.log("Jogadores recebidos:", userResponse.payload);
               dispatch(addJogadores(userResponse.payload));
               //addJogadores
             }
@@ -119,14 +115,12 @@ const Time = () => {
       }
     };
     fetchTime1();
-    console.log("Finalizando useEffect");
   }, []); //mudar aqui
   const qtdUser = timeDados.timeUser.payload.userId;
   const handleSairTime = async (e) => {
     e.preventDefault();
     if (qtdUser.length === 1) {
       try {
-        console.log(Times);
         const result = await dispatch(
           deletaInteiro({
             id: Times._id,
@@ -134,7 +128,6 @@ const Time = () => {
           })
         );
         if (result) {
-          console.log("voce excluiu o time", result);
           navigate("/login");
         }
         // Aqui você pode adicionar lógica adicional para lidar com o resultado
@@ -152,7 +145,6 @@ const Time = () => {
           })
         );
         if (result) {
-          console.log("voce saiu do time", result);
           navigate("/login");
         }
         // Aqui você pode adicionar lógica adicional para lidar com o resultado

@@ -45,7 +45,7 @@ const Convite = () => {
   const token = currentUser.logged;
   const timeUser = timeDados.timeUser;
   const isOwner = timeDados.eDono;
-  console.log("ISOWNER: %o", timeDados);
+
   useEffect(() => {
     if (isOpen && convitesTime.length === 0 && convitesTorneio.length === 0) {
       // Fetch user invites when modal opens
@@ -56,7 +56,6 @@ const Convite = () => {
       }
       // Fetch team invites if user is the owner of a team
       if (isOwner && timeUser && timeUser.payload._id) {
-        console.log("TESTE:%s", currentUser.logged);
         dispatch(
           fetchConvitesTime({
             timeId: timeUser.payload._id,

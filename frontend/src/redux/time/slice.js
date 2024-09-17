@@ -57,9 +57,7 @@ const deleteUserFromTime = createAsyncThunk(
           Authorization: `${data.token}`,
         },
       };
-      console.log("voce chegou ate aqui", data);
       const response = await api.delete(`/times/${data.id}`, config);
-      console.log("voce chegou ate aqui!");
       alert("Você deletou o jogador do time com sucesso");
       return response.data; // Certifique-se de retornar algo se necessário
     } catch (error) {
@@ -116,7 +114,6 @@ const getTimeByTimeId = createAsyncThunk(
 // Ação para atualizar o time
 const updateTime = createAsyncThunk("user/updateTimeAsync", async (data) => {
   try {
-    console.log("data recebida:", data);
     let formData = new FormData();
     formData = {
       nometime: data.nomeTime,

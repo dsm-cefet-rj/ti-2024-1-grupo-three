@@ -29,7 +29,6 @@ const searchUserAsync = createAsyncThunk('user/searchUserAsync', async (data) =>
 })
 const updateUser = createAsyncThunk("user/updateUserAsync", async (data) => {
   try {
-    console.log("data recebida:", data);
     let formData = new FormData();
     formData = {
       senha: data.senha,

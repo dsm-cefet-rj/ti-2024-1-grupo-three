@@ -75,7 +75,7 @@ const GerarPartida = () => {
       const response = await axios.post(
         `http://localhost:3004/partidas/${selectedTorneio._id}` //nao consegui enviar o token com redux
       );
-      console.log("Resposta da API:", response.data);
+
       alert("Partidas geradas com sucesso!");
     } catch (error) {
       console.error("Erro ao chamar a API:", error);

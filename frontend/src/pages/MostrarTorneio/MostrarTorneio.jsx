@@ -47,7 +47,7 @@ const MostrarTorneio = () => {
             token: currentUser.logged
           })
         )
-        console.log(response);
+
         setTimes(response.payload.Participantes);
 
         if (times) {
@@ -71,7 +71,7 @@ const MostrarTorneio = () => {
       
               const partidaDetails = await Promise.all(partidaDetailsPromises);
               setPartidas(partidaDetails);
-              console.log(partidas);
+
           }
       }
       } catch (error) {

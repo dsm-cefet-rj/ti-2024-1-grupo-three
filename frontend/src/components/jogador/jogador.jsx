@@ -17,7 +17,6 @@ function Jogador({ id, nome }) {
     e.preventDefault();
     if (qtdUser.length === 1) {
       try {
-        console.log(Times);
         const result = await dispatch(
           deletaInteiro({
             id: Times._id,
@@ -25,7 +24,6 @@ function Jogador({ id, nome }) {
           })
         );
         if (result) {
-          console.log("voce excluiu o time", result);
           navigate("/login");
         }
         // Aqui você pode adicionar lógica adicional para lidar com o resultado
@@ -44,7 +42,6 @@ function Jogador({ id, nome }) {
             })
           );
           if (result) {
-            console.log("voce saiu do time", result);
             navigate("/login");
           }
           // Aqui você pode adicionar lógica adicional para lidar com o resultado
