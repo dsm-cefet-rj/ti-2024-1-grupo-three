@@ -5,9 +5,10 @@ import { Torneio } from "../models/torneioModel.js";
 
 async function create(req, res) {
   try {
-    const { timeMandante, timeVisitante, data, local } = req.body;
+    const { timeMandante, timeVisitante, TorneioId, data, local } = req.body;
     const Mandante = await Time.findById(timeMandante);
     const Visitante = await Time.findById(timeVisitante);
+    const Torneios = await Torneio.findById(TorneioId);
     const novaPartida = new Partida({
       timeMandante: Mandante,
       timeVisitante: Visitante,
@@ -16,6 +17,8 @@ async function create(req, res) {
       placar: "0 x 0",
     });
     const response = await novaPartida.save();
+    Torneios.Partidas.push(novaPartida._id);
+    await Torneios.save();
     res.status(201).json({ response, msg: "partida criada com sucesso" });
   } catch (error) {
     console.log(error);

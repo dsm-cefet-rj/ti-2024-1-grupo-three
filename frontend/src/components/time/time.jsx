@@ -1,15 +1,23 @@
 import "./stylenotas.css";
 import { React, useState, useEffect } from "react";
-import axios from "axios";
 import Delete from "../../assets/delete.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { getTimeByTimeId } from "../../redux/time/slice";
 
 const Time = ({ id }) => {
-  const timeUser = useSelector((rootReducer) => rootReducer.timeUser);
+  const dispatch = useDispatch();
   const [nomeTime, setNomeTime] = useState("");
+  const currentUser = useSelector((rootReducer) => rootReducer.user);
   useEffect(() => {
     const fetchTime = async () => {
       try {
-        const time = timeUser;
+        const response = await dispatch(
+          getTimeByTimeId({
+            _id: id,
+            token: currentUser.logged
+          })
+        );
+        const time = response.payload;
         if (time) {
           setNomeTime(time.nomeTime);
         }

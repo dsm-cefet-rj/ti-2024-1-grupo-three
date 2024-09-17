@@ -38,6 +38,16 @@ const getTorneiosByTime = createAsyncThunk('torneio/getTorneioByTimeAsync', asyn
     return response.data;
 });
 
+const getTimesByTorneio = createAsyncThunk('torneio/getTimesByTorneioAsync', async (data) => {
+  const config ={
+    headers:{
+      Authorization: `${data.token}`, 
+    },
+  }; 
+   const response = await api.get(`/torneio/meutime/${data.id}`, config);
+    return response.data;
+});
+
 const updateTorneio = createAsyncThunk("Torneio/updateTorneioAsync", async (data) => {
   await axios.put(`http://localhost:3004/Torneio/${data.id}`, data);
 });
@@ -67,6 +77,6 @@ const torneioSlice = createSlice({
 
 export const { addTorneio, clearTorneio } = torneioSlice.actions;
 
-export { addTorneioAsync, getTorneioByUserIdDonoTorneio, getTorneiosByTime, updateTorneio, deleteTorneioByUserIdDonoTorneio, deleteTorneio };
+export { addTorneioAsync, getTorneioByUserIdDonoTorneio, getTorneiosByTime, updateTorneio, deleteTorneioByUserIdDonoTorneio, deleteTorneio, getTimesByTorneio};
 
 export default torneioSlice.reducer;

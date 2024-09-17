@@ -7,6 +7,8 @@ import { useNavigate, Navigate } from "react-router-dom";
 import "./MostrarTorneio.css";
 import Time from "../../components/time/time";
 import { useParams } from "react-router-dom";
+import { getTimesByTorneio } from "../../redux/torneios/slice";
+import { getPartidasIdTime } from "../../redux/partida/slice";
 
 /**
  * Componente MostrarTorneio.
@@ -21,7 +23,8 @@ const MostrarTorneio = () => {
   const [times, setTimes] = useState([]); // Estado para armazenar os times participantes
   const currentUser = useSelector((rootReducer) => rootReducer.user);
   const [partidas, setPartidas] = useState([]); // Estado para armazenar as partidas do torneio
-  const { id } = useParams(); // Extrai o parâmetro 'id' da URL
+  const { id } = useParams();
+  const dispatch = useDispatch(); // Extrai o parâmetro 'id' da URL
  //Seleciona o token de autenticação do estado Redux
 
   if (!currentUser.logged) {
@@ -38,17 +41,24 @@ const MostrarTorneio = () => {
      */
     const fetchTime = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3004/torneio/meutime/${id}` //buscar times rotas
-        );
-        setTimes(response.data.Participantes);
+        const response = await dispatch(
+          getTimesByTorneio({
+            id: id,
+            token: currentUser.logged
+          })
+        )
+        console.log(response);
+        setTimes(response.payload.Participantes);
 
         if (times) {
           const partidaDetailsPromises = times.map(async (times) => {
-            const partidaResponse = await axios.get(
-              `http://localhost:3004/partidas/time/${times}`
-            );
-            return partidaResponse.data;
+            const response = await dispatch(
+              getPartidasIdTime({
+                id: times.id,
+                token: currentUser.logged
+              })
+            )
+            return response.payload;
           });
           const partidaDetails = await Promise.all(partidaDetailsPromises);
           setPartidas(partidaDetails);
@@ -58,7 +68,7 @@ const MostrarTorneio = () => {
       }
     };
     fetchTime();
-  }, [id, partidas, times]);
+  }, []);
 
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);

@@ -11,7 +11,11 @@ const torneioSchema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
-    
+    Partidas: [
+      {
+      type: mongoose.Schema.Types.ObjectId,
+      }
+    ],
     qtdTimes: {
       type: Number,
       required: true,
