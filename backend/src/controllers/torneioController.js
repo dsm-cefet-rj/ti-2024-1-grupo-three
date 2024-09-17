@@ -176,6 +176,43 @@ async function deleteTorneioByUserIdDonoTorneio(req, res) {
     res.status(500).json({ msg: "Erro ao deletar torneio" });
   }
 }
+async function deleteTimeFromTorneio(req, res) {
+  try {
+    const timeId = req.params.id; // Obtain userId from request
+    if (!timeId) {
+      res.status(400).json({ msg: "User ID is required" });
+      return;
+    }
+
+    console.log("userid backend", timeId);
+
+    const torneio = await Torneio.findOne({
+      Participantes: timeId,
+    });
+
+    console.log("torneio encontrado", torneio);
+
+    if (!torneio) {
+      res.status(404).json({ msg: "Erro, não encontrado" });
+      return;
+    }
+
+    // Assuming userId is an array and we want to remove the provided userId
+    const timeIndex = torneio.Participantes.indexOf(timeId);
+    if (timeIndex === -1) {
+      res.status(404).json({ msg: "Time não encontrado no torneio" });
+      return;
+    }
+
+    torneio.Participantes.splice(timeIndex, 1);
+    await torneio.save();
+
+    res.status(200).json({ torneio, msg: "Time removido do torneio" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: "Erro interno do servidor" });
+  }
+}
 
 async function deleteTorneio(req, res) {
   try {
@@ -250,5 +287,6 @@ export {
   get,
   deleteTorneio,
   deleteTorneioByUserIdDonoTorneio,
+  deleteTimeFromTorneio,
   update,
 };
