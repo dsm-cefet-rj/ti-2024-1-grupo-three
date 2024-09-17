@@ -32,8 +32,6 @@ const Modal = ({ isOpen, onClose, children }) => {
 const Convite = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
-  const [teamNames, setTeamNames] = useState({});
-  const navigate = useNavigate(); // Hook para navegação de rotas
 
   // Access global state using useSelector
   const currentUser = useSelector((rootReducer) => rootReducer.user); // Access logged in user
@@ -58,7 +56,7 @@ const Convite = () => {
       }
       // Fetch team invites if user is the owner of a team
       if (isOwner && timeUser && timeUser.payload._id) {
-        console.log("Tomanocu:%s", currentUser.logged);
+        console.log("TESTE:%s", currentUser.logged);
         dispatch(
           fetchConvitesTime({
             timeId: timeUser.payload._id,
@@ -86,15 +84,36 @@ const Convite = () => {
     setIsOpen(false);
   };
 
-  const handleRejeitar = (idConvite) => {
-    dispatch(recusarConvite({ conviteId: idConvite, token: token }));
-    navigate("/Login");
+  const handleRejeitar = async (idConvite) => {
+    try {
+      await dispatch(recusarConvite({ conviteId: idConvite, token: token }));
+      
+      // Recarregar convites após rejeitar
+      if (user && user._id) {
+        await dispatch(fetchConvitesUsuario({ userId: user._id, token: currentUser.logged }));
+      }
+      if (isOwner && timeUser && timeUser.payload._id) {
+        await dispatch(fetchConvitesTime({ timeId: timeUser.payload._id, token: currentUser.logged }));
+      }
+    } catch (error) {
+      console.error("Erro ao recusar convite:", error);
+    }
   };
 
-  const handleAceitar = (idConvite) => {
-    console.log("TOKEN:%s", token);
-    dispatch(aceitarConvite({ conviteId: idConvite, token: token }));
-    navigate("/Login"); //para resetar o bd
+  const handleAceitar = async (idConvite) => {
+    try {
+      await dispatch(aceitarConvite({ conviteId: idConvite, token: token }));
+      
+      // Recarregar convites após aceitar
+      if (user && user._id) {
+        await dispatch(fetchConvitesUsuario({ userId: user._id, token: currentUser.logged }));
+      }
+      if (isOwner && timeUser && timeUser.payload._id) {
+        await dispatch(fetchConvitesTime({ timeId: timeUser.payload._id, token: currentUser.logged }));
+      }
+    } catch (error) {
+      console.error("Erro ao aceitar convite:", error);
+    }
   };
 
   return (
