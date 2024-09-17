@@ -3,7 +3,7 @@ import React from "react";
 import Delete from "../../assets/delete.svg";
 import Promote from "../../assets/star.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteUserFromTime } from "../../redux/time/slice";
+import { deletaInteiro, deleteUserFromTime } from "../../redux/time/slice";
 import { useNavigate, Navigate } from "react-router-dom";
 
 function Jogador({ id, nome }) {
@@ -12,15 +12,33 @@ function Jogador({ id, nome }) {
   const timeDados = useSelector((rootReducer) => rootReducer.time);
   const dispatch = useDispatch();
   const Times = timeDados.timeUser.payload;
-  console.log("Timasturbo", Times);
-  const handleDeleteUserTime = async (e) => {
+  const qtdUser = timeDados.timeUser.payload.userId;
+  const handleSairTime = async (e) => {
     e.preventDefault();
-    try {
-      if (currentUser.user._id === Times.userIdDono) {
+    if (qtdUser.length === 1) {
+      try {
+        console.log(Times);
+        const result = await dispatch(
+          deletaInteiro({
+            id: Times._id,
+            token: currentUser.logged,
+          })
+        );
+        if (result) {
+          console.log("voce excluiu o time", result);
+          navigate("/login");
+        }
+        // Aqui você pode adicionar lógica adicional para lidar com o resultado
+      } catch (error) {
+        console.error("Erro ao tentar sair:", error);
+        alert("Ocorreu um erro ao tentar sair.");
+      }
+    } else{ 
+      try {
         const result = await dispatch(
           deleteUserFromTime({
             timeId: Times._id,
-            id: id, //não pode ser current user, tem que ser id selecionado
+            id: currentUser.user._id,
             token: currentUser.logged,
           })
         );
@@ -28,16 +46,13 @@ function Jogador({ id, nome }) {
           console.log("voce saiu do time", result);
           navigate("/login");
         }
-      } else {
-        alert("Você não é o dono desse time!");
-
         // Aqui você pode adicionar lógica adicional para lidar com o resultado
+      } catch (error) {
+        console.error("Erro ao tentar sair:", error);
+        alert("Ocorreu um erro ao tentar sair.");
       }
-    } catch (error) {
-      console.error("Erro ao tentar remover:", error);
-      alert("Ocorreu um erro ao tentar remover.");
-    }
-  };
+    };
+  }
 
   return (
     <div className="tudo">
@@ -45,7 +60,7 @@ function Jogador({ id, nome }) {
         <h1>{nome}</h1>
         <img
           src={Delete}
-          onClick={handleDeleteUserTime}
+          onClick={handleSairTime}
           alt="menu"
           className="imagedelete"
         />

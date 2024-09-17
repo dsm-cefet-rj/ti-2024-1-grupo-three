@@ -118,12 +118,12 @@ const Time = () => {
   const qtdUser = timeDados.timeUser.payload.userId;
   const handleSairTime = async (e) => {
     e.preventDefault();
-    if (!Array.isArray(qtdUser) && qtdUser.length === 1) {
+    if (qtdUser.length === 1) {
       try {
-        console.log(cu);
+        console.log(Times);
         const result = await dispatch(
           deletaInteiro({
-            id: Times.timeUser._id,
+            id: Times._id,
             token: currentUser.logged,
           })
         );
