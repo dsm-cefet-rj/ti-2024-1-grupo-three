@@ -53,7 +53,7 @@ function Jogador({ id, nome }) {
           alert("Ocorreu um erro ao tentar sair.");
         }
       } else{
-        alert("Voce não tem permissão para exclui um jogador");
+        alert("Voce não tem permissão para excluir um jogador");
       }
     };
   }
