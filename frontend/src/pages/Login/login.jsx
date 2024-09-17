@@ -62,7 +62,7 @@ const Login = () => {
         alert("Autenticado com sucesso!");
         fetchTime();
         setTimeout(() => {
-          navigate("/meustorneios"); //tive que botar pq tava acessando time antes de conseguir salvar o time ao redux
+          navigate("/Time"); //tive que botar pq tava acessando time antes de conseguir salvar o time ao redux
         }, 1000);
       }
     } catch (error) {
