@@ -1,8 +1,9 @@
-import { React, useState} from "react";
+import { React, useState } from "react";
 import Seta from "../../assets/Arrow 1.svg";
 import "./partidaComponente.css";
 import Edit from "../../assets/edit.svg";
 import Check from "../../assets/check.svg";
+import { useNavigate, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePartida } from "../../redux/partida/slice";
 /**
@@ -21,6 +22,7 @@ import { updatePartida } from "../../redux/partida/slice";
  */
 
 function PartidaComponente({ id, nome, resultado, data, local }) {
+  const navigate = useNavigate(); // Hook para navegação
   const [newResultado, setResultado] = useState("");
   const [editarResultado, setEditarResultado] = useState(false);
   const currentUser = useSelector((rootReducer) => rootReducer.user);
@@ -38,18 +40,19 @@ function PartidaComponente({ id, nome, resultado, data, local }) {
     setEditarResultado(false);
   };
   const handleUpdate = (e) => {
-      if(newResultado != ""){
-        const response = dispatch(
-          updatePartida({
-            placar: newResultado,
-            token: currentUser.logged,
-            id: id,
-          })
-        );
-      } else {
-        alert("Nome não pode ser vazio");
-        handleEditarFalse();
-      }
+    if (newResultado != "") {
+      const response = dispatch(
+        updatePartida({
+          placar: newResultado,
+          token: currentUser.logged,
+          id: id,
+        })
+      );
+      navigate("/Time");
+    } else {
+      alert("Nome não pode ser vazio");
+      handleEditarFalse();
+    }
   };
   return (
     <div className="partidaContainer">
@@ -60,20 +63,20 @@ function PartidaComponente({ id, nome, resultado, data, local }) {
           </div>
           <div className="divisao">
             <div className="infos">
-            {editarResultado === true ? (
+              {editarResultado === true ? (
                 <div className="">
                   <input
                     id="nome"
-                    className=""
+                    className="inputresult"
                     placeholder={resultado}
                     onChange={(event) => handleChange(event, setResultado)}
                   />
                 </div>
-                ) : (
-                  <div className="">
-                    <h2 className="">{resultado}</h2>
-                  </div>
-                )}
+              ) : (
+                <div className="">
+                  <h2 className="">{resultado}</h2>
+                </div>
+              )}
               <h2>{local}</h2>
             </div>
             <div className="">
@@ -82,12 +85,20 @@ function PartidaComponente({ id, nome, resultado, data, local }) {
             <div>
               {resultado === "" ? (
                 <h2>{resultado}</h2>
+              ) : editarResultado === true ? (
+                <img
+                  src={Check}
+                  alt="menu"
+                  className="imageedit1"
+                  onClick={handleUpdate}
+                />
               ) : (
-                editarResultado === true ? (
-                  <img src={Check} alt="menu" className="imageedit1" onClick={handleUpdate}/>
-                ) : (
-                  <img src={Edit} alt="menu" className="imageedit" onClick={handleEditartrue}/>
-                )
+                <img
+                  src={Edit}
+                  alt="menu"
+                  className="imageedit"
+                  onClick={handleEditartrue}
+                />
               )}
             </div>
           </div>
