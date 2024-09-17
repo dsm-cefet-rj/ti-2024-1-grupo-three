@@ -47,7 +47,30 @@ const getTimeByUserId = createAsyncThunk(
   }
 );
 
+const deleteUserFromTime = createAsyncThunk(
+  "time/deleteUserFromTimeAsync",
+  async (data) => {
+    //sair do time
+    try {
+      const config = {
+        headers: {
+          Authorization: `${data.token}`,
+        },
+      };
+      console.log("voce chegou ate aqui", data);
+      const response = await api.delete(`/times/${data.id}`, config);
+      console.log("voce chegou ate aqui!");
+      alert("Você deletou o jogador do time com sucesso");
+      return response.data; // Certifique-se de retornar algo se necessário
+    } catch (error) {
+      console.error("Erro ao deletar jogador do time:", error); // Logar o erro para depuração
+      alert("Ocorreu um erro ao tentar excluir jogador do time");
+    }
+  }
+); //deletar usuario do time
+
 const deleteTime = createAsyncThunk("time/deleteTimeAsync", async (data) => {
+  //sair do time
   try {
     const config = {
       headers: {
@@ -55,7 +78,7 @@ const deleteTime = createAsyncThunk("time/deleteTimeAsync", async (data) => {
       },
     };
     console.log("voce chegou ate aqui", data);
-    const response = await api.delete(`/time/${data.id}`, config); //para de funcionar aqui
+    const response = await api.delete(`/time/${data.id}`, config);
     console.log("voce chegou ate aqui!");
     alert("Você saiu do time com sucesso");
     return response.data; // Certifique-se de retornar algo se necessário
@@ -149,6 +172,7 @@ export {
   updateTime,
   deleteTimeByUserId,
   deleteTime,
+  deleteUserFromTime,
 };
 
 export default timeSlice.reducer;
