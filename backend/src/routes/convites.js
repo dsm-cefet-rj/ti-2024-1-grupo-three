@@ -5,7 +5,7 @@ import { checkToken } from "../middleware/Auth.js";
 const conviteRoutes = express.Router();
 
 // Rota para criar um novo convite
-conviteRoutes.post("/convite", create);
+conviteRoutes.post("/convite",checkToken, create);
 
 // Rota para obter todos os convites
 conviteRoutes.get("/convite",checkToken, getAll);

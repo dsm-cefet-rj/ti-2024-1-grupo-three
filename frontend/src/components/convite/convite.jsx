@@ -34,11 +34,11 @@ const Convite = () => {
   const { convitesTime, convitesTorneio, loading, error } = useSelector((rootReducer) => rootReducer.convite); // Access invites data
 
   // Extract necessary information from the state
-  const user = currentUser?.user;
-  const token = currentUser?.logged;
-  const timeUser = timeDados?.timeUser;
-  const isOwner = timeDados?.eDono;
-
+  const user = currentUser.user;
+  const token = currentUser.logged;
+  const timeUser = timeDados.timeUser;
+  const isOwner = timeDados.eDono;
+  console.log("ISOWNER: %o", timeDados)
   useEffect(() => {
     if (isOpen && convitesTime.length === 0 && convitesTorneio.length === 0) {
       // Fetch user invites when modal opens
@@ -46,8 +46,9 @@ const Convite = () => {
         dispatch(fetchConvitesUsuario({ userId: user._id, token: currentUser.logged}));
       }
       // Fetch team invites if user is the owner of a team
-      if (isOwner && timeUser && timeUser._id) {
-        dispatch(fetchConvitesTime({ timeId: timeUser._id, token: currentUser.logged}));
+      if (isOwner && timeUser && timeUser.payload._id) {
+        console.log("Tomanocu:%s",currentUser.logged)
+        dispatch(fetchConvitesTime({ timeId: timeUser.payload._id, token: currentUser.logged}));
       }
     }
   }, [isOpen, dispatch, user, token, timeUser, isOwner, convitesTime.length, convitesTorneio.length]);
@@ -63,11 +64,12 @@ const Convite = () => {
   };
 
   const handleRejeitar = (idConvite) => {
-    dispatch(recusarConvite({ conviteId: idConvite, token }));
+    dispatch(recusarConvite({ conviteId: idConvite, token: token }));
   };
 
   const handleAceitar = (idConvite) => {
-    dispatch(aceitarConvite({ conviteId: idConvite, token }));
+    console.log("TOKEN:%s",token)
+    dispatch(aceitarConvite({ conviteId: idConvite, token: token }));
   };
 
   return (

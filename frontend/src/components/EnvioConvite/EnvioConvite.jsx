@@ -9,6 +9,7 @@ import { searchTimeAsync } from "../../redux/time/slice";
 import { verificarConviteExistente } from "../../redux/convite/slice";
 import { addCoviteAsync } from "../../redux/convite/slice";
 import { jwtDecode } from "jwt-decode";
+import { getTorneioByUserIdDonoTorneio } from "../../redux/torneios/slice";
 //So pra mudar o outro commit
 
 const Modal = ({ isOpen, onClose, children }) => {
@@ -32,7 +33,7 @@ const Modal = ({ isOpen, onClose, children }) => {
 
 const EnvioConvite = () => {
   const currentUser = useSelector((rootReducer) => rootReducer.user); // Usuário logado
-  const userId = currentUser.user._id
+    const userId = currentUser.user._id
   const token = currentUser.logged
   const timeDados = useSelector((rootReducer) => rootReducer.time);
    // Armazena os resultados da busca
@@ -95,6 +96,17 @@ const EnvioConvite = () => {
     setSelectedUser(user);
     setSearchTerm(user.nome); // Atualiza o campo de busca com o nome do usuário selecionado
     setSearchResults([]); // Limpa a lista de sugestões após a seleção
+    if(tipoConvite == "Jogador"){
+      setTipoConviteEnvio("usuario_para_usuario");
+      setUsuarioRemetenteId(userId);
+      setUsuarioDestinatarioId(user._id);   
+    }else{
+      setTipoConviteEnvio("torneio_para_time");
+      setUsuarioRemetenteId(userId);
+      setTimeId(user._id)
+    }
+    
+    
   };
 
   const handleSubmit = async (e) => {
@@ -125,16 +137,19 @@ const EnvioConvite = () => {
           } else {
             setTipoConviteEnvio("usuario_para_usuario");
             setUsuarioRemetenteId(userId);
-            setUsuarioDestinatarioId(selectedUser._id);
-            console.log(tipoConviteEnvio,
-              usuarioRemetenteId,
-              usuarioDestinatarioId,
-              timeId,
-              torneio,)
+            setUsuarioDestinatarioId(selectedUser._id);        
+                console.log("tipo convite: %s",tipoConviteEnvio)
+            const data = {}
+            data.tipoConviteEnvio = tipoConviteEnvio;
+            data.usuarioRemetenteId = usuarioRemetenteId;
+            data.usuarioDestinatarioId = usuarioDestinatarioId;
+            data.timeId = timeId;
+            data.torneio = torneio;
+            
+            console.log("TOKEN: %s", token)
+            console.log("DATA: %o", data)
             try{
-              const response = await dispatch(addCoviteAsync({
-                ...data, token:token
-              }))
+              const response = await dispatch(addCoviteAsync({data: data, token:token}))
               if(response.payload){
                 alert("Convite Enviado!");
               setMensagemAviso(`Convite enviado com sucesso!`);
@@ -152,30 +167,31 @@ const EnvioConvite = () => {
       }
     } else {
       if (selectedUser) {
-        const responseDono = await axios.get(
-          `http://localhost:3004/torneio/dono/${userId}`
-        );
-        torneioUsuario = responseDono.data;
+        const responseDono = await dispatch(getTorneioByUserIdDonoTorneio({userIdDono: userId, token: token}))
+        torneioUsuario = responseDono.payload;
 
-        if (!Array.isArray(torneioUsuario)) {
+        if (torneioUsuario) {
           setTipoConviteEnvio("torneio_para_time");
           setUsuarioRemetenteId(userId);
           setTimeId(selectedUser._id);
           setTorneio(torneioUsuario._id);
-          const response = await fetch("http://localhost:3004/convite", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              tipoConviteEnvio,
-              usuarioRemetenteId,
-              usuarioDestinatarioId,
-              timeId,
-              torneio,
-            }),
-          });
-          console.log(response);
+          const data = {}
+          data.tipoConviteEnvio = tipoConviteEnvio;
+          data.usuarioRemetenteId = usuarioRemetenteId;
+          data.usuarioDestinatarioId = usuarioDestinatarioId;
+          data.timeId = timeId;
+          data.torneio = torneio;
+          try{
+            const response = await dispatch(addCoviteAsync({data: data, token:token}))
+            if(response.payload){
+              alert("Convite Enviado!");
+            setMensagemAviso(`Convite enviado com sucesso!`);
+            }
+          }catch (error){
+            console.error("Erro ao enviar o convite:", error);
+            setMensagemAviso(`Erro ao enviar o convite!`);
+          }
+          console.log(response.payload);
           if (response.status === 201) {
             alert("Convite Enviado!");
             setMensagemAviso(`Convite enviado com sucesso!`);
