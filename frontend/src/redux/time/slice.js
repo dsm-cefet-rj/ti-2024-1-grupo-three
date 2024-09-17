@@ -21,62 +21,76 @@ const addTimeAsync = createAsyncThunk("time/addTimeAsync", async (data) => {
   }
 });
 
-const searchTimeAsync = createAsyncThunk("time/searchTimeAsync", async (data) => {
-  try{
-    const response = await api.get(`/time?nome_like=${data.nome}`)
-    return response.data
-  } catch(error){
-    alert(error)
+const searchTimeAsync = createAsyncThunk(
+  "time/searchTimeAsync",
+  async (data) => {
+    try {
+      const response = await api.get(`/time?nome_like=${data.nome}`);
+      return response.data;
+    } catch (error) {
+      alert(error);
+    }
   }
-})
+);
 
 // Buscar time pelo ID do usuário
-const getTimeByUserId = createAsyncThunk("time/getTimeByUserIdAsync", async (data) => {
-  const config = {
-    headers: {
-      Authorization: `${data.token}`,
-    },
-  };
-  const response = await api.get(`/time/user/${data.userId}`, config);
-  return response.data;
-});
-
-
-const deleteTime = createAsyncThunk("time/deleteTimeAsync", async (data) => {
-   try {
+const getTimeByUserId = createAsyncThunk(
+  "time/getTimeByUserIdAsync",
+  async (data) => {
     const config = {
       headers: {
         Authorization: `${data.token}`,
       },
     };
-    const response = await api.delete(`/time/${data.userId}`, config);
-    alert("Item deletado com sucesso");
+    const response = await api.get(`/time/user/${data.userId}`, config);
+    return response.data;
+  }
+);
+
+const deleteTime = createAsyncThunk("time/deleteTimeAsync", async (data) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `${data.token}`,
+      },
+    };
+    console.log("voce chegou ate aqui", data);
+    const response = await api.delete(`/time/${data.id}`, config); //para de funcionar aqui
+    console.log("voce chegou ate aqui!");
+    alert("Você saiu do time com sucesso");
     return response.data; // Certifique-se de retornar algo se necessário
   } catch (error) {
-    console.error("Erro ao deletar item:", error); // Logar o erro para depuração
-    alert("Ocorreu um erro ao tentar deletar o item");
-  }});
-// Buscar time pelo ID do dono
-const getTimeByUserIdDono = createAsyncThunk("time/getTimeByUserIdDonoAsync", async (data) => {
-  const config = {
-    headers: {
-      Authorization: `${data.token}`,
-    },
-  };
-  const response = await api.get(`/time/dono/${data.userIdDono}`, config);
-  return response.data;
+    console.error("Erro ao Sair do time:", error); // Logar o erro para depuração
+    alert("Ocorreu um erro ao tentar sair do time");
+  }
 });
+// Buscar time pelo ID do dono
+const getTimeByUserIdDono = createAsyncThunk(
+  "time/getTimeByUserIdDonoAsync",
+  async (data) => {
+    const config = {
+      headers: {
+        Authorization: `${data.token}`,
+      },
+    };
+    const response = await api.get(`/time/dono/${data.userIdDono}`, config);
+    return response.data;
+  }
+);
 
 // Buscar time pelo ID do time
-const getTimeByTimeId = createAsyncThunk("time/getTimeByTimeId", async (data) => {
-  const config = {
-    headers: {
-      Authorization: `${data.token}`,
-    },
-  };
-  const response = await api.get(`/time/${data._id}`, config);
-  return response.data;
-});
+const getTimeByTimeId = createAsyncThunk(
+  "time/getTimeByTimeId",
+  async (data) => {
+    const config = {
+      headers: {
+        Authorization: `${data.token}`,
+      },
+    };
+    const response = await api.get(`/time/${data._id}`, config);
+    return response.data;
+  }
+);
 
 // Ação para atualizar o time
 const updateTime = createAsyncThunk("time/updateTimeAsync", async (data) => {
@@ -84,12 +98,14 @@ const updateTime = createAsyncThunk("time/updateTimeAsync", async (data) => {
 });
 
 // Ação para deletar o time pelo ID do dono do usuário
-const deleteTimeByUserId = createAsyncThunk("time/deleteTimeAsync", async (userIdDono) => {
-  await api.delete(`/time?userId=${userIdDono}`);
-});
+const deleteTimeByUserId = createAsyncThunk(
+  "time/deleteTimeAsync",
+  async (userIdDono) => {
+    await api.delete(`/time?userId=${userIdDono}`);
+  }
+);
 
 // Ação para deletar um time específico pelo ID
-
 
 const timeSlice = createSlice({
   name: "time",

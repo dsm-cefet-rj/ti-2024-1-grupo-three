@@ -8,7 +8,11 @@ import "../time/time.css";
 import Edit from "../../assets/edit.svg";
 import Jogador from "../../components/jogador/jogador";
 import { getPartidasIdTime, addPartidas } from "../../redux/partida/slice";
-import { addJogadores, getJogadores } from "../../redux/jogadores/slice";
+import {
+  addJogadores,
+  getJogadores,
+  clearJogadores,
+} from "../../redux/jogadores/slice";
 import { deleteTime, clearTime } from "../../redux/time/slice";
 
 /**
@@ -32,7 +36,6 @@ const Time = () => {
   const Jogadores = useSelector((rootReducer) => rootReducer.jogadores);
   const Partidas = useSelector((rootReducer) => rootReducer.partidas);
   const dispatch = useDispatch();
-  console.log(currentUser);
 
   console.log(currentUser);
   // Redireciona para a página de login se o token não estiver presente
@@ -51,6 +54,7 @@ const Time = () => {
      */
     const fetchTime1 = async () => {
       try {
+        dispatch(clearJogadores());
         console.log("Chamando fetchTime");
         console.log("Times", Times);
         if (Times) {
@@ -80,23 +84,26 @@ const Time = () => {
     console.log("Finalizando useEffect");
   }, []); //mudar aqui
 
-
   const handleSairTime = async (e) => {
-  e.preventDefault();
-  try {
-    const result = await dispatch(
-      deleteTime({
-        userId: currentUser.user._id,
-        token: currentUser.logged,
-      })
-    );
-    // Aqui você pode adicionar lógica adicional para lidar com o resultado
-  } catch (error) {
-    console.error("Erro ao tentar sair:", error);
-    alert("Ocorreu um erro ao tentar sair.");
-  }
-};
-
+    e.preventDefault();
+    try {
+      const result = await dispatch(
+        deleteTime({
+          timeId: Times._id,
+          id: currentUser.user._id,
+          token: currentUser.logged,
+        })
+      );
+      if (result) {
+        console.log("voce saiu do time", result);
+        navigate("/login");
+      }
+      // Aqui você pode adicionar lógica adicional para lidar com o resultado
+    } catch (error) {
+      console.error("Erro ao tentar sair:", error);
+      alert("Ocorreu um erro ao tentar sair.");
+    }
+  };
 
   /**
    * Manipula o clique do botão para criar um time.
@@ -149,12 +156,7 @@ const Time = () => {
               </div>
             )}
             {/* botao sair do time */}
-            <form
-              className="formSairTime"
-               onSubmit={
-                 handleSairTime
-               }
-            >
+            <form className="formSairTime" onSubmit={handleSairTime}>
               <div className="sairTime">
                 <button className="botaosairTime" type="submit">
                   sair do time

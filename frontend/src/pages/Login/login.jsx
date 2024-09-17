@@ -53,7 +53,6 @@ const Login = () => {
         email: email,
         senha: senha,
       };
-      console.log(body);
       const response = await api.post("/login", body);
 
       if (response.data.status == true) {
