@@ -48,7 +48,7 @@ const MeusTorneios = () => {
             })
           )
           console.log(response);
-          if (response) {
+          if (response.payload) {
             torneiosDono = response.payload;
             setTorneiosDono(torneiosDono);
           }
