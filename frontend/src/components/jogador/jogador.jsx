@@ -34,22 +34,26 @@ function Jogador({ id, nome }) {
         alert("Ocorreu um erro ao tentar sair.");
       }
     } else{ 
-      try {
-        const result = await dispatch(
-          deleteUserFromTime({
-            timeId: Times._id,
-            id: currentUser.user._id,
-            token: currentUser.logged,
-          })
-        );
-        if (result) {
-          console.log("voce saiu do time", result);
-          navigate("/login");
+      if (currentUser.user._id === Times.userIdDono) {
+        try {
+          const result = await dispatch(
+            deleteUserFromTime({
+              timeId: Times._id,
+              id: id,
+              token: currentUser.logged,
+            })
+          );
+          if (result) {
+            console.log("voce saiu do time", result);
+            navigate("/login");
+          }
+          // Aqui você pode adicionar lógica adicional para lidar com o resultado
+        } catch (error) {
+          console.error("Erro ao tentar sair:", error);
+          alert("Ocorreu um erro ao tentar sair.");
         }
-        // Aqui você pode adicionar lógica adicional para lidar com o resultado
-      } catch (error) {
-        console.error("Erro ao tentar sair:", error);
-        alert("Ocorreu um erro ao tentar sair.");
+      } else{
+        alert("Voce não tem permissão para exclui um jogador");
       }
     };
   }
