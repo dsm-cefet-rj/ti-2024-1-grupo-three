@@ -2,7 +2,6 @@ import { Partida } from "../models/partidaModel.js";
 import { Time } from "../models/timeModel.js";
 import { Torneio } from "../models/torneioModel.js";
 
-
 async function create(req, res) {
   try {
     const { timeMandante, timeVisitante, TorneioId, data, local } = req.body;
@@ -126,9 +125,7 @@ async function updatePlacar(req, res) {
     // Salvar a partida atualizada
     await partida.save();
 
-    res
-      .status(200)
-      .json({ partida, message: "Placar atualizado com sucesso" });
+    res.status(200).json({ partida, message: "Placar atualizado com sucesso" });
   } catch (error) {
     console.error("Erro ao atualizar o placar:", error);
     res.status(500).json({ message: "Erro ao atualizar o placar", error });
@@ -186,8 +183,7 @@ async function criarPartidaMOR(req, res) {
         .json({ message: "Partidas criadas com sucesso!", partidas });
     } else {
       return res.status(400).json({
-        error:
-          "Número de participantes não é suficiente para criar partidas.",
+        error: "Número de participantes não é suficiente para criar partidas.",
       });
     }
   } catch (error) {
@@ -196,4 +192,13 @@ async function criarPartidaMOR(req, res) {
   }
 }
 
-export {create, getAll, get, deletePartida, update, getPartidasByTime, updatePlacar, criarPartidaMOR};
+export {
+  create,
+  getAll,
+  get,
+  deletePartida,
+  update,
+  getPartidasByTime,
+  updatePlacar,
+  criarPartidaMOR,
+};

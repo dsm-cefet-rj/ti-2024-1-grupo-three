@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import { debounce } from "lodash"; // Importa o debounce do lodash
 import "../gerarPartida/gerarPartida.css";
+import { criarPartidas } from "../../redux/partida/slice";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, Navigate } from "react-router-dom";
 
 const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
@@ -23,10 +26,13 @@ const Modal = ({ isOpen, onClose, children }) => {
 };
 
 const GerarPartida = () => {
+  const navigate = useNavigate(); // Hook para navegação
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [searchResults, setSearchResults] = useState([]); // Para armazenar os resultados da busca
   const [selectedTorneio, setSelectedTorneio] = useState(null); // Para armazenar o torneio selecionado
+  const currentUser = useSelector((rootReducer) => rootReducer.user);
+  const dispatch = useDispatch();
 
   // Função com debounce para limitar as chamadas da API
   const debouncedSearch = debounce(async (searchValue) => {
@@ -34,7 +40,7 @@ const GerarPartida = () => {
       // Busca apenas se houver mais de 1 caractere
       try {
         const response = await axios.get(
-          `http://localhost:3004/api/torneio?nome_like=${searchValue}`
+          `http://localhost:3004/torneio?nome_like=${searchValue}`
         );
         setSearchResults(response.data);
       } catch (error) {
@@ -67,7 +73,7 @@ const GerarPartida = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:3004/api/partidas/${selectedTorneio._id}`
+        `http://localhost:3004/partidas/${selectedTorneio._id}` //nao consegui enviar o token com redux
       );
       console.log("Resposta da API:", response.data);
       alert("Partidas geradas com sucesso!");

@@ -23,5 +23,5 @@ partidaRoutes.put("/partidas/:id", checkToken, update);
 
 partidaRoutes.put("/partidas/:id", checkToken, updatePlacar);
 
-partidaRoutes.post("/partidas/:torneioId", checkToken, criarPartidaMOR);
+partidaRoutes.post("/partidas/:torneioId", criarPartidaMOR); //deveria ter checkToken
 export default partidaRoutes;

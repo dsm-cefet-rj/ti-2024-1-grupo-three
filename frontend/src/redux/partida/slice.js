@@ -7,6 +7,24 @@ const initialState = {
   partidas: [],
 };
 
+const criarPartidas = createAsyncThunk(
+  "partidas/criarPartidasAsync",
+  async (data) => {
+    const config = {
+      headers: {
+        Authorization: `${data.token}`,
+      },
+    };
+    try {
+      const response = await api.post(`/partidas/${data.torneioId}`, config);
+      alert("Partidas criadas!");
+      return response.data;
+    } catch (error) {
+      alert("Erro ao criar partida");
+      return false;
+    }
+  }
+);
 const addPartida = createAsyncThunk(
   "partidas/addPartidasAsync",
   async (data) => {
@@ -44,32 +62,35 @@ const getPartidasIdTime = createAsyncThunk(
       },
     };
     const response = await api.get(`/partidas/time/${data.idTime}`, config);
+    console.log("response get partidas", response);
     return response.data;
   }
 );
 
-const updatePartida = createAsyncThunk("user/updatePartidaAsync", async (data) => {
-  try {
-    console.log("data recebida:", data);
-    let formData = new FormData();
-    formData = {
-      placar: data.placar,
-    };
+const updatePartida = createAsyncThunk(
+  "user/updatePartidaAsync",
+  async (data) => {
+    try {
+      console.log("data recebida:", data);
+      let formData = new FormData();
+      formData = {
+        placar: data.placar,
+      };
 
-    const config = {
-      headers: {
-        Authorization: `${data.token}`,
-      },
-    };
-    const response = await api.put(`/partidas/${data.id}`, formData, config);
+      const config = {
+        headers: {
+          Authorization: `${data.token}`,
+        },
+      };
+      const response = await api.put(`/partidas/${data.id}`, formData, config);
 
-    alert("Partida atualizada com sucesso");
-    return response.data.data;
-  } catch (error) {
-    alert(error);
+      alert("Partida atualizada com sucesso");
+      return response.data.data;
+    } catch (error) {
+      alert(error);
+    }
   }
-});
-
+);
 
 const partidaSlice = createSlice({
   name: "partidas",
@@ -88,6 +109,12 @@ const partidaSlice = createSlice({
 
 export const { addPartidas, clearPartidas } = partidaSlice.actions;
 
-export { addPartida, getPartidas, getPartidasIdTime, updatePartida };
+export {
+  addPartida,
+  getPartidas,
+  getPartidasIdTime,
+  updatePartida,
+  criarPartidas,
+};
 
 export default partidaSlice.reducer;
