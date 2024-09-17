@@ -43,12 +43,13 @@ const MeusTorneios = () => {
         try {
           const response = await dispatch(
             getTorneioByUserIdDonoTorneio({
-              userIdDono: currentUser.user.id,
+              userIdDono: currentUser.user._id,
               token: currentUser.logged,
             })
           )
-          if (response.status === 200 && response.data) {
-            torneiosDono = response.data;
+          console.log(response);
+          if (response) {
+            torneiosDono = response.payload;
             setTorneiosDono(torneiosDono);
           }
         } catch (error) {
