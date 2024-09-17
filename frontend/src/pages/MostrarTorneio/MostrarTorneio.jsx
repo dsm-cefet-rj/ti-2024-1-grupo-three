@@ -19,11 +19,12 @@ import { useParams } from "react-router-dom";
 const MostrarTorneio = () => {
   const navigate = useNavigate(); // Hook para navegação de rotas
   const [times, setTimes] = useState([]); // Estado para armazenar os times participantes
+  const currentUser = useSelector((rootReducer) => rootReducer.user);
   const [partidas, setPartidas] = useState([]); // Estado para armazenar as partidas do torneio
   const { id } = useParams(); // Extrai o parâmetro 'id' da URL
  //Seleciona o token de autenticação do estado Redux
 
-  if (!token) {
+  if (!currentUser.logged) {
     return <Navigate to="/login" />;
   }
 
