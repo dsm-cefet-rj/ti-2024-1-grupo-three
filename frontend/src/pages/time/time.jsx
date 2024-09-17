@@ -34,7 +34,7 @@ const Time = () => {
   const dispatch = useDispatch();
   console.log(currentUser);
 
-  // console.log(currentUser);
+  console.log(currentUser);
   // Redireciona para a página de login se o token não estiver presente
   if (!currentUser.logged) {
     return <Navigate to="/login" />;

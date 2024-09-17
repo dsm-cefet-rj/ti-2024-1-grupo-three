@@ -22,10 +22,10 @@ const addUser = createAsyncThunk("user/addUserAsync", async (data) => {
 
 const updateUser = createAsyncThunk("user/updateUserAsync", async (data) => {
   try {
+    console.log("data recebida:", data);
     let formData = new FormData();
     formData = {
-      nome: data.nome,
-      email: data.email,
+      senha: data.senha,
     };
     if (data.senha.length > 0) formData.senha = data.senha;
 

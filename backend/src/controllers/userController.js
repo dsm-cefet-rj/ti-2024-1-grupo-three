@@ -62,18 +62,28 @@ async function create(req, res) {
 }
 
 async function update(req, res) {
-  const id = req.params.id;
-  const userReq = {
-    nome: req.body.nomeUser,
-    email: req.body.emailUser,
-    senha: req.body.userPass,
-  };
-  const updatedUser = await User.findByIdAndUpdate(id, userReq);
-  if (!updatedUser) {
-    res.status(404).json({ msg: "erro, não encontrado" });
-    return;
+  try {
+    const id = req.params.id;
+    const userReq = {
+      senha: req.body.senha,
+    };
+    if (userReq.senha) {
+      const salt = await bcrypt.genSalt(12);
+      const newSenha = await bcrypt.hash(userReq.senha, salt);
+      userReq.senha = newSenha;
+    }
+    const updatedUser = await User.findByIdAndUpdate(id, userReq);
+    if (!updatedUser) {
+      res.status(404).json({ msg: "erro, não encontrado" });
+      return;
+    }
+    res.status(200).json({ userReq, msg: "Usuário atualizado com sucesso" });
+  } catch (error) {
+    return res.status(400).send({
+      message: "Ocorreu um erro na tentativa da atualização",
+      erro: error,
+    });
   }
-  res.status(200).json({ userReq, msg: "Usuário atualizado com sucesso" });
 }
 
 async function deleteUser(req, res) {
