@@ -29,7 +29,7 @@ const getPartidas = createAsyncThunk(
         Authorization: `${data.token}`,
       },
     };
-    const response = await api.get(`/partidas/${data.idPartida}`, config);
+    const response = await api.get(`/partidas/${data.id}`, config);
     return response.data;
   }
 );

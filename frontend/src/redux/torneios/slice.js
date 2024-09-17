@@ -27,6 +27,15 @@ const getTorneioByUserIdDonoTorneio = createAsyncThunk('torneio/getTorneioByUser
    const response = await api.get(`/torneio/dono/${data.userIdDono}`, config);
     return response.data;
 });
+const getTorneio = createAsyncThunk('torneio/getTorneioAsync', async (data) => {
+  const config ={
+    headers:{
+      Authorization: `${data.token}`, 
+    },
+  }; 
+   const response = await api.get(`/torneio/${data.id}`, config);
+    return response.data;
+});
 
 const getTorneiosByTime = createAsyncThunk('torneio/getTorneioByTimeAsync', async (data) => {
   const config ={
@@ -77,6 +86,6 @@ const torneioSlice = createSlice({
 
 export const { addTorneio, clearTorneio } = torneioSlice.actions;
 
-export { addTorneioAsync, getTorneioByUserIdDonoTorneio, getTorneiosByTime, updateTorneio, deleteTorneioByUserIdDonoTorneio, deleteTorneio, getTimesByTorneio};
+export { addTorneioAsync, getTorneioByUserIdDonoTorneio, getTorneiosByTime, updateTorneio, deleteTorneioByUserIdDonoTorneio, deleteTorneio, getTimesByTorneio, getTorneio};
 
 export default torneioSlice.reducer;

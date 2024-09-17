@@ -62,7 +62,7 @@ const CriarTime = () => {
   }
 
   // Redireciona para a página de login se o token não estiver presente
-  if (!token) {
+  if (!currentUser.logged) {
     return <Navigate to="/login" />;
   }
 

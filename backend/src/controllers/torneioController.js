@@ -36,6 +36,7 @@ async function create(req, res) {
       localTorneio,
       chat: novoChat, // associa o chat ao torneio
       Participantes: [], // Associa os times encontrados ou deixa vazio
+      Partidas:[],
     });
 
     await novoTorneio.save();

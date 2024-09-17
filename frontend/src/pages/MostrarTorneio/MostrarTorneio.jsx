@@ -7,8 +7,8 @@ import { useNavigate, Navigate } from "react-router-dom";
 import "./MostrarTorneio.css";
 import Time from "../../components/time/time";
 import { useParams } from "react-router-dom";
-import { getTimesByTorneio } from "../../redux/torneios/slice";
-import { getPartidasIdTime } from "../../redux/partida/slice";
+import { getTimesByTorneio, getTorneio} from "../../redux/torneios/slice";
+import { getPartidas, getPartidasIdTime } from "../../redux/partida/slice";
 
 /**
  * Componente MostrarTorneio.
@@ -51,18 +51,29 @@ const MostrarTorneio = () => {
         setTimes(response.payload.Participantes);
 
         if (times) {
-          const partidaDetailsPromises = times.map(async (times) => {
-            const response = await dispatch(
-              getPartidasIdTime({
-                id: times.id,
-                token: currentUser.logged
+          const response = await dispatch(
+              getTorneio({
+                  id: id,
+                  token: currentUser.logged
               })
-            )
-            return response.payload;
-          });
-          const partidaDetails = await Promise.all(partidaDetailsPromises);
-          setPartidas(partidaDetails);
-        }
+          );
+      
+          if (response.payload) {
+              const partidaDetailsPromises = response.payload.Partidas.map(async (partidas) => {
+                  const partidaResponse = await dispatch( // Use await here
+                      getPartidas({
+                          id: partidas,
+                          token: currentUser.logged,
+                      })
+                  );
+                  return partidaResponse.payload; // Await ensures this is resolved properly
+              });
+      
+              const partidaDetails = await Promise.all(partidaDetailsPromises);
+              setPartidas(partidaDetails);
+              console.log(partidas);
+          }
+      }
       } catch (error) {
         console.error("Erro ao buscar o nome do time:", error);
       }
@@ -128,21 +139,15 @@ const MostrarTorneio = () => {
               <div>
                 {show2 ? (
                   <div>
-                    {partidas.slice(0, 2).map((partida, index) => (
+                    {partidas.map((partida, index) => (
                       <div key={index}>
-                        {partida.map((dado) => (
                           <PartidaComponente
-                            key={dado._id}
-                            nome={
-                              dado.isMandante
-                                ? `vs ${dado.adversario}`
-                                : `vs ${dado.adversario}`
-                            }
-                            resultado={dado.placar}
-                            data={dado.data}
-                            local={dado.local}
+                            key={partida._id}
+                            nome={`${partida.timeMandante.nomeTime} vs ${partida.timeVisitante.nomeTime}`}
+                            resultado={partida.placar}
+                            data={partida.data}
+                            local={partida.local}
                           />
-                        ))}
                       </div>
                     ))}
                     <div>
@@ -154,19 +159,13 @@ const MostrarTorneio = () => {
                   <div>
                     {partidas.slice(0, 2).map((partida, index) => (
                       <div key={index}>
-                        {partida.slice(0, 1).map((dado) => (
                           <PartidaComponente
-                            key={dado._id}
-                            nome={
-                              dado.isMandante
-                                ? `vs ${dado.adversario}`
-                                : `vs ${dado.adversario}`
-                            }
-                            resultado={dado.placar}
-                            data={dado.data}
-                            local={dado.local}
+                            key={partida._id}
+                            nome={`${partida.timeMandante.nomeTime} vs ${partida.timeVisitante.nomeTime}`}
+                            resultado={partida.placar}
+                            data={partida.data}
+                            local={partida.local}
                           />
-                        ))}
                       </div>
                     ))}
                     <div>
