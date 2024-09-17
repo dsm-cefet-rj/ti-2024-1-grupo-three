@@ -57,7 +57,7 @@ export const addCoviteAsync = createAsyncThunk(
     console.log("DATA: %o", data)
     const config = getAuthConfig(token); // Adicionando o token
     try {
-      const response = await mock.post("/convite", data, config);
+      const response = await api.post("/convite", data, config);
       return response.data;
     } catch (error) {
       console.error("Erro ao criar o convite:", error);

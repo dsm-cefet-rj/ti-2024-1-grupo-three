@@ -147,7 +147,7 @@ const timeSlice = createSlice({
       .addCase(getTimeByUserId.fulfilled, (state, action) => {
         state.timeUser = action.payload;
         // Verifica se o usuário é o dono do time
-        state.eDono = action.payload.donoId === action.meta.arg.userId;
+        state.eDono = action.payload.userIdDono === action.meta.arg.userId;
       })
       .addCase(getTimeByUserIdDono.fulfilled, (state, action) => {
         state.timeUser = action.payload;
