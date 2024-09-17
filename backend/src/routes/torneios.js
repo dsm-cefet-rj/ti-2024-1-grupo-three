@@ -7,6 +7,7 @@ import {
   getAll,
   get,
   deleteTorneio,
+  deleteTorneioByUserIdDonoTorneio,
   update,
 } from "../controllers/torneioController.js";
 import { checkToken } from "../middleware/Auth.js";
@@ -21,6 +22,13 @@ torneioRoutes.get("/torneio", getAll); // Obtenção de todos os torneios
 torneioRoutes.get("/torneio/:id", checkToken, get); // Obtenção de um torneio específico
 torneioRoutes.put("/torneio/:id", checkToken, update); // Atualização de um torneio específico
 torneioRoutes.delete("/torneio/:id", checkToken, deleteTorneio); // Exclusão de um torneio específico
+
+torneioRoutes.delete(
+  "/torneios/dono/:userIdDonoTorneio",
+  checkToken,
+  deleteTorneioByUserIdDonoTorneio
+);
+
 torneioRoutes.get("/torneio/dono/:userIdDonoTorneio", checkToken, getByOwner); //1111111
 
 torneioRoutes.get("/torneio/time/:timeId", checkToken, getTorneiosByTime); //11111

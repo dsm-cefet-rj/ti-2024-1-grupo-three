@@ -158,6 +158,28 @@ async function deleteTime(req, res) {
     res.status(500).json({ msg: "Erro interno do servidor" });
   }
 }
+
+async function excluirTime(req, res) {
+  //excluir time vazio
+  try {
+    const timeId = req.params.timeId; // Obtain userId from request
+    if (!timeId) {
+      res.status(400).json({ msg: "Time ID is required" });
+      return;
+    }
+
+    console.log("userid backend", timeId);
+
+    const time = await Time.findByIdAndDelete(timeId);
+
+    return res.status(200).send({
+      message: "time deletado com sucesso",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ msg: "Erro ao deletar time" });
+  }
+}
 async function update(req, res) {
   const id = req.params.id;
   const time = {
@@ -180,4 +202,5 @@ export {
   deleteTime,
   update,
   deleteUserFromTime,
+  excluirTime,
 };

@@ -5,7 +5,10 @@ import "./meusTorneios.css";
 import Button from "../../components/button/button";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, Navigate } from "react-router-dom";
-import { getTorneiosByTime, getTorneioByUserIdDonoTorneio } from "../../redux/torneios/slice";
+import {
+  getTorneiosByTime,
+  getTorneioByUserIdDonoTorneio,
+} from "../../redux/torneios/slice";
 
 /**
  * Componente MeusTorneios.
@@ -19,7 +22,7 @@ const MeusTorneios = () => {
   const navigate = useNavigate();
   const currentUser = useSelector((rootReducer) => rootReducer.user);
   const timeUser = useSelector((rootReducer) => rootReducer.time);
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   const [torneiosDono, setTorneiosDono] = useState([]);
   const [torneiosParticipante, setTorneiosParticipante] = useState([]);
   const [show, setShow] = useState(false);
@@ -46,8 +49,8 @@ const MeusTorneios = () => {
               userIdDono: currentUser.user._id,
               token: currentUser.logged,
             })
-          )
-          console.log(response);
+          );
+          console.log("torneios dono", response);
           if (response.payload) {
             torneiosDono = response.payload;
             setTorneiosDono(torneiosDono);
@@ -64,15 +67,15 @@ const MeusTorneios = () => {
           const time = timeUser.timeUser.payload;
           if (time) {
             // Busca os torneios que o time está participando
-            const responseTorneioTime = await dispatch( 
+            const responseTorneioTime = await dispatch(
               getTorneiosByTime({
                 idTime: time._id,
                 token: currentUser.logged,
               })
-            )
-            if(responseTorneioTime && responseTorneioTime.data){  
-            torneiosTime = responseTorneioTime.data;
-            setTorneiosParticipante(torneiosTime);
+            );
+            if (responseTorneioTime.payload) {
+              torneiosTime = responseTorneioTime.payload;
+              setTorneiosParticipante(torneiosTime);
             }
           }
         } catch (error) {}

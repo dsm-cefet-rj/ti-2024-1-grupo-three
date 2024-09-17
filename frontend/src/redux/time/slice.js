@@ -87,6 +87,24 @@ const deleteTime = createAsyncThunk("time/deleteTimeAsync", async (data) => {
     alert("Ocorreu um erro ao tentar sair do time");
   }
 });
+
+const excluirTime = createAsyncThunk("time/excluirTimeAsync", async (data) => {
+  //excluir time
+  try {
+    const config = {
+      headers: {
+        Authorization: `${data.token}`,
+      },
+    };
+    console.log("voce chegou ate aqui", data);
+    const response = await api.delete(`/time/excluir/${data.timeId}`, config);
+    return response.data; // Certifique-se de retornar algo se necessário
+  } catch (error) {
+    console.error("Erro ao Excluir o time:", error); // Logar o erro para depuração
+    alert("Ocorreu um erro ao tentar sair e excluir o time");
+  }
+});
+
 // Buscar time pelo ID do dono
 const getTimeByUserIdDono = createAsyncThunk(
   "time/getTimeByUserIdDonoAsync",
@@ -191,6 +209,7 @@ export {
   deleteTimeByUserId,
   deleteTime,
   deleteUserFromTime,
+  excluirTime,
 };
 
 export default timeSlice.reducer;

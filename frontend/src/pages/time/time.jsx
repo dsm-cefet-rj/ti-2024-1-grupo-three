@@ -14,7 +14,12 @@ import {
   getJogadores,
   clearJogadores,
 } from "../../redux/jogadores/slice";
-import { deleteTime, clearTime, updateTime } from "../../redux/time/slice";
+import {
+  deleteTime,
+  clearTime,
+  updateTime,
+  excluirTime,
+} from "../../redux/time/slice";
 
 /**
  * Componente Time.
@@ -50,7 +55,6 @@ const Time = () => {
     setEditarNome(false);
   };
 
-
   // Redireciona para a página de login se o token não estiver presente
   if (!currentUser.logged) {
     return <Navigate to="/login" />;
@@ -59,8 +63,8 @@ const Time = () => {
   console.log(Times);
 
   const handleUpdate = (e) => {
-    if(currentUser.user._id === Times.userIdDono){
-      if(newName != ""){
+    if (currentUser.user._id === Times.userIdDono) {
+      if (newName != "") {
         const response = dispatch(
           updateTime({
             nomeTime: newName,
@@ -72,8 +76,7 @@ const Time = () => {
         alert("Nome não pode ser vazio");
         handleEditarFalse();
       }
-    }
-    else{
+    } else {
       handleEditarFalse();
     }
   };
@@ -120,7 +123,18 @@ const Time = () => {
 
   const handleSairTime = async (e) => {
     e.preventDefault();
+    console.log("saindo do time", Times);
+    if (Times.userId.length === 1) {
+      const result2 = await dispatch(
+        excluirTime({
+          timeId: Times._id,
+          token: currentUser.logged,
+        })
+      );
+    }
     try {
+      console.log("saindo do time", Times);
+
       const result = await dispatch(
         deleteTime({
           timeId: Times._id,
@@ -129,9 +143,12 @@ const Time = () => {
         })
       );
       if (result) {
+        //se jogadores = 0 , deletar time
+
         console.log("voce saiu do time", result);
         navigate("/login");
       }
+
       // Aqui você pode adicionar lógica adicional para lidar com o resultado
     } catch (error) {
       console.error("Erro ao tentar sair:", error);
@@ -156,22 +173,32 @@ const Time = () => {
       {nomeTime ? (
         <div className="envoltoJogPar">
           <div className="nometimeflex">
-          {editarNome === true ? (
-                <div className="">
-                  <input
-                    id="nome"
-                    className="nomedoTime"
-                    placeholder={nomeTime}
-                    onChange={(event) => handleChange(event, setNewName)}
-                  />
-                  <img src={Check} alt="menu" className="imageedit1" onClick={handleUpdate} />
-                </div>
-                ) : (
-                  <div className="">
-                    <h1 className="nomedoTime">{nomeTime}</h1>
-                    <img src={Edit} alt="menu" className="imageedit1" onClick={handleEditartrue} />
-                  </div>
-                )}
+            {editarNome === true ? (
+              <div className="">
+                <input
+                  id="nome"
+                  className="nomedoTime"
+                  placeholder={nomeTime}
+                  onChange={(event) => handleChange(event, setNewName)}
+                />
+                <img
+                  src={Check}
+                  alt="menu"
+                  className="imageedit1"
+                  onClick={handleUpdate}
+                />
+              </div>
+            ) : (
+              <div className="">
+                <h1 className="nomedoTime">{nomeTime}</h1>
+                <img
+                  src={Edit}
+                  alt="menu"
+                  className="imageedit1"
+                  onClick={handleEditartrue}
+                />
+              </div>
+            )}
           </div>
 
           <div>
