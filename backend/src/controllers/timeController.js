@@ -80,7 +80,48 @@ async function get(req, res) {
     console.log(error);
   }
 }
+
+async function deleteUserFromTime(req, res) {
+  //excluir jogador do time!
+  try {
+    const userId = req.params.id; // Obtain userId from request
+    if (!userId) {
+      res.status(400).json({ msg: "User ID is required" });
+      return;
+    }
+
+    console.log("userid backend", userId);
+
+    const time = await Time.findOne({
+      userId: userId,
+    });
+
+    console.log("time encontrado", time);
+
+    if (!time) {
+      res.status(404).json({ msg: "Erro, não encontrado" });
+      return;
+    }
+
+    // Assuming userId is an array and we want to remove the provided userId
+    const userIndex = time.userId.indexOf(userId);
+    if (userIndex === -1) {
+      res.status(404).json({ msg: "Usuário não encontrado no time" });
+      return;
+    }
+
+    time.userId.splice(userIndex, 1);
+    await time.save();
+
+    res.status(200).json({ time, msg: "Usuário removido do time" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: "Erro interno do servidor" });
+  }
+}
+
 async function deleteTime(req, res) {
+  //SAIR DO TIME!!!!!!!!!!! COM NOME DIFERENTE!
   try {
     const userId = req.params.id; // Obtain userId from request
     if (!userId) {

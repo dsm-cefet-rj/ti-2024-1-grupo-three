@@ -56,7 +56,7 @@ const Login = () => {
       const response = await api.post("/login", body);
 
       if (response.data.status == true) {
-        console.log(response.data);
+        console.log("suco", response.data);
         suco = response.data;
         dispatch(addLoggedUser(response.data));
         alert("Autenticado com sucesso!");

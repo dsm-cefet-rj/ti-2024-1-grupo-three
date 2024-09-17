@@ -4,6 +4,8 @@ import "./criarTime.css";
 import { useNavigate, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addTime, addTimeAsync } from "../../redux/time/slice";
+import { getTimeByUserId } from "../../redux/time/slice";
+import { getPartidasIdTime, addPartidas } from "../../redux/partida/slice";
 
 /**
  * Componente CriarTime.
@@ -18,7 +20,7 @@ const CriarTime = () => {
   const [nomeTime, setNomeTime] = useState(""); // Estado para armazenar o nome do time
   const navigate = useNavigate(); // Hook para navegação de rotas
   const currentUser = useSelector((rootReducer) => rootReducer.user);
-
+  let suco;
   /**
    * Manipula a submissão do formulário para criar um novo time.
    * Faz uma chamada à API para criar um time com os dados fornecidos.
@@ -39,6 +41,8 @@ const CriarTime = () => {
     try {
       const response = await dispatch(addTimeAsync(body));
       if (addTimeAsync.fulfilled.match(response)) {
+        suco = currentUser;
+        fetchTime();
         setTimeout(() => {
           navigate("/time");
         }, 2000);
@@ -48,6 +52,33 @@ const CriarTime = () => {
     } catch (error) {
       console.error("Erro ao criar o time:", error);
       alert("Erro ao criar o time. Por favor, tente novamente.");
+    }
+  };
+  const fetchTime = async () => {
+    try {
+      const response = await dispatch(
+        getTimeByUserId({
+          userId: suco.user._id,
+          token: suco.logged,
+        })
+      );
+      if (response) {
+        dispatch(addTime(response));
+        //addJogadores
+      }
+      const partidaResponse = await dispatch(
+        getPartidasIdTime({
+          idTime: response.payload._id,
+          token: suco.logged,
+        })
+      );
+
+      console.log("cu", partidaResponse);
+      if (partidaResponse) {
+        dispatch(addPartidas(partidaResponse.payload)); // esta vindo com formato certo
+      }
+    } catch (error) {
+      console.error("Erro ao buscar o nome do time:", error);
     }
   };
 
@@ -62,7 +93,7 @@ const CriarTime = () => {
   }
 
   // Redireciona para a página de login se o token não estiver presente
-  if (!token) {
+  if (!currentUser.logged) {
     return <Navigate to="/login" />;
   }
 
