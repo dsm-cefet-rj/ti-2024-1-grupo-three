@@ -158,6 +158,7 @@ async function deleteTime(req, res) {
     res.status(500).json({ msg: "Erro interno do servidor" });
   }
 }
+<<<<<<< Updated upstream
 
 async function excluirTime(req, res) {
   //excluir time vazio
@@ -180,6 +181,25 @@ async function excluirTime(req, res) {
     res.status(400).json({ msg: "Erro ao deletar time" });
   }
 }
+=======
+async function deletaInteiro(req, res) {
+  try {
+    const id = req.params.id;
+    const timeReq = await Time.findById(id);
+    if (!timeReq) {
+      res.status(404).json({ msg: "erro, não encontrado" });
+      return;
+    }
+
+    const deletedTime = await Time.findByIdAndDelete(id);
+
+    res.status(200).json({ deletedTime, msg: "Time excluido" });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+>>>>>>> Stashed changes
 async function update(req, res) {
   const id = req.params.id;
   const time = {
@@ -202,5 +222,9 @@ export {
   deleteTime,
   update,
   deleteUserFromTime,
+<<<<<<< Updated upstream
   excluirTime,
+=======
+  deletaInteiro
+>>>>>>> Stashed changes
 };

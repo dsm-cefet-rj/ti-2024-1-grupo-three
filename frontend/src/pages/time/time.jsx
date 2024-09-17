@@ -14,12 +14,16 @@ import {
   getJogadores,
   clearJogadores,
 } from "../../redux/jogadores/slice";
+<<<<<<< Updated upstream
 import {
   deleteTime,
   clearTime,
   updateTime,
   excluirTime,
 } from "../../redux/time/slice";
+=======
+import { deleteTime, clearTime, updateTime, deletaInteiro } from "../../redux/time/slice";
+>>>>>>> Stashed changes
 
 /**
  * Componente Time.
@@ -120,9 +124,10 @@ const Time = () => {
     fetchTime1();
     console.log("Finalizando useEffect");
   }, []); //mudar aqui
-
+  const qtdUser = timeDados.timeUser.payload.userId;
   const handleSairTime = async (e) => {
     e.preventDefault();
+<<<<<<< Updated upstream
     console.log("saindo do time", Times);
     if (Times.userId.length === 1) {
       const result2 = await dispatch(
@@ -155,6 +160,46 @@ const Time = () => {
       alert("Ocorreu um erro ao tentar sair.");
     }
   };
+=======
+    if (!Array.isArray(qtdUser) && qtdUser.length === 1) {
+      try {
+        console.log(cu);
+        const result = await dispatch(
+          deletaInteiro({
+            id: Times.timeUser._id,
+            token: currentUser.logged,
+          })
+        );
+        if (result) {
+          console.log("voce excluiu o time", result);
+          navigate("/login");
+        }
+        // Aqui você pode adicionar lógica adicional para lidar com o resultado
+      } catch (error) {
+        console.error("Erro ao tentar sair:", error);
+        alert("Ocorreu um erro ao tentar sair.");
+      }
+    } else{ 
+      try {
+        const result = await dispatch(
+          deleteTime({
+            timeId: Times._id,
+            id: currentUser.user._id,
+            token: currentUser.logged,
+          })
+        );
+        if (result) {
+          console.log("voce saiu do time", result);
+          navigate("/login");
+        }
+        // Aqui você pode adicionar lógica adicional para lidar com o resultado
+      } catch (error) {
+        console.error("Erro ao tentar sair:", error);
+        alert("Ocorreu um erro ao tentar sair.");
+      }
+    };
+  }
+>>>>>>> Stashed changes
 
   /**
    * Manipula o clique do botão para criar um time.
