@@ -12,27 +12,6 @@ const initialState = {
 };
 
 
-export const addCoviteAsync = createAsyncThunk(
-  'convites/addConviteAsync',
-  async (data) => {
-    
-    const dataInfo = {
-      tipoConviteEnvio: data.tipoConviteEnvio,
-      usuarioRemetenteId: data.usuarioRemetenteId,
-      usuarioDestinatarioId: data.usuarioDestinatarioId,
-      timeId: data.timeId,
-      torneio: data.torneio
-    };
-    try {
-      const response = await api.post("/convite", dataInfo, config);
-      return response.data;
-    } catch (error) {
-      console.error("Erro ao criar o convite:", error);
-      throw error;
-    }
-  }
-);
-
 export const verificarConviteExistente = createAsyncThunk(
   "convites/verificarConviteExistente",
   async ({ destinatarioId, remetenteId, token }, { rejectWithValue }) => {
@@ -72,11 +51,32 @@ export const fetchConvitesTime = createAsyncThunk(
   }
 );
 
+export const addCoviteAsync = createAsyncThunk(
+  'convites/addConviteAsync',
+  async ({data, token}) => {
+    console.log("DATA: %o", data)
+    const config = getAuthConfig(token); // Adicionando o token
+    try {
+      const response = await mock.post("/convite", data, config);
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao criar o convite:", error);
+      throw error;
+    }
+  }
+);
+
 export const aceitarConvite = createAsyncThunk(
   'convites/aceitarConvite',
   async ({ conviteId, token }) => {
     const config = getAuthConfig(token); // Adicionando o token
-    const response = await api.put(`/convite/aceitar/${conviteId}`, null, config);
+    try{
+      const response = await api.put(`/convite/aceitar/${conviteId}`, {}, config);
+    } catch (error){
+      console.error("Erro ao aceitar o convite:", error);
+      throw error;
+    }
+    
     alert("Convite aceito com sucesso!");
     return response.data;
   }

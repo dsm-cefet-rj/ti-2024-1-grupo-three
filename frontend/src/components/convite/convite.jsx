@@ -34,10 +34,10 @@ const Convite = () => {
   const { convitesTime, convitesTorneio, loading, error } = useSelector((rootReducer) => rootReducer.convite); // Access invites data
 
   // Extract necessary information from the state
-  const user = currentUser?.user;
-  const token = currentUser?.logged;
-  const timeUser = timeDados?.timeUser;
-  const isOwner = timeDados?.eDono;
+  const user = currentUser.user;
+  const token = currentUser.logged;
+  const timeUser = timeDados.timeUser;
+  const isOwner = timeDados.eDono;
 
   useEffect(() => {
     if (isOpen && convitesTime.length === 0 && convitesTorneio.length === 0) {
@@ -63,11 +63,12 @@ const Convite = () => {
   };
 
   const handleRejeitar = (idConvite) => {
-    dispatch(recusarConvite({ conviteId: idConvite, token }));
+    dispatch(recusarConvite({ conviteId: idConvite, token: token }));
   };
 
   const handleAceitar = (idConvite) => {
-    dispatch(aceitarConvite({ conviteId: idConvite, token }));
+    console.log("TOKEN:%s",token)
+    dispatch(aceitarConvite({ conviteId: idConvite, token: token }));
   };
 
   return (
