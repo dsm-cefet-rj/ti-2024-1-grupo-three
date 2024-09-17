@@ -16,7 +16,7 @@ async function create(req, res) {
       placar: "0 x 0",
     });
     const response = await novaPartida.save();
-    Torneios.Partidas.push(novaPartida._id);
+    Torneios.Partidas.push(response._id);
     await Torneios.save();
     res.status(201).json({ response, msg: "partida criada com sucesso" });
   } catch (error) {
