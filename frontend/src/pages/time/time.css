@@ -103,6 +103,10 @@ h1 {
   margin-top: 4vh;
 }
 
+.envoltoedit {
+  display: flex;
+  flex-direction: row;
+}
 .formcrietime {
   display: flex;
   justify-content: center;

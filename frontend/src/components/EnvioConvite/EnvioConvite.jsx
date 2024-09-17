@@ -33,16 +33,16 @@ const Modal = ({ isOpen, onClose, children }) => {
 
 const EnvioConvite = () => {
   const currentUser = useSelector((rootReducer) => rootReducer.user); // Usuário logado
-    const userId = currentUser.user._id
-  const token = currentUser.logged
+  const userId = currentUser.user._id;
+  const token = currentUser.logged;
   const timeDados = useSelector((rootReducer) => rootReducer.time);
-   // Armazena os resultados da busca
+  // Armazena os resultados da busca
   // Armazena o usuário selecionado
   const dispatch = useDispatch();
 
   const [tipoConvite, setTipoConvite] = useState("Jogador");
   const [mensagemAviso, setMensagemAviso] = useState("");
-  const [selectedUser, setSelectedUser] = useState(null); 
+  const [selectedUser, setSelectedUser] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -51,14 +51,13 @@ const EnvioConvite = () => {
   const [usuarioDestinatarioId, setUsuarioDestinatarioId] = useState("");
   const [timeId, setTimeId] = useState("");
   const [torneio, setTorneio] = useState("");
-  
 
   // Função com debounce para limitar as chamadas da API
   const debouncedSearch = debounce(async (searchValue) => {
     if (searchValue.length > 2) {
       try {
         let response;
-        
+
         // Verifica se o tipo de convite é "Jogador"
         if (tipoConvite === "Jogador") {
           // Executa a ação de busca de usuário
@@ -67,10 +66,9 @@ const EnvioConvite = () => {
           // Executa a ação de busca de time (presumindo que exista uma action searchTimeAsync)
           response = await dispatch(searchTimeAsync({ nome: searchValue }));
         }
-  
+
         // Armazena o resultado da busca, acessando a propriedade 'payload'
         setSearchResults(response.payload);
-        
       } catch (error) {
         console.error("Erro ao buscar usuários:", error);
         setSearchResults([]); // Limpa os resultados em caso de erro
@@ -96,17 +94,15 @@ const EnvioConvite = () => {
     setSelectedUser(user);
     setSearchTerm(user.nome); // Atualiza o campo de busca com o nome do usuário selecionado
     setSearchResults([]); // Limpa a lista de sugestões após a seleção
-    if(tipoConvite == "Jogador"){
+    if (tipoConvite == "Jogador") {
       setTipoConviteEnvio("usuario_para_usuario");
       setUsuarioRemetenteId(userId);
-      setUsuarioDestinatarioId(user._id);   
-    }else{
+      setUsuarioDestinatarioId(user._id);
+    } else {
       setTipoConviteEnvio("torneio_para_time");
       setUsuarioRemetenteId(userId);
-      setTimeId(user._id)
+      setTimeId(user._id);
     }
-    
-    
   };
 
   const handleSubmit = async (e) => {
@@ -117,9 +113,10 @@ const EnvioConvite = () => {
     let remetenteUnico = true;
     if (tipoConvite == `Jogador`) {
       if (selectedUser) {
-        
-        if ((selectedUser._id)) {
-          timeDoUsuario = await dispatch(getTimeByUserId({userId:selectedUser._id}))
+        if (selectedUser._id) {
+          timeDoUsuario = await dispatch(
+            getTimeByUserId({ userId: selectedUser._id })
+          );
         }
         const responseConvite = await dispatch(
           verificarConviteExistente({
@@ -130,36 +127,36 @@ const EnvioConvite = () => {
         );
         if (responseConvite.payload) {
           setMensagemAviso(`Usuário já possui convite!`);
-          return
+          return;
         } else {
           if (!Array.isArray(timeDoUsuario.payload) && timeDoUsuario.payload) {
             setMensagemAviso(`Usuário já possui um time!`);
           } else {
             setTipoConviteEnvio("usuario_para_usuario");
             setUsuarioRemetenteId(userId);
-            setUsuarioDestinatarioId(selectedUser._id);        
-                console.log("tipo convite: %s",tipoConviteEnvio)
-            const data = {}
+            setUsuarioDestinatarioId(selectedUser._id);
+            console.log("tipo convite: %s", tipoConviteEnvio);
+            const data = {};
             data.tipoConviteEnvio = tipoConviteEnvio;
             data.usuarioRemetenteId = usuarioRemetenteId;
             data.usuarioDestinatarioId = usuarioDestinatarioId;
             data.timeId = timeId;
             data.torneio = torneio;
-            
-            console.log("TOKEN: %s", token)
-            console.log("DATA: %o", data)
-            try{
-              const response = await dispatch(addCoviteAsync({data: data, token:token}))
-              if(response.payload){
+
+            console.log("TOKEN: %s", token);
+            console.log("DATA: %o", data);
+            try {
+              const response = await dispatch(
+                addCoviteAsync({ data: data, token: token })
+              );
+              if (response.payload) {
                 alert("Convite Enviado!");
-              setMensagemAviso(`Convite enviado com sucesso!`);
+                setMensagemAviso(`Convite enviado com sucesso!`);
               }
-            }catch (error){
+            } catch (error) {
               console.error("Erro ao enviar o convite:", error);
               setMensagemAviso(`Erro ao enviar o convite!`);
             }
-            
-            
           }
         }
       } else {
@@ -167,37 +164,43 @@ const EnvioConvite = () => {
       }
     } else {
       if (selectedUser) {
-        const responseDono = await dispatch(getTorneioByUserIdDonoTorneio({userIdDono: userId, token: token}))
+        const responseDono = await dispatch(
+          getTorneioByUserIdDonoTorneio({ userIdDono: userId, token: token })
+        );
         torneioUsuario = responseDono.payload;
+        console.log("torneio usuario", torneioUsuario);
 
         if (torneioUsuario) {
           setTipoConviteEnvio("torneio_para_time");
           setUsuarioRemetenteId(userId);
           setTimeId(selectedUser._id);
           setTorneio(torneioUsuario._id);
-          const data = {}
+          console.log("torneio", torneio);
+          const data = {};
           data.tipoConviteEnvio = tipoConviteEnvio;
           data.usuarioRemetenteId = usuarioRemetenteId;
           data.usuarioDestinatarioId = usuarioDestinatarioId;
           data.timeId = timeId;
           data.torneio = torneio;
-          try{
-            const response = await dispatch(addCoviteAsync({data: data, token:token}))
-            if(response.payload){
+          try {
+            const response = await dispatch(
+              addCoviteAsync({ data: data, token: token })
+            );
+            if (response.payload) {
               alert("Convite Enviado!");
-            setMensagemAviso(`Convite enviado com sucesso!`);
+              setMensagemAviso(`Convite enviado com sucesso!`);
             }
-          }catch (error){
+            console.log(response.payload);
+            if (response.status === 201) {
+              alert("Convite Enviado!");
+              setMensagemAviso(`Convite enviado com sucesso!`);
+            } else {
+              alert("Erro ao enviar convite!");
+              setMensagemAviso(`Convite não enviado!`);
+            }
+          } catch (error) {
             console.error("Erro ao enviar o convite:", error);
             setMensagemAviso(`Erro ao enviar o convite!`);
-          }
-          console.log(response.payload);
-          if (response.status === 201) {
-            alert("Convite Enviado!");
-            setMensagemAviso(`Convite enviado com sucesso!`);
-          } else {
-            alert("Erro ao enviar convite!");
-            setMensagemAviso(`Convite não enviado!`);
           }
         } else {
           setMensagemAviso(`Você não é dono de nenhum torneio!`);

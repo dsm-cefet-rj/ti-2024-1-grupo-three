@@ -14,7 +14,12 @@ import {
   getJogadores,
   clearJogadores,
 } from "../../redux/jogadores/slice";
-import {clearTime, updateTime, deletaInteiro, deleteUserFromTime } from "../../redux/time/slice";
+import {
+  clearTime,
+  updateTime,
+  deletaInteiro,
+  deleteUserFromTime,
+} from "../../redux/time/slice";
 
 /**
  * Componente Time.
@@ -67,6 +72,7 @@ const Time = () => {
             id: Times._id,
           })
         );
+        navigate("/Login");
       } else {
         alert("Nome não pode ser vazio");
         handleEditarFalse();
@@ -136,7 +142,7 @@ const Time = () => {
         console.error("Erro ao tentar sair:", error);
         alert("Ocorreu um erro ao tentar sair.");
       }
-    } else{ 
+    } else {
       try {
         const result = await dispatch(
           deleteUserFromTime({
@@ -154,8 +160,8 @@ const Time = () => {
         console.error("Erro ao tentar sair:", error);
         alert("Ocorreu um erro ao tentar sair.");
       }
-    };
-  }
+    }
+  };
 
   /**
    * Manipula o clique do botão para criar um time.
@@ -175,7 +181,7 @@ const Time = () => {
         <div className="envoltoJogPar">
           <div className="nometimeflex">
             {editarNome === true ? (
-              <div className="">
+              <div className="envoltoedit">
                 <input
                   id="nome"
                   className="nomedoTime"
@@ -190,7 +196,7 @@ const Time = () => {
                 />
               </div>
             ) : (
-              <div className="">
+              <div className="envoltoedit">
                 <h1 className="nomedoTime">{nomeTime}</h1>
                 <img
                   src={Edit}

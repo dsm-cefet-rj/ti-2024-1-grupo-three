@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTimeByTimeId } from "../../redux/time/slice";
-import { fetchConvitesUsuario, fetchConvitesTime, aceitarConvite, recusarConvite } from "../../redux/convite/slice"; // Import actions from slice
+import {
+  fetchConvitesUsuario,
+  fetchConvitesTime,
+  aceitarConvite,
+  recusarConvite,
+} from "../../redux/convite/slice"; // Import actions from slice
 import "./convite.css";
+import { useNavigate } from "react-router-dom";
 
 const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
@@ -27,33 +33,50 @@ const Convite = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
   const [teamNames, setTeamNames] = useState({});
+  const navigate = useNavigate(); // Hook para navegação de rotas
 
   // Access global state using useSelector
   const currentUser = useSelector((rootReducer) => rootReducer.user); // Access logged in user
   const timeDados = useSelector((rootReducer) => rootReducer.time); // Access team data
-  const { convitesTime, convitesTorneio, loading, error } = useSelector((rootReducer) => rootReducer.convite); // Access invites data
+  const { convitesTime, convitesTorneio, loading, error } = useSelector(
+    (rootReducer) => rootReducer.convite
+  ); // Access invites data
 
   // Extract necessary information from the state
   const user = currentUser.user;
   const token = currentUser.logged;
   const timeUser = timeDados.timeUser;
   const isOwner = timeDados.eDono;
-  console.log("ISOWNER: %o", timeDados)
+  console.log("ISOWNER: %o", timeDados);
   useEffect(() => {
     if (isOpen && convitesTime.length === 0 && convitesTorneio.length === 0) {
       // Fetch user invites when modal opens
       if (user && user._id) {
-        dispatch(fetchConvitesUsuario({ userId: user._id, token: currentUser.logged}));
+        dispatch(
+          fetchConvitesUsuario({ userId: user._id, token: currentUser.logged })
+        );
       }
       // Fetch team invites if user is the owner of a team
       if (isOwner && timeUser && timeUser.payload._id) {
-        console.log("Tomanocu:%s",currentUser.logged)
-        dispatch(fetchConvitesTime({ timeId: timeUser.payload._id, token: currentUser.logged}));
+        console.log("Tomanocu:%s", currentUser.logged);
+        dispatch(
+          fetchConvitesTime({
+            timeId: timeUser.payload._id,
+            token: currentUser.logged,
+          })
+        );
       }
     }
-  }, [isOpen, dispatch, user, token, timeUser, isOwner, convitesTime.length, convitesTorneio.length]);
-
-  
+  }, [
+    isOpen,
+    dispatch,
+    user,
+    token,
+    timeUser,
+    isOwner,
+    convitesTime.length,
+    convitesTorneio.length,
+  ]);
 
   const handleOpenModal = () => {
     setIsOpen(true);
@@ -65,11 +88,13 @@ const Convite = () => {
 
   const handleRejeitar = (idConvite) => {
     dispatch(recusarConvite({ conviteId: idConvite, token: token }));
+    navigate("/Login");
   };
 
   const handleAceitar = (idConvite) => {
-    console.log("TOKEN:%s",token)
+    console.log("TOKEN:%s", token);
     dispatch(aceitarConvite({ conviteId: idConvite, token: token }));
+    navigate("/Login"); //para resetar o bd
   };
 
   return (
@@ -86,17 +111,27 @@ const Convite = () => {
                   <div key={convite._id} className="conteudo-convites">
                     <p>time: {convite.timeRemetente || "Carregando..."}</p>
                     <div className="btn-group">
-                      <button type="button" className="btn-aceita" onClick={() => handleAceitar(convite._id)}>
+                      <button
+                        type="button"
+                        className="btn-aceita"
+                        onClick={() => handleAceitar(convite._id)}
+                      >
                         aceitar
                       </button>
-                      <button type="button" className="btn-recusa" onClick={() => handleRejeitar(convite._id)}>
+                      <button
+                        type="button"
+                        className="btn-recusa"
+                        onClick={() => handleRejeitar(convite._id)}
+                      >
                         rejeitar
                       </button>
                     </div>
                   </div>
                 ))
               ) : (
-                <p className="naotem">você não tem convites para times no momento.</p>
+                <p className="naotem">
+                  você não tem convites para times no momento.
+                </p>
               )}
 
               {/* Convites para Torneios */}
@@ -106,17 +141,27 @@ const Convite = () => {
                   <div key={convite._id} className="conteudo-convites">
                     <p>torneio: {convite.torneio || "Carregando..."}</p>
                     <div className="btn-group">
-                      <button type="button" className="btn-aceita" onClick={() => handleAceitar(convite._id)}>
+                      <button
+                        type="button"
+                        className="btn-aceita"
+                        onClick={() => handleAceitar(convite._id)}
+                      >
                         aceitar
                       </button>
-                      <button type="button" className="btn-recusa" onClick={() => handleRejeitar(convite._id)}>
+                      <button
+                        type="button"
+                        className="btn-recusa"
+                        onClick={() => handleRejeitar(convite._id)}
+                      >
                         rejeitar
                       </button>
                     </div>
                   </div>
                 ))
               ) : (
-                <p className="naotem">você não tem convites para torneios no momento.</p>
+                <p className="naotem">
+                  você não tem convites para torneios no momento.
+                </p>
               )}
             </div>
           </div>
