@@ -7,6 +7,7 @@ import {
   get,
   deleteTime,
   update,
+  deleteUserFromTime,
 } from "../controllers/timeController.js";
 import { checkToken } from "../middleware/Auth.js";
 
@@ -24,8 +25,11 @@ timeRoutes.get("/time/user/:userId", checkToken, getByUser);
 
 timeRoutes.get("/time/dono/:userIdDono", checkToken, getByOwner);
 
-// Rota para deletar um time específico por ID (DELETE)
+// Rota para sair do time (DELETE)
 timeRoutes.delete("/time/:id", checkToken, deleteTime);
+
+//rota para tirar jogador do time
+timeRoutes.delete("/times/:id", checkToken, deleteUserFromTime);
 
 // Rota para atualizar um time específico por ID (PUT)
 timeRoutes.put("/time/:id", checkToken, update);

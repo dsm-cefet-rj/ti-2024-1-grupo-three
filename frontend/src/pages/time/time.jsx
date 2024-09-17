@@ -133,7 +133,7 @@ const Time = () => {
                 <div>
                   {Jogadores.map((jogador) => (
                     <div key={jogador._id}>
-                      <Jogador nome={jogador.nome} />
+                      <Jogador nome={jogador.nome} id={jogador._id} />
                     </div>
                   ))}
                 </div>
@@ -146,7 +146,7 @@ const Time = () => {
                 <div>
                   {Jogadores.slice(0, 2).map((jogador) => (
                     <div key={jogador._id}>
-                      <Jogador nome={jogador.nome} />
+                      <Jogador nome={jogador.nome} id={jogador._id} />
                     </div>
                   ))}
                 </div>

@@ -82,7 +82,7 @@ async function get(req, res) {
 }
 
 async function deleteUserFromTime(req, res) {
-  //excluir jogador do time!
+  //SAIR DO TIME!!!!!!!!!!! COM NOME DIFERENTE!
   try {
     const userId = req.params.id; // Obtain userId from request
     if (!userId) {
@@ -175,4 +175,13 @@ async function update(req, res) {
   res.status(200).json({ time, msg: "serviço atualizado com sucesso" });
 }
 
-export { create, getByOwner, getByUser, getAll, get, deleteTime, update };
+export {
+  create,
+  getByOwner,
+  getByUser,
+  getAll,
+  get,
+  deleteTime,
+  update,
+  deleteUserFromTime,
+};
