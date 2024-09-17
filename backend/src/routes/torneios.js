@@ -23,7 +23,7 @@ torneioRoutes.get("/torneio", getAll); // Obtenção de todos os torneios
 torneioRoutes.get("/torneio/:id", checkToken, get); // Obtenção de um torneio específico
 torneioRoutes.put("/torneio/:id", checkToken, update); // Atualização de um torneio específico
 torneioRoutes.delete("/torneio/:id", checkToken, deleteTorneio); // Exclusão de um torneio específico
-torneioRoutes.delete("/torneio/time/:id", checkToken, deleteTorneio);
+torneioRoutes.delete("/torneio/time/:id", checkToken, deleteTimeFromTorneio);
 
 torneioRoutes.delete(
   "/torneios/dono/:userIdDonoTorneio",

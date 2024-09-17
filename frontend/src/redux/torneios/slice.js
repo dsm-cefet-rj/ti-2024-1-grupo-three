@@ -94,7 +94,7 @@ const deleteTorneioByUserIdDonoTorneio = createAsyncThunk(
 );
 
 const deleteTimeFromTorneio = createAsyncThunk(
-  "Torneio/deleteTimeFromTorneioAsync",
+  "torneio/deleteTimeFromTorneioAsync",
   async (data) => {
     try {
       const config = {

@@ -189,7 +189,7 @@ async function deleteTimeFromTorneio(req, res) {
     const torneio = await Torneio.findOne({
       Participantes: timeId,
     });
-
+    console.log("torneio encontrado", timeId);
     console.log("torneio encontrado", torneio);
 
     if (!torneio) {
