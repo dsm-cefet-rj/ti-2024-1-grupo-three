@@ -81,18 +81,21 @@ const Time = () => {
   }, []); //mudar aqui
 
 
-  const handleSairTime = async (e) =>{
-    e.preventDefault();
-    const deleteTime = await dispatch(
+  const handleSairTime = async (e) => {
+  e.preventDefault();
+  try {
+    const result = await dispatch(
       deleteTime({
         userId: currentUser.user._id,
         token: currentUser.logged,
       })
     );
-    if(deleteTime.status===200){
-      dispatch(clearTime());
-    }
+    // Aqui você pode adicionar lógica adicional para lidar com o resultado
+  } catch (error) {
+    console.error("Erro ao tentar sair:", error);
+    alert("Ocorreu um erro ao tentar sair.");
   }
+};
 
 
   /**

@@ -80,23 +80,30 @@ import { Time } from "../models/timeModel.js";
   }
   async function deleteTime(req, res) {
     try {
-       const userId = req.params.userId; // Corrigido para req.params
-      const time = await Time.findOne({  userId: { 
-        $elemMatch: { $eq: userId } 
-      }  }); // Confere se userId é o campo correto
-      if (!time) {
-        res.status(404).json({ msg: "erro, não encontrado" });
-        return;
-      }
+        const userId = req.params.userId; // Obtém o userId da requisição
+        const time = await Time.findOne({ userId: userId }); // Corrige a busca para um userId específico
+        
+        if (!time) {
+            res.status(404).json({ msg: "Erro, não encontrado" });
+            return;
+        }
 
-      team.userId.splice(userIndex, 1);
-      await team.save();
+        // Supondo que userId seja um array e queremos remover o userId fornecido
+        const userIndex = time.userId.indexOf(userId);
+        if (userIndex === -1) {
+            res.status(404).json({ msg: "Usuário não encontrado no time" });
+            return;
+        }
 
-      res.status(200).json({ deletedTime, msg: "Saiu do time" });
+        time.userId.splice(userIndex, 1);
+        await time.save();
+
+        res.status(200).json({ time, msg: "Usuário removido do time" });
     } catch (error) {
-      console.log(error);
+        console.log(error);
+        res.status(500).json({ msg: "Erro interno do servidor" });
     }
-  }
+}
   async function update(req, res) {
     const id = req.params.id;
     const time = {

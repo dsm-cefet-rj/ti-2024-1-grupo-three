@@ -72,13 +72,19 @@ const deleteTimeByUserId = createAsyncThunk("time/deleteTimeAsync",
 );
 
 const deleteTime = createAsyncThunk("time/deleteTimeAsync", async (data) => {
-  const config = {
-    headers: {
-      Authorization: `${data.token}`,
-    },
-  };
-  const response = await api.delete(`/time/${data.userId}`, config);
-  return response.data;
+   try {
+    const config = {
+      headers: {
+        Authorization: `${data.token}`,
+      },
+    };
+    const response = await api.delete(`/time/${data.userId}`, config);
+    alert("Item deletado com sucesso");
+    return response.data; // Certifique-se de retornar algo se necessário
+  } catch (error) {
+    console.error("Erro ao deletar item:", error); // Logar o erro para depuração
+    alert("Ocorreu um erro ao tentar deletar o item");
+  }
 });
 
 const timeSlice = createSlice({

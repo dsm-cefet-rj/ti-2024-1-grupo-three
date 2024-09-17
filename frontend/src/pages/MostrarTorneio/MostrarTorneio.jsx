@@ -2,11 +2,9 @@ import { React, useState, useEffect } from "react";
 import Button from "../../components/button/button";
 import NavBar from "../../components/navBar/navBar";
 import PartidaComponente from "../../components/partidaComponent/partidaComponente";
-import EnviarConvite from "../../components/EnvioConvite/EnvioConvite";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Navigate } from "react-router-dom";
 import "./MostrarTorneio.css";
-import axios from "axios";
 import Time from "../../components/time/time";
 import { useParams } from "react-router-dom";
 
@@ -23,8 +21,7 @@ const MostrarTorneio = () => {
   const [times, setTimes] = useState([]); // Estado para armazenar os times participantes
   const [partidas, setPartidas] = useState([]); // Estado para armazenar as partidas do torneio
   const { id } = useParams(); // Extrai o parâmetro 'id' da URL
-
-  const token = useSelector((state) => state.auth.token); //Seleciona o token de autenticação do estado Redux
+ //Seleciona o token de autenticação do estado Redux
 
   if (!token) {
     return <Navigate to="/login" />;

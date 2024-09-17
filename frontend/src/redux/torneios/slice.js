@@ -21,7 +21,7 @@ const addTorneioAsync = createAsyncThunk("torneio/addTorneioAsync", async (data)
 const getTorneioByUserIdDonoTorneio = createAsyncThunk('torneio/getTorneioByUserIdDonoTorneioAsync', async (data) => {
   const config ={
     headers:{
-      Authorizaion: `${data.token}`, 
+      Authorization: `${data.token}`, 
     },
   }; 
    const response = await api.get(`/torneio/dono/${data.userIdDono}`, config);
@@ -31,7 +31,7 @@ const getTorneioByUserIdDonoTorneio = createAsyncThunk('torneio/getTorneioByUser
 const getTorneiosByTime = createAsyncThunk('torneio/getTorneioByTimeAsync', async (data) => {
   const config ={
     headers:{
-      Authorizaion: `${data.token}`, 
+      Authorization: `${data.token}`, 
     },
   }; 
    const response = await api.get(`/torneio/time/${data.idTime}`, config);

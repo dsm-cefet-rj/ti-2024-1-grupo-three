@@ -5,7 +5,6 @@ import "./meusTorneios.css";
 import Button from "../../components/button/button";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, Navigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 import { getTorneiosByTime, getTorneioByUserIdDonoTorneio } from "../../redux/torneios/slice";
 
 /**
@@ -19,16 +18,13 @@ import { getTorneiosByTime, getTorneioByUserIdDonoTorneio } from "../../redux/to
 const MeusTorneios = () => {
   const navigate = useNavigate();
   const currentUser = useSelector((rootReducer) => rootReducer.user);
-  const timeUser = useSelector((rootReducer) => rootReducer.timeUser);
-  const torneioUserDono = useSelector((rootReducer) => rootReducer.torneioUserDono);
+  const timeUser = useSelector((rootReducer) => rootReducer.time);
   const dispatch = useDispatch(); 
-  const token = useSelector((state) => state.auth.token);
-  const decodedToken = jwtDecode(token);
   const [torneiosDono, setTorneiosDono] = useState([]);
   const [torneiosParticipante, setTorneiosParticipante] = useState([]);
   const [show, setShow] = useState(false);
 
-  if (!token) {
+  if (!currentUser.logged) {
     return <Navigate to="/login" />;
   }
 
@@ -64,7 +60,7 @@ const MeusTorneios = () => {
         // Busca os torneios onde o usuário é o dono
 
         try {
-          const time = timeUser;
+          const time = timeUser.timeUser.payload;
           if (time) {
             // Busca os torneios que o time está participando
             const responseTorneioTime = await dispatch( 
@@ -88,15 +84,11 @@ const MeusTorneios = () => {
     };
 
     fetchTorneio();
-  }, [decodedToken.id]);
+  }, []);
 
   const handleClickCriarTorneio = () => {
     navigate("/criartorneio");
   };
-
-  if (!currentUser.logged) {
-    return <Navigate to="/login" />;
-  }
 
   return (
     <div>

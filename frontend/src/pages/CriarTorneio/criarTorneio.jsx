@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTorneio, addTorneioAsync } from "../../redux/torneios/slice";
-import { v4 as idGen } from "uuid";
 import { useNavigate, Navigate } from "react-router-dom";
 import "./criartorneio.css";
-import axios from "axios";
 import NavBar from "../../components/navBar/navBar";
-import { jwtDecode } from "jwt-decode";
+
 
 /**
  * Componente TorneioForm.
@@ -24,18 +22,17 @@ const TorneioForm = () => {
   const [nomeTorneio, setNomeTorneio] = useState(""); // Estado para armazenar o nome do torneio
   const [quantidadeTimes, setQuantidadeTimes] = useState("2"); // Estado para armazenar a quantidade de times
   const [localTorneio, setlocalTorneio] = useState(""); // Estado para armazenar o local do torneio
-  const token = useSelector((state) => state.auth.token); // Seleciona o token de autenticação do estado Redux
-  const decodedToken = jwtDecode(token); // Decodifica o token JWT
+
 
   // Redireciona para a página de login se o token não estiver presente
-  if (!token) {
+  if (!currentUser.logged) {
     return <Navigate to="/login" />;
   }
 
   const body = {
     nomeTorneio: nomeTorneio,
-    userIdDonoTorneio: userIdDonoTorneio,
-    qtdTimes: qtdTimes,
+    userIdDonoTorneio: currentUser.user._id,
+    qtdTimes: quantidadeTimes,
     localTorneio: localTorneio,
   }
   /**
