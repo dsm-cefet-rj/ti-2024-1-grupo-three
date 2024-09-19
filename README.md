@@ -19,5 +19,4 @@ Utilize a branch mais atualizada.
     ```
 
 # ADICIONAR .ENV
-DB_USER=mongodb+srv://calmon:calmon@futebrol.9krww.mongodb.net/?retryWrites=true&w=majority&appName=FuteBRol
-SECRET=SAHDASHUDSAHUSAHASUDHUDAHDUASDHASUDHASUDAHUDASHU
+
